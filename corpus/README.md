@@ -6,7 +6,8 @@ e quatro casos edge. As imagens não reproduzem marcas ou arte de terceiros.
 Os assets gerados são disponibilizados como CC0-1.0; fontes e licenças constam
 do manifest. O corpus completo de 07_QUALITY_VALIDATION.md ainda é tarefa de F9.
 
-`baselines/metrics.json` contém o AntiVector poligonal inicial;
+`baselines/metrics.json` contém o AntiVector padrão validado em F4;
+`baselines/polygon-f3.json` preserva a referência poligonal inicial;
 `baselines/vtracer.json`, o vtracer 0.6.5 com a mesma paleta pré-quantizada,
 precisão 8 bits, speckle=0, layer_difference=0, modo cutout.
 Essa configuração documenta uma comparação com nº de cores equivalente;
