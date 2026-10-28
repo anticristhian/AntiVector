@@ -1,15 +1,16 @@
-//! Provisional polygon CLI and diagnostic stage images.
+//! Vectorization CLI with quality presets, composition options and stage images.
 
 use av_core::{
-    assemble::{assemble, polygon_edges},
     color::{Palette, TRANSPARENT},
-    pipeline::polygon_stages,
+    pipeline::{finish, polygon_stages},
     ColorCount, Control, CoreError, Params,
 };
 use std::path::PathBuf;
 
 #[derive(clap::Args)]
 pub struct VectorizeArgs {
+    #[arg(long,value_parser=["exact","overlap"])]
+    pub stacking: Option<String>,
     pub input: PathBuf,
     #[arg(short, long)]
     pub output: PathBuf,
@@ -70,48 +71,68 @@ pub fn run(args: VectorizeArgs) -> Result<(), Failure> {
     if args.params.is_none() {
         params.min_region_area =
             av_core::params::default_min_region_area(params.detail, image.w, image.h);
+        if params.experimental.quality_v5 {
+            params.denoise =
+                av_core::params::resolve_defaults(params.mode, &av_core::detect(&image)).denoise;
+            if params.experimental.force_pixel_art {
+                params.denoise = 0.0;
+                params.min_region_area = 1;
+            }
+        }
     }
     let ctl = Control::default();
     let stages = polygon_stages(&image, &params, &ctl).map_err(core_error)?;
     if let Some(path) = args.dump_stages {
         std::fs::create_dir_all(&path).map_err(|e| (4, e.to_string()))?;
         raster(
-            image.w,
-            image.h,
+            stages.quantized.w,
+            stages.quantized.h,
             stages.quantized.labels.iter().copied(),
-            &stages.palette,
+            &stages.quant_palette,
         )
         .save(path.join("quantize.png"))
         .map_err(|e| (4, e.to_string()))?;
-        for (name, map) in [("label", &stages.labeled), ("merge_small", &stages.merged)] {
+        raster(
+            stages.resolved.w,
+            stages.resolved.h,
+            stages.resolved.labels.iter().copied(),
+            &stages.resolved_palette,
+        )
+        .save(path.join("resolve_aa.png"))
+        .map_err(|e| (4, e.to_string()))?;
+        let bytes: Vec<u8> = stages.preprocessed.px.iter().flatten().copied().collect();
+        image::save_buffer(
+            path.join("preprocess.png"),
+            &bytes,
+            stages.preprocessed.w,
+            stages.preprocessed.h,
+            image::ColorType::Rgba8,
+        )
+        .map_err(|e| (4, e.to_string()))?;
+        for (name, map, palette) in [
+            ("label", &stages.labeled, &stages.resolved_palette),
+            ("merge_small", &stages.merged, &stages.palette),
+        ] {
             raster(
-                image.w,
-                image.h,
+                map.w,
+                map.h,
                 map.region_of
                     .iter()
                     .map(|&id| map.regions[id as usize].color),
-                &stages.palette,
+                palette,
             )
             .save(path.join(format!("{name}.png")))
             .map_err(|e| (4, e.to_string()))?;
         }
     }
-    let edges = if params.experimental.curve_fit {
-        av_core::stages::fit_edges_for_regions(
-            &stages.graph,
-            &stages.merged,
-            &stages.palette,
-            &params,
-            av_core::detect(&image).is_pixel_art,
-            &ctl,
-        )
-        .map_err(core_error)?
-    } else {
-        polygon_edges(&stages.graph)
+    let doc = finish(&stages, &ctl).map_err(core_error)?;
+    let options = av_export::svg::SvgOptions {
+        overlap: args.stacking.as_deref().map_or_else(
+            || av_export::svg::SvgOptions::default().overlap,
+            |mode| mode == "overlap",
+        ),
     };
-    let doc = assemble(&stages.merged, &stages.graph, &stages.palette, edges, &ctl)
-        .map_err(core_error)?;
-    let svg = av_export::svg::to_string(&doc).map_err(core_error)?;
+    let svg = av_export::svg::to_string_with_options(&doc, &options).map_err(core_error)?;
     std::fs::write(&args.output, svg).map_err(|e| (4, e.to_string()))?;
     println!(
         "paths={} nodes={} colors={}",

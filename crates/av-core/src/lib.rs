@@ -8,6 +8,7 @@ pub mod error;
 pub mod fit;
 pub mod params;
 pub mod pipeline;
+pub mod preprocess;
 pub mod progress;
 pub mod raster;
 pub mod segment;
@@ -16,11 +17,14 @@ pub mod segment;
 pub mod stages {
     pub use crate::assemble::assemble;
     pub use crate::boundary::extract::extract_boundaries;
+    pub use crate::color::antialias::resolve_aa;
     pub use crate::color::quantize::quantize;
     pub use crate::fit::fit_edges;
     pub use crate::fit::fit_edges_for_regions;
+    pub use crate::preprocess::preprocess;
     pub use crate::segment::label::label;
     pub use crate::segment::merge::merge_small;
+    pub use crate::segment::merge::merge_small_with_aa;
 }
 
 pub use assemble::VectorDoc;

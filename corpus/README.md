@@ -2,11 +2,12 @@
 
 Gerado deterministicamente por `cargo run -p av-bench --release -- gen`.
 São 20 casos synthetic com SVG de referência, cinco logos geométricos originais
-e quatro casos edge. As imagens não reproduzem marcas ou arte de terceiros.
+e quatro casos edge, mais cinco sprites pixelart originais (34 imagens).
+As imagens não reproduzem marcas ou arte de terceiros.
 Os assets gerados são disponibilizados como CC0-1.0; fontes e licenças constam
 do manifest. O corpus completo de 07_QUALITY_VALIDATION.md ainda é tarefa de F9.
 
-`baselines/metrics.json` contém o AntiVector padrão validado em F4;
+`baselines/metrics.json` contém o AntiVector padrão validado mais recente;
 `baselines/polygon-f3.json` preserva a referência poligonal inicial;
 `baselines/vtracer.json`, o vtracer 0.6.5 com a mesma paleta pré-quantizada,
 precisão 8 bits, speckle=0, layer_difference=0, modo cutout.
@@ -26,7 +27,13 @@ cargo run -p av-bench --release -- baseline vtracer --label reference
 cargo run -p av-bench --release -- compare reference candidate
 cargo run -p av-bench --release -- perf --config logo --label perf
 cargo run -p av-bench --release -- run --label regression --check-baseline corpus/baselines/metrics.json
+cargo run -p av-bench --release -- visual f5-final f5-reference --label 2026-10-28-f5
 ```
+
+F5 usa sobreposição opaca segura (ADR-010), paleta compactada após merge e
+calibração de qualidade de ADR-011. As referências históricas F3/F4 continuam
+versionadas. A avaliação cega fica em `bench-out/visual/2026-10-28-f5/index.html`;
+o JSON começa sem votos. Corpus completo e metas RNF permanecem para F9.
 
 Os gaps são medidos pela cobertura alfa de um render sem AA (resvg CrispEdges),
 equivalente a detectar fundo magenta vazando, mas sem confundir cores magenta

@@ -10,6 +10,7 @@ use av_core::{
 };
 use serde::{Deserialize, Serialize};
 use std::{
+    borrow::Cow,
     collections::{BTreeMap, BTreeSet},
     fs,
     path::Path,
@@ -22,6 +23,8 @@ use std::{
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Row {
+    #[serde(default)]
+    pub resolved_params: Option<Params>,
     pub id: String,
     pub category: String,
     pub paths: usize,
@@ -40,6 +43,8 @@ pub struct Row {
 }
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct RunReport {
+    #[serde(default)]
+    pub overlap: bool,
     pub label: String,
     pub engine: String,
     pub params: Params,
@@ -98,23 +103,71 @@ fn vectorize(
     image: &RgbaImage,
     p: &Params,
     baseline: bool,
+    overlap: bool,
 ) -> Result<(String, usize, BTreeMap<String, f64>)> {
     let ctl = Control::default();
     let mut times = BTreeMap::new();
+    let original_size = (image.w, image.h);
+    let mut detection = timed(&mut times, "detect", || Ok(av_core::detect(image)))?;
+    detection.is_pixel_art |= p.experimental.force_pixel_art;
+    let (prepared, scale) = if p.experimental.quality_v5 {
+        let prepared = timed(&mut times, "preprocess", || {
+            Ok(stages::preprocess(image, p, &detection, &ctl)?)
+        })?;
+        (Cow::Owned(prepared.image), prepared.scale)
+    } else {
+        (Cow::Borrowed(image), 1)
+    };
+    let image = prepared.as_ref();
+    let scaled = av_core::pipeline::scaled_params(p, scale);
+    let p = &scaled;
     let (palette, labels) = timed(&mut times, "quantize", || {
         Ok(stages::quantize(image, p, &ctl)?)
     })?;
+    let (palette, labels, mixture) = if p.experimental.quality_v5 {
+        let aa = timed(&mut times, "resolve_aa", || {
+            Ok(stages::resolve_aa(image, &palette, &labels, p, &ctl)?)
+        })?;
+        (aa.palette, aa.labels, Some(aa.mixture_pixels))
+    } else {
+        (palette, labels, None)
+    };
+    // F5 compares identical final segmentation, including removed AA/noise colors.
+    // Historical F3/F4 baselines retain their original quantization-only input.
+    let mut palette = palette;
+    let common = if p.experimental.quality_v5 {
+        let labeled = timed(&mut times, "label", || {
+            Ok(stages::label(&labels, Some(image), &ctl)?)
+        })?;
+        let mut merged = timed(&mut times, "merge_small", || {
+            Ok(stages::merge_small_with_aa(
+                &labeled,
+                &palette,
+                p,
+                Some(image),
+                mixture.as_ref().unwrap(),
+                &ctl,
+            )?)
+        })?;
+        palette = av_core::color::compact_regions(&palette, &mut merged)?;
+        Some(merged)
+    } else {
+        None
+    };
     let count = palette.colors.len();
     if baseline {
-        if labels
-            .labels
-            .iter()
-            .all(|&id| id == av_core::color::TRANSPARENT)
-        {
+        let common_labels = common.as_ref().map(|map| {
+            map.region_of
+                .iter()
+                .map(|&id| map.regions[id as usize].color)
+                .collect::<Vec<_>>()
+        });
+        let labels = common_labels.as_deref().unwrap_or(&labels.labels);
+        if labels.iter().all(|&id| id == av_core::color::TRANSPARENT) {
             return Ok((
                 format!(
                     "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"{}\" height=\"{}\"/>",
-                    image.w, image.h
+                    original_size.0, original_size.1
                 ),
                 count,
                 times,
@@ -122,7 +175,6 @@ fn vectorize(
         }
         // Same palette labels; do not reduce precision or remove speckles afterwards.
         let pixels = labels
-            .labels
             .iter()
             .flat_map(|&id| {
                 if id == av_core::color::TRANSPARENT {
@@ -138,7 +190,11 @@ fn vectorize(
                 color_precision: 8,
                 layer_difference: 0,
                 filter_speckle: 0,
-                hierarchical: vtracer::Hierarchical::Cutout,
+                hierarchical: if overlap {
+                    vtracer::Hierarchical::Stacked
+                } else {
+                    vtracer::Hierarchical::Cutout
+                },
                 ..Default::default()
             };
             Ok(vtracer::convert(
@@ -152,31 +208,62 @@ fn vectorize(
             .map_err(std::io::Error::other)?
             .to_string())
         })?;
+        let svg = if scale > 1 {
+            let needle = format!("width=\"{}\" height=\"{}\"", image.w, image.h);
+            if !svg.contains(&needle) {
+                return Err("vtracer SVG dimensions missing".into());
+            }
+            svg.replacen(
+                &needle,
+                &format!(
+                    "width=\"{}\" height=\"{}\" viewBox=\"0 0 {} {}\"",
+                    original_size.0, original_size.1, image.w, image.h
+                ),
+                1,
+            )
+        } else {
+            svg
+        };
         return Ok((svg, count, times));
     }
-    let labeled = timed(&mut times, "label", || {
-        Ok(stages::label(&labels, Some(image), &ctl)?)
-    })?;
-    let merged = timed(&mut times, "merge_small", || {
-        Ok(stages::merge_small(
-            &labeled,
-            &palette,
-            p,
-            Some(image),
-            &ctl,
-        )?)
-    })?;
+    let merged = if let Some(merged) = common {
+        merged
+    } else {
+        let labeled = timed(&mut times, "label", || {
+            Ok(stages::label(&labels, Some(image), &ctl)?)
+        })?;
+        timed(&mut times, "merge_small", || {
+            if let Some(mask) = &mixture {
+                return Ok(stages::merge_small_with_aa(
+                    &labeled,
+                    &palette,
+                    p,
+                    Some(image),
+                    mask,
+                    &ctl,
+                )?);
+            }
+            Ok(stages::merge_small(
+                &labeled,
+                &palette,
+                p,
+                Some(image),
+                &ctl,
+            )?)
+        })?
+    };
     let graph = timed(&mut times, "extract_boundaries", || {
         Ok(stages::extract_boundaries(&merged, &ctl)?)
     })?;
     let edges = if p.experimental.curve_fit {
         timed(&mut times, "fit_edges", || {
-            Ok(stages::fit_edges_for_regions(
+            Ok(av_core::fit::fit_edges_for_regions_at_scale(
                 &graph,
                 &merged,
                 &palette,
                 p,
-                av_core::detect(image).is_pixel_art,
+                detection.is_pixel_art,
+                scale,
                 &ctl,
             )?)
         })?
@@ -186,10 +273,16 @@ fn vectorize(
         })?
     };
     let doc = timed(&mut times, "assemble", || {
-        Ok(assemble(&merged, &graph, &palette, edges, &ctl)?)
+        Ok(av_core::pipeline::restore_scale(
+            assemble(&merged, &graph, &palette, edges, &ctl)?,
+            scale,
+        ))
     })?;
     let svg = timed(&mut times, "export_svg", || {
-        Ok(av_export::svg::to_string(&doc)?)
+        Ok(av_export::svg::to_string_with_options(
+            &doc,
+            &av_export::svg::SvgOptions { overlap },
+        )?)
     })?;
     Ok((svg, count, times))
 }
@@ -220,6 +313,13 @@ fn resolved(base: &Params, image: &RgbaImage, derive_defaults: bool) -> Params {
     let mut p = base.clone();
     if derive_defaults {
         p.min_region_area = av_core::params::default_min_region_area(p.detail, image.w, image.h);
+        if p.experimental.quality_v5 {
+            p.denoise = av_core::params::resolve_defaults(p.mode, &av_core::detect(image)).denoise;
+            if p.experimental.force_pixel_art {
+                p.denoise = 0.0;
+                p.min_region_area = 1;
+            }
+        }
     }
     p
 }
@@ -231,13 +331,14 @@ fn measure(
     baseline: bool,
     out: &Path,
     derive_defaults: bool,
+    overlap: bool,
 ) -> Result<Row> {
     safe_name(&entry.id)?;
     let image = corpus::read(root, entry)?;
     let p = resolved(p, &image, derive_defaults);
     let (((svg, palette_count, stages_ms), total_ms), peak) = sampled(|| {
         let start = Instant::now();
-        let result = vectorize(&image, &p, baseline)?;
+        let result = vectorize(&image, &p, baseline, overlap)?;
         Ok((result, start.elapsed().as_secs_f64() * 1000.0))
     })?;
     let render = av_metrics::render::svg(&svg, true)?;
@@ -288,6 +389,7 @@ fn measure(
     )?;
     corpus::save_png(&out.join("diffs").join(format!("{}.png", entry.id)), &diff)?;
     Ok(Row {
+        resolved_params: Some(p),
         id: entry.id.clone(),
         category: entry.category.clone(),
         paths: geometry.paths,
@@ -312,6 +414,7 @@ pub fn run(
     config: &str,
     quantizer: Option<&str>,
     baseline: bool,
+    overlap: bool,
 ) -> Result<RunReport> {
     safe_name(label)?;
     let params = params(config, quantizer)?;
@@ -328,6 +431,7 @@ pub fn run(
             baseline,
             &out,
             !Path::new(config).is_file(),
+            overlap,
         )?;
         println!(
             "{} SSIM={:.6} DE00={:.6} gaps={} nodes={} ms={:.3}",
@@ -341,6 +445,7 @@ pub fn run(
         rows.push(row);
     }
     let report = RunReport {
+        overlap,
         label: label.into(),
         engine: if baseline {
             "vtracer 0.6.5 (common quantized palette)"
@@ -376,6 +481,7 @@ pub fn perf(
     label: &str,
     config: &str,
     quantizer: Option<&str>,
+    overlap: bool,
 ) -> Result<()> {
     safe_name(label)?;
     let base = params(config, quantizer)?;
@@ -386,7 +492,7 @@ pub fn perf(
         let mut trials = Vec::new();
         for _ in 0..5 {
             let start = Instant::now();
-            let (_, _, stages) = vectorize(&image, &p, false)?;
+            let (_, _, stages) = vectorize(&image, &p, false, overlap)?;
             trials.push((start.elapsed().as_secs_f64() * 1000.0, stages));
         }
         let median = |mut values: Vec<f64>| {

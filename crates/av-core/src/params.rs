@@ -30,10 +30,39 @@ pub enum Quantizer {
     Wu,
 }
 
+/// Denoising alternatives compared by the F5 harness.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum DenoiseKind {
+    #[default]
+    Bilateral,
+    MeanShift,
+    Guided,
+}
+
+/// Pixel-art baseline versus scale-aware corner fitting (F5 experiment).
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum PixelArtStrategy {
+    #[default]
+    PreserveGrid,
+    ScaleCorners,
+}
+
 /// Explicit opt-ins for experiments; defaults preserve the documented algorithm.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ExperimentalParams {
+    #[serde(default)]
+    pub quality_v5: bool,
+    #[serde(default)]
+    pub denoise_kind: DenoiseKind,
+    #[serde(default)]
+    pub force_pixel_art: bool,
+    #[serde(default)]
+    pub pixel_art_strategy: PixelArtStrategy,
+    #[serde(default = "default_upscale")]
+    pub upscale_small: bool,
     #[serde(default = "default_corner_radius")]
     pub corner_recovery_radius: f64,
     #[serde(default)]
@@ -42,12 +71,21 @@ pub struct ExperimentalParams {
     pub quantizer: Quantizer,
 }
 
+fn default_upscale() -> bool {
+    true
+}
+
 fn default_corner_radius() -> f64 {
     1.5
 }
 impl Default for ExperimentalParams {
     fn default() -> Self {
         Self {
+            quality_v5: true,
+            denoise_kind: DenoiseKind::Bilateral,
+            force_pixel_art: false,
+            pixel_art_strategy: PixelArtStrategy::PreserveGrid,
+            upscale_small: true,
             curve_fit: true,
             quantizer: Quantizer::Kmeans,
             corner_recovery_radius: 1.5,

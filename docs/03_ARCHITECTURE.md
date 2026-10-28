@@ -209,3 +209,64 @@ automática havia rejeitado a promoção antes dessa validação; a nova tentati
 usa a alternativa que eliminou as regressões. Nenhuma decisão DEFINITIVO mudou.
 Limite: resultado calibrado no corpus inicial; F5 deve resolver AA multicor para
 reduzir também os nós dos componentes preservados conservadoramente.
+
+### ADR-010 — Sobreposição opaca segura e qualidade F5 (2026-10-28)
+
+Substitui o padrão de exportação de ADR-006. Motivo: compartilhar a mesma curva
+evita frestas geométricas, mas o compositor AA pode deixar uma linha de fundo
+entre dois paths com furos coincidentes. Mantém-se a geometria canônica única;
+somente o escritor SVG omite furos cobertos por shapes opacos posteriores.
+Todos os descendentes devem existir e ser desenhados depois: transparência ou
+descendente anterior conserva o furo. `--stacking exact` continua disponível.
+
+Evidência: `f5-exact.json` × `f5-candidate.json`, 34 imagens, zero gaps nos dois
+modos. Concentric: SSIM 0,968855 → 0,986571; logos: SSIM melhora em 5/5 e
+ΔE00 diminui em 5/5. Dois testes de composição conferem igualdade pixel a pixel
+sem AA, incluindo transparência e descendente maior desenhado antes. O gate
+geral contra a baseline F4 passou nas 29 imagens sem relaxar limites. O gate
+geométrico permaneceu verde: Hausdorff médio 0,486993246306px, recall
+0,988095238095, 16/20 synthetic com nós/SSIM pelo menos equivalentes ao vtracer.
+
+Decisão [DEFINITIVO]: SVG usa sobreposição opaca segura por padrão; paths com
+furos exatos são opção explícita. Impacto: menos subpaths/nós emitidos, mesma
+topologia e mesmos dados de sessão; exportações futuras devem escolher e testar
+sua política de composição. A avaliação visual humana permanece pendente;
+esta decisão usa medidas do renderizador e testes, não votos inventados.
+
+### ADR-011 — Calibração multicor e experimentos F5 (2026-10-28)
+
+Após o A/B e cinco checks locais aprovados, adota-se `quality_v5` para novos
+parâmetros/presets. A flag falsa preserva o pipeline histórico. São ativados:
+limpeza alfa em luz linear, bicúbico 2× para entradas pequenas elegíveis,
+denoise, resolução AA em dois passes, proteção de detalhe fino e snap ≥60%.
+Auto inclui cores minoritárias estáveis do detector; pixel art retém todas as
+cores exatas (até64), incluindo acentos menores que 0,5% da área. Paletas são
+compactadas após AA e merge; cores travadas nunca são descartadas.
+
+Upscale permanece hipótese calibrada: fonte <256px, sem pixel art e com frame
+uniforme. Um frame multicor mantém amostragem original para não criar fragmentos
+nas junções fixas do quadro (junction_y passou de25 para13 nós). Cadeias maiores
+que a janela do polígono (200 pontos) são ajustadas em unidades da fonte;
+detalhes menores usam a resolução ampliada. Isso reduziu circle_r50 de72 para9
+nós emitidos, sem trocar as junções. O gate geral F4 passou com essa política.
+Sem upscale, somente3/5 logos venceram nós+fidelidade; com a política calibrada,
+5/5 venceram (19/19/26/26/23 nós; SSIM mínimo0,998686524; ΔE00 máximo0,030221964).
+O vtracer recebe exatamente a mesma segmentação pós-merge, paleta e escala;
+ambos em modo stacked, precisão8bits, speckle0, layer_difference0.
+
+Experimento denoise: bilateral/mean-shift/guided mediram, respectivamente,
+SSIM médio0,996327371/0,996393295/0,995856898 e1229/1253/1283 nós nas34 imagens.
+Guiado piora fidelidade; mean-shift acrescenta24 nós por ganho SSIM0,000065924.
+Mantém-se bilateral; alternativas permanecem experimentais. As médias das
+medianas de preprocess de5 repetições foram1,647788/1,725041/1,631018ms.
+Não são metas RNF nem prova de superioridade em fotos; corpus completo é F9.
+
+Experimento pixel art (cinco sprites originais, grid4×): PreserveGrid teve SSIM1,
+ΔE00=0 em5/5; ScaleCorners alterou flower (SSIM0,999979, ΔE00=0,001304) e aumentou
+seus nós de70 para72. Mantém-se PreserveGrid. O arquivo antigo `f5-pixel-scale`
+foi descartado: uma atribuição PowerShell falhou e não ativou a estratégia;
+somente `f5-pixel-final.json` contém o experimento válido.
+
+Limites: critérios de F5 são avaliados no corpus atual (20 synthetic,5 logos,
+4edge,5pixelart). Não há amostras lineart/illustration/photo suficientes para
+alegar aceite global de v1. Avaliação cega gerada deve ser preenchida pelo usuário.

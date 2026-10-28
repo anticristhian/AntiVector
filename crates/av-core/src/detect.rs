@@ -264,5 +264,8 @@ pub fn detect(image: &crate::RgbaImage) -> Detection {
         Mode::Logo | Mode::Illustration => dominant.clamp(2, 64) as u16,
         Mode::Photo => 24,
     };
+    if result.is_pixel_art {
+        result.colors = unique.clamp(2, 64) as u16;
+    }
     result
 }

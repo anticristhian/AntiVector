@@ -23,9 +23,18 @@ fn fixture(name: &str) -> (RgbaImage, RegionMap, BoundaryGraph, Palette, Params)
         ..Params::default()
     };
     params.experimental.curve_fit = true;
+    params.experimental.quality_v5 = false;
     params.experimental.corner_recovery_radius = 1.5;
     let stages = polygon_stages(&image, &params, &Control::default()).unwrap();
-    (image, stages.merged, stages.graph, stages.palette, params)
+    let av_core::pipeline::PolygonStages {
+        merged,
+        graph,
+        palette,
+        preprocessed,
+        ..
+    } = stages;
+    drop(preprocessed);
+    (image, merged, graph, palette, params)
 }
 
 #[test]

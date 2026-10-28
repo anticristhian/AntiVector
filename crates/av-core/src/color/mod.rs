@@ -1,5 +1,6 @@
 //! Perceptual color representation and deterministic palette operations.
 
+pub mod antialias;
 pub mod oklab;
 pub mod quantize;
 
@@ -43,4 +44,71 @@ impl LabelMap {
         }
         Ok(())
     }
+}
+
+/// Compact labels in raster order, retaining unused forced colors after used ones.
+pub fn compact_palette(
+    palette: &Palette,
+    labels: &mut LabelMap,
+) -> Result<Palette, crate::CoreError> {
+    labels.validate()?;
+    let mut remap = vec![TRANSPARENT; palette.colors.len()];
+    let mut colors = Vec::new();
+    for old in labels.labels.iter_mut().filter(|id| **id != TRANSPARENT) {
+        let index = *old as usize;
+        let color = palette
+            .colors
+            .get(index)
+            .ok_or_else(|| crate::CoreError::InvalidParams("label palette reference".into()))?;
+        if remap[index] == TRANSPARENT {
+            let mut color = color.clone();
+            color.id = colors.len() as u16;
+            remap[index] = color.id;
+            colors.push(color);
+        }
+        *old = remap[index];
+    }
+    for (i, color) in palette.colors.iter().enumerate() {
+        if color.locked && remap[i] == TRANSPARENT {
+            let mut color = color.clone();
+            color.id = colors.len() as u16;
+            colors.push(color);
+        }
+    }
+    Ok(Palette { colors })
+}
+
+/// Remove palette entries eliminated by region merging, preserving forced colors.
+pub fn compact_regions(
+    palette: &Palette,
+    map: &mut crate::segment::RegionMap,
+) -> Result<Palette, crate::CoreError> {
+    map.validate()?;
+    let mut remap = vec![TRANSPARENT; palette.colors.len()];
+    let mut colors = Vec::new();
+    for region in &mut map.regions {
+        if region.color == TRANSPARENT {
+            continue;
+        }
+        let index = region.color as usize;
+        let original = palette
+            .colors
+            .get(index)
+            .ok_or_else(|| crate::CoreError::InvalidParams("region palette reference".into()))?;
+        if remap[index] == TRANSPARENT {
+            let mut color = original.clone();
+            color.id = colors.len() as u16;
+            remap[index] = color.id;
+            colors.push(color);
+        }
+        region.color = remap[index];
+    }
+    for (i, color) in palette.colors.iter().enumerate() {
+        if color.locked && remap[i] == TRANSPARENT {
+            let mut color = color.clone();
+            color.id = colors.len() as u16;
+            colors.push(color);
+        }
+    }
+    Ok(Palette { colors })
 }

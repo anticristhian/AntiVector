@@ -61,7 +61,12 @@ fn lossless_lines(points: &[Point]) -> Vec<Seg> {
     anchors.into_iter().skip(1).map(Seg::Line).collect()
 }
 
-fn fitted_chain(points: &[Point], params: &Params, ctl: &Control) -> Result<Vec<Seg>, CoreError> {
+fn fitted_chain(
+    points: &[Point],
+    params: &Params,
+    pixel_factor: Option<f64>,
+    ctl: &Control,
+) -> Result<Vec<Seg>, CoreError> {
     let mut polygon = polygon::optimal(points, ctl)?;
     corners::recover_bridges(
         &mut polygon.points,
@@ -69,7 +74,11 @@ fn fitted_chain(points: &[Point], params: &Params, ctl: &Control) -> Result<Vec<
         &mut polygon.supports,
         params.experimental.corner_recovery_radius,
     );
-    let flags = corners::classify(&polygon.points, polygon.closed, params);
+    let flags = if let Some(factor) = pixel_factor {
+        corners::pixel_corners(&polygon.points, polygon.closed, factor)
+    } else {
+        corners::classify(&polygon.points, polygon.closed, params)
+    };
     let initial = bezier::initial(&polygon.points, &flags, polygon.closed);
     optimize::optimize(&initial, f64::from(params.fit_tolerance_px), ctl)
 }
@@ -101,7 +110,7 @@ fn straight_aware(
     anchors.sort_unstable();
     anchors.dedup();
     if anchors.len() == 2 {
-        return fitted_chain(points, params, ctl);
+        return fitted_chain(points, params, None, ctl);
     }
     let mut output = Vec::new();
     for interval in anchors.windows(2) {
@@ -113,10 +122,32 @@ fn straight_aware(
         {
             output.extend(lossless_lines(chain));
         } else {
-            output.extend(fitted_chain(chain, params, ctl)?);
+            output.extend(fitted_chain(chain, params, None, ctl)?);
         }
     }
     Ok(output)
+}
+
+fn pixel_factor(points: &[Point]) -> f64 {
+    let gcd = |mut a: usize, mut b: usize| {
+        while b != 0 {
+            let next = a % b;
+            a = b;
+            b = next;
+        }
+        a
+    };
+    let mut factor = 0;
+    let mut run = 1;
+    for triple in points.windows(3) {
+        if sub(triple[1], triple[0]) == sub(triple[2], triple[1]) {
+            run += 1;
+        } else {
+            factor = gcd(factor, run);
+            run = 1;
+        }
+    }
+    gcd(factor, run).max(1) as f64
 }
 
 /// Apply conservative coverage guards for transparent or closed colored interfaces.
@@ -129,6 +160,20 @@ pub fn fit_edges_for_regions(
     palette: &crate::color::Palette,
     params: &Params,
     pixel_art: bool,
+    ctl: &Control,
+) -> Result<Vec<FittedEdge>, CoreError> {
+    fit_edges_for_regions_at_scale(graph, map, palette, params, pixel_art, 1, ctl)
+}
+
+/// Fit in original pixel units after preprocessing enlarged the segmentation.
+/// Return coordinates in the graph's units, preserving junctions exactly.
+pub fn fit_edges_for_regions_at_scale(
+    graph: &BoundaryGraph,
+    map: &crate::segment::RegionMap,
+    palette: &crate::color::Palette,
+    params: &Params,
+    pixel_art: bool,
+    scale: u32,
     ctl: &Control,
 ) -> Result<Vec<FittedEdge>, CoreError> {
     use crate::color::TRANSPARENT;
@@ -160,7 +205,8 @@ pub fn fit_edges_for_regions(
                 .get(right as usize)
                 .ok_or_else(|| CoreError::InvalidParams("edge palette reference".into()))?
                 .rgb;
-            preserve[i] = edge.start == edge.end
+            preserve[i] = !params.experimental.quality_v5
+                && edge.start == edge.end
                 && !a.iter().all(|&v| v >= 240)
                 && !b.iter().all(|&v| v >= 240);
         }
@@ -172,7 +218,7 @@ pub fn fit_edges_for_regions(
             *fixed |= edge.start == edge.end;
         }
     }
-    fit_impl(graph, params, pixel_art, &preserve, ctl)
+    fit_impl(graph, params, pixel_art, &preserve, scale, ctl)
 }
 
 /// Fit every boundary exactly once; return geometry in dense edge-ID order.
@@ -184,7 +230,7 @@ pub fn fit_edges(
     pixel_art: bool,
     ctl: &Control,
 ) -> Result<Vec<FittedEdge>, CoreError> {
-    fit_impl(graph, params, pixel_art, &[], ctl)
+    fit_impl(graph, params, pixel_art, &[], 1, ctl)
 }
 
 fn fit_impl(
@@ -192,9 +238,14 @@ fn fit_impl(
     params: &Params,
     pixel_art: bool,
     preserve: &[bool],
+    scale: u32,
     ctl: &Control,
 ) -> Result<Vec<FittedEdge>, CoreError> {
     params.validate()?;
+    if scale == 0 {
+        return Err(CoreError::InvalidParams("zero fitting scale".into()));
+    }
+    let scale = f64::from(scale);
     ctl.report(Stage::FitEdges, 0.0)?;
     for (i, edge) in graph.edges.iter().enumerate() {
         if edge.id as usize != i
@@ -218,10 +269,17 @@ fn fit_impl(
         .par_iter()
         .map(|edge| {
             ctl.check()?;
+            // Keep the finer sampling for details that fit in one polygon
+            // search window; normalize longer chains to source pixel units.
+            let scale = if edge.pts.len() <= 200 { 1.0 } else { scale };
+            let mut normalized = params.clone();
+            normalized.fit_tolerance_px /= scale as f32;
+            normalized.experimental.corner_recovery_radius /= scale;
+            let params = &normalized;
             let points: Vec<_> = edge
                 .pts
                 .iter()
-                .map(|p| [f64::from(p.x), f64::from(p.y)])
+                .map(|p| [f64::from(p.x) / scale, f64::from(p.y) / scale])
                 .collect();
             let span = |axis: usize| {
                 points
@@ -231,18 +289,36 @@ fn fit_impl(
                     - points.iter().map(|p| p[axis]).fold(f64::INFINITY, f64::min)
             };
             let thin = span(0).min(span(1)) <= 2.0;
-            let segs = if edge.on_frame
+            let mut segs = if edge.on_frame
                 || pixel_art
+                    && params.experimental.pixel_art_strategy
+                        == crate::params::PixelArtStrategy::PreserveGrid
                 || thin
                 || preserve.get(edge.id as usize).copied().unwrap_or(false)
             {
                 lossless_lines(&points)
+            } else if pixel_art {
+                fitted_chain(&points, params, Some(pixel_factor(&points)), ctl)?
             } else {
                 straight_aware(&points, span(0).min(span(1)), params, ctl)?
             };
+            let rescale = |p: &mut Point| {
+                p[0] *= scale;
+                p[1] *= scale;
+            };
+            for seg in &mut segs {
+                match seg {
+                    Seg::Line(p) => rescale(p),
+                    Seg::Cubic(a, b, p) => {
+                        rescale(a);
+                        rescale(b);
+                        rescale(p);
+                    }
+                }
+            }
             Ok(FittedEdge {
                 id: edge.id,
-                start: points[0],
+                start: [points[0][0] * scale, points[0][1] * scale],
                 segs,
             })
         })

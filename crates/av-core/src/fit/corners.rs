@@ -149,3 +149,31 @@ pub fn classify(points: &[Point], closed: bool, p: &Params) -> Vec<bool> {
     }
     corners
 }
+
+/// Simplified Kopf-inspired experiment: retain only scale-supported right angles.
+/// It does not change connectivity; compared against exact grid preservation in F5.
+pub fn pixel_corners(points: &[Point], closed: bool, factor: f64) -> Vec<bool> {
+    if points.len() < 3 {
+        return vec![true; points.len()];
+    }
+    let last = points.len() - 1;
+    points
+        .iter()
+        .enumerate()
+        .map(|(i, &v)| {
+            if !closed && (i == 0 || i == last) {
+                return true;
+            }
+            let i = if i == last { 0 } else { i };
+            let previous = if i == 0 { last - 1 } else { i - 1 };
+            let next = i + 1;
+            let a = sub(points[previous], v);
+            let b = sub(points[next], v);
+            let lengths = norm(a) * norm(b);
+            lengths > 0.0
+                && norm(a) + 0.5 >= factor
+                && norm(b) + 0.5 >= factor
+                && ((dot(a, b) / lengths).clamp(-1.0, 1.0).acos().to_degrees() - 90.0).abs() <= 10.0
+        })
+        .collect()
+}

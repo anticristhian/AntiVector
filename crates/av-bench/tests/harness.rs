@@ -25,12 +25,31 @@ fn harness_end_to_end_and_regression_gate() {
     let manifest = corpus.join("manifest.json");
     let entries: Vec<serde_json::Value> =
         serde_json::from_slice(&std::fs::read(&manifest).unwrap()).unwrap();
-    assert_eq!(entries.len(), 29);
+    assert_eq!(entries.len(), 34);
+    let jpeg = image::open(corpus.join("images/jpeg_q60.jpg"))
+        .unwrap()
+        .to_rgba8();
+    let raster = av_core::RgbaImage::new(
+        jpeg.width(),
+        jpeg.height(),
+        jpeg.pixels().map(|p| p.0).collect(),
+    )
+    .unwrap();
+    assert!(av_core::detect(&raster).colors.abs_diff(2) <= 1);
     let subset = vec![entries[0].clone(), entries[20].clone(), entries[26].clone()];
     std::fs::write(&manifest, serde_json::to_vec(&subset).unwrap()).unwrap();
     run(&["run", "--label", "a"]);
     run(&["baseline", "vtracer", "--label", "b"]);
     run(&["compare", "a", "b"]);
+    run(&["visual", "a", "b", "--label", "smoke"]);
+    let answers: serde_json::Value =
+        serde_json::from_slice(&std::fs::read(output.join("visual/smoke.json")).unwrap()).unwrap();
+    assert_eq!(answers["status"], "pending_human");
+    assert!(answers["answers"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .all(|a| a["choice"].is_null()));
     run(&["perf"]);
     assert!(output.join("compare-a-b/report.html").is_file());
     let report: serde_json::Value =

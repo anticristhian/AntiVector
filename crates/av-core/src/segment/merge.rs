@@ -20,8 +20,37 @@ pub fn merge_small(
     original: Option<&RgbaImage>,
     ctl: &Control,
 ) -> Result<RegionMap, CoreError> {
+    merge_impl(map, palette, params, original, None, ctl)
+}
+
+/// Merge small and thin mixed-color regions, preserving high-contrast fine lines.
+#[tracing::instrument(skip_all)]
+pub fn merge_small_with_aa(
+    map: &RegionMap,
+    palette: &Palette,
+    params: &Params,
+    original: Option<&RgbaImage>,
+    mixture_pixels: &[bool],
+    ctl: &Control,
+) -> Result<RegionMap, CoreError> {
+    merge_impl(map, palette, params, original, Some(mixture_pixels), ctl)
+}
+
+fn merge_impl(
+    map: &RegionMap,
+    palette: &Palette,
+    params: &Params,
+    original: Option<&RgbaImage>,
+    mixture_pixels: Option<&[bool]>,
+    ctl: &Control,
+) -> Result<RegionMap, CoreError> {
     map.validate()?;
     params.validate()?;
+    if mixture_pixels.is_some_and(|mask| mask.len() != map.region_of.len()) {
+        return Err(CoreError::InvalidParams(
+            "AA mixture mask dimensions".into(),
+        ));
+    }
     for region in &map.regions {
         if region.color != TRANSPARENT && region.color as usize >= palette.colors.len() {
             return Err(CoreError::InvalidParams(
@@ -72,16 +101,47 @@ pub fn merge_small(
     let mut parents: Vec<u32> = (0..n as u32).collect();
     let mut areas: Vec<u32> = map.regions.iter().map(|r| r.area).collect();
     let colors: Vec<u16> = map.regions.iter().map(|r| r.color).collect();
+    let mut mixed = vec![false; n];
+    if let Some(mask) = mixture_pixels {
+        for (&id, &flag) in map.region_of.iter().zip(mask) {
+            mixed[id as usize] |= flag;
+        }
+    }
+    let forced = |id: usize, areas: &[u32], perimeter: &[u32], mixed: &[bool]| {
+        params.experimental.quality_v5
+            && mixed[id]
+            && perimeter[id] > 0
+            && 2.0 * f64::from(areas[id]) / f64::from(perimeter[id]) <= 1.5
+    };
     let mut heap: BinaryHeap<_> = map
         .regions
         .iter()
-        .filter(|r| r.color != TRANSPARENT && r.area < params.min_region_area)
+        .filter(|r| {
+            r.color != TRANSPARENT
+                && (r.area < params.min_region_area
+                    || forced(r.id as usize, &areas, &perimeter, &mixed))
+        })
         .map(|r| Reverse((r.area, r.id)))
         .collect();
     while let Some(Reverse((area, id))) = heap.pop() {
         ctl.check()?;
         let a = id as usize;
         if areas[a] != area || parents[a] != id {
+            continue;
+        }
+        if params.experimental.quality_v5
+            && params.detail >= 0.5
+            && area >= 4
+            && perimeter[a] > 0
+            && f64::from(area) / f64::from(perimeter[a]).powi(2) < 0.02
+            && adjacency[a].keys().all(|&b| {
+                colors[b as usize] == TRANSPARENT
+                    || palette.colors[colors[a] as usize]
+                        .oklab
+                        .distance_squared(palette.colors[colors[b as usize] as usize].oklab)
+                        >= 0.15_f64.powi(2)
+            })
+        {
             continue;
         }
         let target = adjacency[a]
@@ -111,6 +171,7 @@ pub fn merge_small(
         areas[b] += areas[a];
         areas[a] = 0;
         parents[a] = target;
+        mixed[b] |= mixed[a];
         let neighbors = std::mem::take(&mut adjacency[a]);
         adjacency[b].remove(&id);
         for (neighbor, length) in neighbors {
@@ -121,7 +182,9 @@ pub fn merge_small(
             *adjacency[neighbor as usize].entry(target).or_default() += length;
             *adjacency[b].entry(neighbor).or_default() += length;
         }
-        if areas[b] < params.min_region_area && colors[b] != TRANSPARENT {
+        if (areas[b] < params.min_region_area || forced(b, &areas, &perimeter, &mixed))
+            && colors[b] != TRANSPARENT
+        {
             heap.push(Reverse((areas[b], target)));
         }
     }

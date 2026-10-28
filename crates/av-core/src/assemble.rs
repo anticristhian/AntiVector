@@ -66,6 +66,9 @@ pub struct Shape {
     pub region: u32,
     pub color: u16,
     pub loops: Vec<Loop>,
+    /// Direct regions inside each hole, in loops[1..] order. A missing exported
+    /// region is transparent and must never be painted over by overlap mode.
+    pub hole_regions: Vec<Vec<u32>>,
 }
 
 /// One closed path with redundant collinear anchors removed losslessly.
@@ -203,6 +206,30 @@ pub fn assemble(
             ));
         }
         let loops = graph.region_loops[region.id as usize].clone();
+        let hole_regions = loops
+            .iter()
+            .skip(1)
+            .map(|path| {
+                let mut regions = Vec::new();
+                for &(id, _) in path {
+                    let edge = graph
+                        .edges
+                        .get(id as usize)
+                        .ok_or_else(|| CoreError::Internal("hole edge reference".into()))?;
+                    let other = if edge.left_region == Some(region.id) {
+                        edge.right_region
+                    } else if edge.right_region == Some(region.id) {
+                        edge.left_region
+                    } else {
+                        return Err(CoreError::Internal("hole region adjacency".into()));
+                    };
+                    regions.push(other.unwrap_or(u32::MAX));
+                }
+                regions.sort_unstable();
+                regions.dedup();
+                Ok(regions)
+            })
+            .collect::<Result<_, CoreError>>()?;
         for path in &loops {
             nodes += loop_geometry(&edges, path)?.segs.len();
         }
@@ -210,6 +237,7 @@ pub fn assemble(
             region: region.id,
             color: region.color,
             loops,
+            hole_regions,
         });
     }
     let stats = DocStats {

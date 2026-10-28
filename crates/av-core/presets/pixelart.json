@@ -1,5 +1,6 @@
 {
   "version": 1,
+  "experimental": {"quality_v5":true,"force_pixel_art":true,"curve_fit":true,"upscale_small":false},
   "mode": "logo",
   "colors": "auto",
   "palette_lock": [],

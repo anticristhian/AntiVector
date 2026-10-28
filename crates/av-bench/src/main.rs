@@ -19,6 +19,20 @@ struct Cli {
 }
 #[derive(Subcommand)]
 enum Command {
+    /// Check F5 fidelity and equivalent-color compactness on the current corpus.
+    GateQuality {
+        candidate: PathBuf,
+        reference: PathBuf,
+    },
+    /// Generate anonymous randomized pairs; only a human may fill the answers.
+    Visual {
+        a: String,
+        b: String,
+        #[arg(long)]
+        label: String,
+        #[arg(long, default_value_t = 42)]
+        seed: u64,
+    },
     /// Check the measured geometric/compactness acceptance criteria of F4.
     GateCurves {
         candidate: PathBuf,
@@ -28,6 +42,8 @@ enum Command {
     Gen,
     /// Measure AntiVector using a preset or complete parameter JSON file.
     Run {
+        #[arg(long)]
+        stacking: Option<String>,
         #[arg(long, default_value = "logo")]
         config: String,
         #[arg(long)]
@@ -39,6 +55,8 @@ enum Command {
     },
     /// Measure an equivalent-palette vtracer baseline.
     Baseline {
+        #[arg(long)]
+        stacking: Option<String>,
         engine: String,
         #[arg(long, default_value = "logo")]
         config: String,
@@ -54,6 +72,8 @@ enum Command {
     },
     /// Five repetitions per corpus image, reporting medians by stage.
     Perf {
+        #[arg(long)]
+        stacking: Option<String>,
         #[arg(long, default_value = "logo")]
         config: String,
         #[arg(long, default_value = "perf")]
@@ -63,8 +83,27 @@ enum Command {
     },
 }
 
+fn overlap(stacking: Option<&str>) -> Result<bool> {
+    match stacking {
+        None => Ok(av_export::svg::SvgOptions::default().overlap),
+        Some("exact") => Ok(false),
+        Some("overlap") => Ok(true),
+        _ => Err("stacking must be exact or overlap".into()),
+    }
+}
+
 fn execute(cli: Cli) -> Result<()> {
     match cli.command {
+        Command::GateQuality {
+            candidate,
+            reference,
+        } => report::quality_gate(
+            &runner::load_report(&candidate)?,
+            &runner::load_report(&reference)?,
+        ),
+        Command::Visual { a, b, label, seed } => {
+            report::visual(&cli.output_root, &a, &b, &label, seed)
+        }
         Command::GateCurves {
             candidate,
             reference,
@@ -74,6 +113,7 @@ fn execute(cli: Cli) -> Result<()> {
         ),
         Command::Gen => corpus::generate(&cli.corpus),
         Command::Run {
+            stacking,
             config,
             label,
             quantizer,
@@ -86,6 +126,7 @@ fn execute(cli: Cli) -> Result<()> {
                 &config,
                 quantizer.as_deref(),
                 false,
+                overlap(stacking.as_deref())?,
             )?;
             if let Some(path) = check_baseline {
                 report::check(&runner::load_report(&path)?, &result)?;
@@ -93,6 +134,7 @@ fn execute(cli: Cli) -> Result<()> {
             Ok(())
         }
         Command::Baseline {
+            stacking,
             engine,
             config,
             label,
@@ -100,11 +142,20 @@ fn execute(cli: Cli) -> Result<()> {
             if engine != "vtracer" {
                 return Err("only vtracer baseline is supported".into());
             }
-            runner::run(&cli.corpus, &cli.output_root, &label, &config, None, true)?;
+            runner::run(
+                &cli.corpus,
+                &cli.output_root,
+                &label,
+                &config,
+                None,
+                true,
+                overlap(stacking.as_deref())?,
+            )?;
             Ok(())
         }
         Command::Compare { a, b, check } => report::compare(&cli.output_root, &a, &b, check),
         Command::Perf {
+            stacking,
             config,
             label,
             quantizer,
@@ -114,6 +165,7 @@ fn execute(cli: Cli) -> Result<()> {
             &label,
             &config,
             quantizer.as_deref(),
+            overlap(stacking.as_deref())?,
         ),
     }
 }

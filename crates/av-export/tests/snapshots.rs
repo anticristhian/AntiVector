@@ -2,15 +2,20 @@
 
 #[test]
 fn synthetic_polygon_snapshots() {
-    snapshots(false);
+    snapshots(false, false);
 }
 
 #[test]
 fn synthetic_curve_snapshots() {
-    snapshots(true);
+    snapshots(true, false);
 }
 
-fn snapshots(curves: bool) {
+#[test]
+fn synthetic_quality_snapshots() {
+    snapshots(true, true);
+}
+
+fn snapshots(curves: bool, quality: bool) {
     let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../corpus/images");
     for name in [
         "circle_r50",
@@ -38,10 +43,17 @@ fn snapshots(curves: bool) {
             ..Default::default()
         };
         params.experimental.curve_fit = curves;
+        params.experimental.quality_v5 = quality;
         params.experimental.corner_recovery_radius = 1.5;
         let doc = av_core::vectorize(&raster, &params, &Default::default()).unwrap();
-        let svg = av_export::svg::to_string(&doc).unwrap();
-        let snapshot_name = if curves {
+        let svg = av_export::svg::to_string_with_options(
+            &doc,
+            &av_export::svg::SvgOptions { overlap: quality },
+        )
+        .unwrap();
+        let snapshot_name = if quality {
+            format!("quality_{name}")
+        } else if curves {
             format!("curves_{name}")
         } else {
             name.to_string()

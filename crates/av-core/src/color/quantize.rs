@@ -232,7 +232,16 @@ pub fn quantize(
                 Mode::Photo => (128, 0.05),
             };
             let mut result = Vec::new();
-            for k in 2_usize.max(params.palette_lock.len())..=limit {
+            let minimum = if params.experimental.quality_v5 {
+                if params.mode == Mode::Photo {
+                    24
+                } else {
+                    crate::detect(image).colors as usize
+                }
+            } else {
+                2
+            };
+            for k in minimum.max(2).max(params.palette_lock.len()).min(limit)..=limit {
                 result = fit(&bins, &positions, k, params, ctl)?;
                 let error = bins
                     .iter()
@@ -265,6 +274,8 @@ pub fn quantize(
             Ok(())
         })?;
     let mut sums = vec![[0.0; 4]; centers.len()];
+    let mut candidate_rgb = vec![[0; 3]; centers.len()];
+    let mut votes = vec![0_u32; centers.len()];
     for (i, (&label, pixel)) in labels.labels.iter().zip(&image.px).enumerate() {
         if i % (image.w as usize * 64) == 0 {
             ctl.check()?;
@@ -277,6 +288,28 @@ pub fn quantize(
             sum[channel] += oklab::linear_lut()[pixel[channel] as usize];
         }
         sum[3] += 1.0;
+        if params.experimental.quality_v5 {
+            let index = label as usize;
+            let rgb = [pixel[0], pixel[1], pixel[2]];
+            if votes[index] == 0 {
+                candidate_rgb[index] = rgb;
+                votes[index] = 1;
+            } else if candidate_rgb[index] == rgb {
+                votes[index] += 1;
+            } else {
+                votes[index] -= 1;
+            }
+        }
+    }
+    let mut exact_counts = vec![0_u32; centers.len()];
+    if params.experimental.quality_v5 {
+        for (&label, pixel) in labels.labels.iter().zip(&image.px) {
+            if label != TRANSPARENT
+                && candidate_rgb[label as usize] == [pixel[0], pixel[1], pixel[2]]
+            {
+                exact_counts[label as usize] += 1;
+            }
+        }
     }
     let colors: Vec<_> = centers
         .iter_mut()
@@ -285,6 +318,11 @@ pub fn quantize(
             let locked = i < params.palette_lock.len();
             let rgb = if locked {
                 params.palette_lock[i]
+            } else if params.experimental.quality_v5
+                && f64::from(exact_counts[i]) >= 0.6 * sums[i][3]
+                && sums[i][3] > 0.0
+            {
+                candidate_rgb[i]
             } else if sums[i][3] > 0.0 {
                 std::array::from_fn(|ch| {
                     (oklab::linear_to_srgb(sums[i][ch] / sums[i][3]).clamp(0.0, 1.0) * 255.0)

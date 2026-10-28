@@ -34,6 +34,12 @@ Score composto para ranking A/B: `Q = SSIM − 0,02·ΔE00médio − 0,05·log10
 - `av-bench baseline vtracer` — roda vtracer (crate) com nº de cores equivalente.
 - `av-bench compare A B` — relatório HTML com tabela por imagem, deltas, miniaturas lado a lado e mapas de diferença; destaca pioras > limites §4.
 - `av-bench perf` — 5 repetições, mediana, reporta por estágio.
+- `av-bench gate-quality candidate/metrics.json reference/metrics.json` — critérios F5 no corpus atual; exige paletas/cores equivalentes e nós+SSIM+ΔE00 pelo menos equivalentes em ≥80% de logo/illustration.
+- `av-bench visual A B --label AAAA-MM-DD-f5 --seed 42` — pares anônimos, ordem/lados embaralhados, HTML com zoom100/400%, chave separada e JSON sem respostas. O botão salva escolhas humanas; copiar o download para `bench-out/visual/<label>.json`.
+
+Em F5, vtracer recebe a mesma segmentação após resolução AA/merge e compactação
+da paleta, não uma paleta com cores eliminadas pelo AntiVector. Configuração,
+escala, stacking e parâmetros resolvidos por imagem constam nas métricas.
 
 ## 4. Regressão
 - `corpus/baselines/metrics.json` versionado. CI (job `quality`, corpus mínimo synthetic+logo) falha se para qualquer imagem: SSIM cair > 0,005, ΔE00 subir > 0,3, nós subir > 5%, gap > 0, ou tempo subir > 15% (perf só local/nightly).

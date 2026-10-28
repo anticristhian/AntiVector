@@ -47,11 +47,122 @@ pub fn check(a: &RunReport, b: &RunReport) -> Result<()> {
     Ok(())
 }
 
+/// Check current-corpus F5 acceptance, without claiming unrepresented categories.
+pub fn quality_gate(candidate: &RunReport, reference: &RunReport) -> Result<()> {
+    let refs: BTreeMap<_, _> = reference.rows.iter().map(|r| (r.id.as_str(), r)).collect();
+    let mut count = 0;
+    let mut wins = 0;
+    let mut failures = Vec::new();
+    for row in &candidate.rows {
+        if row.fidelity.gap_pixels != 0 {
+            failures.push(format!("{}: gaps", row.id));
+        }
+        let threshold = match row.category.as_str() {
+            "logo" | "lineart" => Some(0.95),
+            "illustration" => Some(0.90),
+            _ => None,
+        };
+        if let Some(threshold) = threshold {
+            if row.fidelity.ssim < threshold || row.fidelity.delta_e_mean > 3.0 {
+                failures.push(format!("{}: fidelity", row.id));
+            }
+        }
+        if matches!(row.category.as_str(), "logo" | "illustration") {
+            count += 1;
+            let other = refs
+                .get(row.id.as_str())
+                .ok_or("missing equivalent-palette reference")?;
+            if row.colors != other.colors || row.input_palette_colors != other.input_palette_colors
+            {
+                failures.push(format!("{}: unequal colors", row.id));
+            }
+            if row.nodes <= other.nodes
+                && row.fidelity.ssim >= other.fidelity.ssim
+                && row.fidelity.delta_e_mean <= other.fidelity.delta_e_mean
+            {
+                wins += 1;
+            }
+        }
+    }
+    if count < 5 || (wins as f64) / (count as f64) < 0.8 {
+        failures
+            .push("compactness+fidelity <80% or fewer than five logo/illustration samples".into());
+    }
+    println!("F5 current corpus: {wins}/{count} equivalent-color logo/illustration wins; {} images checked for gaps; human blind evaluation remains separate",candidate.rows.len());
+    if !failures.is_empty() {
+        return Err(failures.join("; ").into());
+    }
+    println!("F5 quality gate passed");
+    Ok(())
+}
+
 fn escape(text: &str) -> String {
     text.replace('&', "&amp;")
         .replace('<', "&lt;")
         .replace('>', "&gt;")
         .replace('"', "&quot;")
+}
+
+/// Generate anonymous pairs plus a separate key and an unanswered JSON template.
+pub fn visual(root: &Path, a: &str, b: &str, label: &str, seed: u64) -> Result<()> {
+    for value in [a, b, label] {
+        safe_name(value)?;
+    }
+    let first = load_report(&root.join(a).join("metrics.json"))?;
+    let second = load_report(&root.join(b).join("metrics.json"))?;
+    let ids: std::collections::BTreeSet<_> =
+        second.rows.iter().map(|row| row.id.as_str()).collect();
+    let mut rows: Vec<_> = first.rows.iter().collect();
+    if rows.iter().any(|row| !ids.contains(row.id.as_str())) {
+        return Err("visual pair missing image".into());
+    }
+    let mut state = seed;
+    let mut next = || {
+        state = state
+            .wrapping_mul(6364136223846793005)
+            .wrapping_add(1442695040888963407);
+        state >> 32
+    };
+    for i in (1..rows.len()).rev() {
+        let j = next() as usize % (i + 1);
+        rows.swap(i, j);
+    }
+    let dir = root.join("visual").join(label);
+    fs::create_dir_all(dir.join("assets"))?;
+    let mut html=String::from("<!doctype html><html lang=\"pt-BR\"><meta charset=\"utf-8\"><title>Avaliação cega</title><style>body{font:16px system-ui;margin:24px}.pair{display:flex;gap:20px;flex-wrap:wrap}img{image-rendering:pixelated;max-width:100%}body.zoom img{width:calc(4 * var(--natural-width))}section{border-bottom:1px solid #ccc;padding:20px}figure{margin:0}</style><h1>Avaliação visual cega</h1><p>Escolha A, B ou empate. A ordem dos pares e os lados são embaralhados. Não consulte a chave antes de concluir.</p><button onclick=\"document.body.classList.toggle('zoom')\">100% / 400%</button><button onclick=\"save()\">Salvar respostas JSON</button>");
+    let mut key = Vec::new();
+    let mut answers = Vec::new();
+    for (i, row) in rows.iter().enumerate() {
+        safe_name(&row.id)?;
+        let swap = next() & 1 != 0;
+        let engines = if swap { [b, a] } else { [a, b] };
+        for (side, engine) in ["A", "B"].into_iter().zip(engines) {
+            fs::copy(
+                root.join(engine)
+                    .join("renders")
+                    .join(format!("{}.png", row.id)),
+                dir.join("assets").join(format!("{i}-{side}.png")),
+            )?;
+        }
+        writeln!(html,"<section><h2>Par {i}</h2><div class=\"pair\"><figure><figcaption>A</figcaption><img alt=\"A\" src=\"assets/{i}-A.png\"></figure><figure><figcaption>B</figcaption><img alt=\"B\" src=\"assets/{i}-B.png\"></figure></div><p><label><input type=\"radio\" name=\"p{i}\" value=\"A\">A</label> <label><input type=\"radio\" name=\"p{i}\" value=\"B\">B</label> <label><input type=\"radio\" name=\"p{i}\" value=\"tie\">Empate</label></p></section>")?;
+        key.push(serde_json::json!({"pair":i,"image":row.id,"A":engines[0],"B":engines[1]}));
+        answers.push(serde_json::json!({"pair":i,"choice":null}));
+    }
+    let template =
+        serde_json::json!({"label":label,"seed":seed,"status":"pending_human","answers":answers});
+    html.push_str("<script>document.querySelectorAll('img').forEach(img=>{const setup=()=>img.style.setProperty('--natural-width',img.naturalWidth+'px');if(img.complete)setup();else img.addEventListener('load',setup);});</script>");
+    write!(html,"<script>const template={};function save(){{const result=structuredClone(template);result.answers.forEach(x=>x.choice=document.querySelector('input[name=p'+x.pair+']:checked')?.value??null);result.status=result.answers.every(x=>x.choice)?'completed_by_human':'partial';const link=document.createElement('a');link.href=URL.createObjectURL(new Blob([JSON.stringify(result,null,2)],{{type:'application/json'}}));link.download='{}.json';link.click();URL.revokeObjectURL(link.href);}}</script></html>",serde_json::to_string(&template)?,label)?;
+    fs::write(dir.join("index.html"), html)?;
+    fs::write(dir.join("key.json"), serde_json::to_vec_pretty(&key)?)?;
+    fs::write(
+        root.join("visual").join(format!("{label}.json")),
+        serde_json::to_vec_pretty(&template)?,
+    )?;
+    println!(
+        "blind visual evaluation: {} (pending human)",
+        dir.join("index.html").display()
+    );
+    Ok(())
 }
 
 /// Evaluate F4-specific measurements separately from the general regression gate.

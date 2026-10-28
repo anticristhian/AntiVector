@@ -44,6 +44,12 @@ Esses resultados não representam validação em logos externos ou fotografias.
 3. **Denoise edge‑preserving**: filtro bilateral em OKLab, raio = round(1 + 2·denoise), σ_s = raio, σ_r = 0,02 + 0,08·denoise. Pular se denoise = 0. Default por modo: Logo 0,2 (0,5 se jpeg_like), Illustration 0,3, Photo 0,6, LineArt 0,2. Pixel art: sempre 0.
    [EXPERIMENTO] comparar bilateral × mean‑shift × guided filter no harness.
 
+   Calibração F5 (ADR-011): manter bilateral. Bicúbico 2× só em fontes <256px,
+   sem pixel art, com frame uniforme; frame multicor conserva junções originais.
+   Coordenadas são restauradas ao tamanho de entrada após a montagem. Cadeias
+   maiores que200 pontos são ajustadas em unidades da fonte, detalhes na escala
+   preparada. `experimental.quality_v5=false` conserva o pipeline histórico.
+
 ## 3. Quantização (`color/quantize.rs`) — ADR‑007
 1. Converter sRGB→linear→OKLab (tabela LUT 256 para linearização).
 2. Histograma 5‑5‑5 bits (32768 bins) com contagem e soma OKLab; ignorar transparentes.
@@ -133,6 +139,12 @@ Todas as decisões por aresta são independentes ⇒ paralelo por aresta (rayon)
   realmente emitidas nos paths, após essa simplificação sem perda.
 - Mesclar no export (opcional) shapes de mesma cor em um único `<path>` (agrupamento por cor).
 - Modo "empilhado com sobreposição" (para editores que preferem): para cada região, omitir furos preenchidos por regiões que serão desenhadas por cima; ordem por área decrescente. Ganho: tolerância a anti‑aliasing de renderizadores (sem *conflation artifacts*). [HIPÓTESE: oferecer como default se o teste visual mostrar linhas finas de fundo em renderizadores; decidir em F5].
+
+  Decisão F5: ADR-010 substitui o padrão de ADR-006. Sobreposição opaca segura
+  é o padrão medido; `--stacking exact` exporta todos os furos. Um furo só pode
+  ser omitido se todos os descendentes são opacos e desenhados depois. Furos
+  transparentes e descendentes anteriores são preservados. A geometria interna
+  compartilhada não muda. Avaliação visual humana permanece separada e pendente.
 - Mitigação de *conflation artifacts* no modo sem sobreposição: opção de `stroke` de 0,5 px da mesma cor ("hairline seal"), desligada por default.
 
 ## 11. Parâmetros, efeitos e dependências de cache
