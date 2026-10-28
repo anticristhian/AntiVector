@@ -1,0 +1,8 @@
+---
+source: crates/av-export/tests/snapshots.rs
+expression: svg
+---
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="128" height="128" viewBox="0 0 128 128">
+<path fill="#ffffff" fill-rule="evenodd" d="M0 0L128 0L128 128L0 128L0 0ZM52 20L20.21 75.75L75.76 107.78L107.78 52.24L52 20Z"/>
+<path fill="#2562c1" fill-rule="evenodd" d="M52 20L107.78 52.24L75.76 107.78L20.21 75.75L52 20Z"/>
+</svg>

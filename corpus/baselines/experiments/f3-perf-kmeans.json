@@ -1,0 +1,411 @@
+{
+  "profile": "release",
+  "rows": [
+    {
+      "id": "circle_r50",
+      "median_ms": 3.2034,
+      "median_stages_ms": {
+        "assemble": 0.0046,
+        "export_svg": 0.5337999999999999,
+        "extract_boundaries": 0.31339999999999996,
+        "fit_edges_polygon": 0.009000000000000001,
+        "label": 0.3545,
+        "merge_small": 0.37179999999999996,
+        "quantize": 1.5674000000000001
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "square_rot30",
+      "median_ms": 3.2312,
+      "median_stages_ms": {
+        "assemble": 0.0053,
+        "export_svg": 0.5252,
+        "extract_boundaries": 0.3307,
+        "fit_edges_polygon": 0.0068000000000000005,
+        "label": 0.3904,
+        "merge_small": 0.42279999999999995,
+        "quantize": 1.5406
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "star5",
+      "median_ms": 3.4261,
+      "median_stages_ms": {
+        "assemble": 0.0055,
+        "export_svg": 0.6131,
+        "extract_boundaries": 0.4015,
+        "fit_edges_polygon": 0.017900000000000003,
+        "label": 0.3377,
+        "merge_small": 0.4283,
+        "quantize": 1.5635000000000001
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "ring",
+      "median_ms": 3.4015,
+      "median_stages_ms": {
+        "assemble": 0.0052,
+        "export_svg": 0.7691,
+        "extract_boundaries": 0.378,
+        "fit_edges_polygon": 0.0178,
+        "label": 0.3317,
+        "merge_small": 0.3986,
+        "quantize": 1.4738
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "concentric",
+      "median_ms": 4.1922,
+      "median_stages_ms": {
+        "assemble": 0.0059,
+        "export_svg": 1.0163,
+        "extract_boundaries": 0.5297999999999999,
+        "fit_edges_polygon": 0.0191,
+        "label": 0.3501,
+        "merge_small": 0.4839,
+        "quantize": 1.6324
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "junction_t",
+      "median_ms": 2.9768,
+      "median_stages_ms": {
+        "assemble": 0.0054,
+        "export_svg": 0.419,
+        "extract_boundaries": 0.2637,
+        "fit_edges_polygon": 0.0022,
+        "label": 0.3751,
+        "merge_small": 0.444,
+        "quantize": 1.3721
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "junction_y",
+      "median_ms": 3.1468999999999996,
+      "median_stages_ms": {
+        "assemble": 0.0047,
+        "export_svg": 0.49229999999999996,
+        "extract_boundaries": 0.3088,
+        "fit_edges_polygon": 0.0019,
+        "label": 0.374,
+        "merge_small": 0.3817,
+        "quantize": 1.4784
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "line_1px",
+      "median_ms": 3.0702,
+      "median_stages_ms": {
+        "assemble": 0.0051,
+        "export_svg": 0.3944,
+        "extract_boundaries": 0.2671,
+        "fit_edges_polygon": 0.0122,
+        "label": 0.2942,
+        "merge_small": 0.4465,
+        "quantize": 1.5082
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "line_2px",
+      "median_ms": 3.1917,
+      "median_stages_ms": {
+        "assemble": 0.0052,
+        "export_svg": 0.4751,
+        "extract_boundaries": 0.2895,
+        "fit_edges_polygon": 0.0125,
+        "label": 0.3613,
+        "merge_small": 0.43150000000000005,
+        "quantize": 1.6119
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "checker",
+      "median_ms": 2.9765,
+      "median_stages_ms": {
+        "assemble": 0.0053,
+        "export_svg": 0.5864,
+        "extract_boundaries": 0.3563,
+        "fit_edges_polygon": 0.0155,
+        "label": 0.34249999999999997,
+        "merge_small": 0.4112,
+        "quantize": 1.2003000000000001
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "diagonal_touch",
+      "median_ms": 3.3733999999999997,
+      "median_stages_ms": {
+        "assemble": 0.0047,
+        "export_svg": 0.3921,
+        "extract_boundaries": 0.3196,
+        "fit_edges_polygon": 0.0024,
+        "label": 0.5102,
+        "merge_small": 0.6418,
+        "quantize": 1.3649
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "nested_squares",
+      "median_ms": 3.9252999999999996,
+      "median_stages_ms": {
+        "assemble": 0.0051,
+        "export_svg": 1.001,
+        "extract_boundaries": 0.535,
+        "fit_edges_polygon": 0.0193,
+        "label": 0.3624,
+        "merge_small": 0.426,
+        "quantize": 1.6241
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "bezier_leaf",
+      "median_ms": 3.1733,
+      "median_stages_ms": {
+        "assemble": 0.0053,
+        "export_svg": 0.5722,
+        "extract_boundaries": 0.3674,
+        "fit_edges_polygon": 0.0185,
+        "label": 0.3403,
+        "merge_small": 0.3971,
+        "quantize": 1.3835
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "rounded_rectangle",
+      "median_ms": 3.185,
+      "median_stages_ms": {
+        "assemble": 0.0053,
+        "export_svg": 0.5887,
+        "extract_boundaries": 0.31720000000000004,
+        "fit_edges_polygon": 0.0042,
+        "label": 0.33349999999999996,
+        "merge_small": 0.44079999999999997,
+        "quantize": 1.4536
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "ellipse",
+      "median_ms": 3.3125,
+      "median_stages_ms": {
+        "assemble": 0.0053,
+        "export_svg": 0.5224,
+        "extract_boundaries": 0.31020000000000003,
+        "fit_edges_polygon": 0.0013,
+        "label": 0.3474,
+        "merge_small": 0.4109,
+        "quantize": 1.5974
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "text_path",
+      "median_ms": 3.499,
+      "median_stages_ms": {
+        "assemble": 0.0055,
+        "export_svg": 0.7182,
+        "extract_boundaries": 0.3921,
+        "fit_edges_polygon": 0.0178,
+        "label": 0.3427,
+        "merge_small": 0.4092,
+        "quantize": 1.6076000000000001
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "triangles",
+      "median_ms": 3.6916,
+      "median_stages_ms": {
+        "assemble": 0.005699999999999999,
+        "export_svg": 0.8193,
+        "extract_boundaries": 0.4282,
+        "fit_edges_polygon": 0.020999999999999998,
+        "label": 0.3395,
+        "merge_small": 0.404,
+        "quantize": 1.6182
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "circle_noaa",
+      "median_ms": 3.264,
+      "median_stages_ms": {
+        "assemble": 0.0053,
+        "export_svg": 0.608,
+        "extract_boundaries": 0.35409999999999997,
+        "fit_edges_polygon": 0.0078,
+        "label": 0.3436,
+        "merge_small": 0.41609999999999997,
+        "quantize": 1.6441999999999999
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "multicolor_logo",
+      "median_ms": 3.6012,
+      "median_stages_ms": {
+        "assemble": 0.0059,
+        "export_svg": 0.8220000000000001,
+        "extract_boundaries": 0.46309999999999996,
+        "fit_edges_polygon": 0.021500000000000002,
+        "label": 0.2861,
+        "merge_small": 0.4067,
+        "quantize": 1.5576999999999999
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "jpeg_q60",
+      "median_ms": 3.0745999999999998,
+      "median_stages_ms": {
+        "assemble": 0.0053,
+        "export_svg": 0.49319999999999997,
+        "extract_boundaries": 0.3058,
+        "fit_edges_polygon": 0.0015999999999999999,
+        "label": 0.3508,
+        "merge_small": 0.43,
+        "quantize": 1.4799
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "logo_original_1",
+      "median_ms": 3.1587,
+      "median_stages_ms": {
+        "assemble": 0.0058000000000000005,
+        "export_svg": 0.6677000000000001,
+        "extract_boundaries": 0.36900000000000005,
+        "fit_edges_polygon": 0.0019,
+        "label": 0.29300000000000004,
+        "merge_small": 0.3702,
+        "quantize": 1.5876
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "logo_original_2",
+      "median_ms": 3.0676,
+      "median_stages_ms": {
+        "assemble": 0.0048,
+        "export_svg": 0.5913999999999999,
+        "extract_boundaries": 0.36019999999999996,
+        "fit_edges_polygon": 0.0017000000000000001,
+        "label": 0.3589,
+        "merge_small": 0.3824,
+        "quantize": 1.4175
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "logo_original_3",
+      "median_ms": 3.2058,
+      "median_stages_ms": {
+        "assemble": 0.0048,
+        "export_svg": 0.5794,
+        "extract_boundaries": 0.3092,
+        "fit_edges_polygon": 0.009000000000000001,
+        "label": 0.2823,
+        "merge_small": 0.3529,
+        "quantize": 1.6269
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "logo_original_4",
+      "median_ms": 3.9960000000000004,
+      "median_stages_ms": {
+        "assemble": 0.0052,
+        "export_svg": 0.7211,
+        "extract_boundaries": 0.3568,
+        "fit_edges_polygon": 0.0123,
+        "label": 0.4197,
+        "merge_small": 0.45580000000000004,
+        "quantize": 1.8184
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "logo_original_5",
+      "median_ms": 3.4874,
+      "median_stages_ms": {
+        "assemble": 0.0056,
+        "export_svg": 0.6828,
+        "extract_boundaries": 0.38230000000000003,
+        "fit_edges_polygon": 0.022099999999999998,
+        "label": 0.3587,
+        "merge_small": 0.42519999999999997,
+        "quantize": 1.5181
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "edge_1x1",
+      "median_ms": 0.298,
+      "median_stages_ms": {
+        "assemble": 0.0003,
+        "export_svg": 0.0028,
+        "extract_boundaries": 0.0023,
+        "fit_edges_polygon": 0.00019999999999999998,
+        "label": 0.00039999999999999996,
+        "merge_small": 0.001,
+        "quantize": 0.2883
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "edge_transparent",
+      "median_ms": 0.2995,
+      "median_stages_ms": {
+        "assemble": 0.00009999999999999999,
+        "export_svg": 0.0015999999999999999,
+        "extract_boundaries": 0.0106,
+        "fit_edges_polygon": 0.0005,
+        "label": 0.0022,
+        "merge_small": 0.0024,
+        "quantize": 0.26489999999999997
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "edge_uniform",
+      "median_ms": 0.4639,
+      "median_stages_ms": {
+        "assemble": 0.0006,
+        "export_svg": 0.031099999999999996,
+        "extract_boundaries": 0.0213,
+        "fit_edges_polygon": 0.0007,
+        "label": 0.0059,
+        "merge_small": 0.007500000000000001,
+        "quantize": 0.3937
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "edge_1xn",
+      "median_ms": 0.3903,
+      "median_stages_ms": {
+        "assemble": 0.00039999999999999996,
+        "export_svg": 0.0189,
+        "extract_boundaries": 0.013699999999999999,
+        "fit_edges_polygon": 0.0009,
+        "label": 0.0012,
+        "merge_small": 0.0015,
+        "quantize": 0.3513
+      },
+      "repetitions": 5
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+[licenses]
+include-dev = true
+confidence-threshold = 0.95
+allow = [
+    "MIT",
+    "Apache-2.0",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "Zlib",
+    "ISC",
+    "Unicode-3.0",
+    "MPL-2.0",
+]
+
+# The unpublished workspace has no distribution license selected yet.
+# Third-party dependencies remain subject to the allowlist above.
+[licenses.private]
+ignore = true
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"

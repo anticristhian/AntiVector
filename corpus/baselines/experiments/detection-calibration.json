@@ -1,0 +1,640 @@
+[
+  {
+    "id": "circle_r50",
+    "expected_colors": 2,
+    "before": {
+      "mode": "logo",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": false,
+      "width": 128,
+      "height": 128
+    },
+    "after": {
+      "mode": "logo",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": false,
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "id": "square_rot30",
+    "expected_colors": 2,
+    "before": {
+      "mode": "logo",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": false,
+      "width": 128,
+      "height": 128
+    },
+    "after": {
+      "mode": "logo",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": false,
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "id": "star5",
+    "expected_colors": 2,
+    "before": {
+      "mode": "logo",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": true,
+      "is_pixel_art": false,
+      "width": 128,
+      "height": 128
+    },
+    "after": {
+      "mode": "logo",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": false,
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "id": "ring",
+    "expected_colors": 2,
+    "before": {
+      "mode": "logo",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": true,
+      "is_pixel_art": false,
+      "width": 128,
+      "height": 128
+    },
+    "after": {
+      "mode": "logo",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": false,
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "id": "concentric",
+    "expected_colors": 4,
+    "before": {
+      "mode": "logo",
+      "colors": 3,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": false,
+      "width": 128,
+      "height": 128
+    },
+    "after": {
+      "mode": "logo",
+      "colors": 4,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": false,
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "id": "junction_t",
+    "expected_colors": 3,
+    "before": {
+      "mode": "logo",
+      "colors": 3,
+      "has_alpha": false,
+      "is_jpeg_like": true,
+      "is_pixel_art": true,
+      "width": 128,
+      "height": 128
+    },
+    "after": {
+      "mode": "logo",
+      "colors": 3,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": true,
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "id": "junction_y",
+    "expected_colors": 3,
+    "before": {
+      "mode": "logo",
+      "colors": 3,
+      "has_alpha": false,
+      "is_jpeg_like": true,
+      "is_pixel_art": false,
+      "width": 128,
+      "height": 128
+    },
+    "after": {
+      "mode": "logo",
+      "colors": 3,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": false,
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "id": "line_1px",
+    "expected_colors": 2,
+    "before": {
+      "mode": "line_art",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": true,
+      "is_pixel_art": true,
+      "width": 128,
+      "height": 128
+    },
+    "after": {
+      "mode": "line_art",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": true,
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "id": "line_2px",
+    "expected_colors": 2,
+    "before": {
+      "mode": "line_art",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": true,
+      "width": 128,
+      "height": 128
+    },
+    "after": {
+      "mode": "line_art",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": true,
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "id": "checker",
+    "expected_colors": 2,
+    "before": {
+      "mode": "line_art",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": true,
+      "is_pixel_art": true,
+      "width": 128,
+      "height": 128
+    },
+    "after": {
+      "mode": "line_art",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": true,
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "id": "diagonal_touch",
+    "expected_colors": 2,
+    "before": {
+      "mode": "line_art",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": true,
+      "is_pixel_art": true,
+      "width": 128,
+      "height": 128
+    },
+    "after": {
+      "mode": "line_art",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": true,
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "id": "nested_squares",
+    "expected_colors": 3,
+    "before": {
+      "mode": "logo",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": true,
+      "width": 128,
+      "height": 128
+    },
+    "after": {
+      "mode": "logo",
+      "colors": 3,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": true,
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "id": "bezier_leaf",
+    "expected_colors": 2,
+    "before": {
+      "mode": "logo",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": true,
+      "is_pixel_art": false,
+      "width": 128,
+      "height": 128
+    },
+    "after": {
+      "mode": "logo",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": false,
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "id": "rounded_rectangle",
+    "expected_colors": 2,
+    "before": {
+      "mode": "logo",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": true,
+      "is_pixel_art": false,
+      "width": 128,
+      "height": 128
+    },
+    "after": {
+      "mode": "logo",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": false,
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "id": "ellipse",
+    "expected_colors": 2,
+    "before": {
+      "mode": "logo",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": false,
+      "width": 128,
+      "height": 128
+    },
+    "after": {
+      "mode": "logo",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": false,
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "id": "text_path",
+    "expected_colors": 2,
+    "before": {
+      "mode": "logo",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": false,
+      "width": 128,
+      "height": 128
+    },
+    "after": {
+      "mode": "logo",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": false,
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "id": "triangles",
+    "expected_colors": 3,
+    "before": {
+      "mode": "logo",
+      "colors": 3,
+      "has_alpha": false,
+      "is_jpeg_like": true,
+      "is_pixel_art": false,
+      "width": 128,
+      "height": 128
+    },
+    "after": {
+      "mode": "logo",
+      "colors": 3,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": false,
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "id": "circle_noaa",
+    "expected_colors": 2,
+    "before": {
+      "mode": "line_art",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": true,
+      "width": 128,
+      "height": 128
+    },
+    "after": {
+      "mode": "line_art",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": true,
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "id": "multicolor_logo",
+    "expected_colors": 5,
+    "before": {
+      "mode": "logo",
+      "colors": 5,
+      "has_alpha": false,
+      "is_jpeg_like": true,
+      "is_pixel_art": true,
+      "width": 128,
+      "height": 128
+    },
+    "after": {
+      "mode": "logo",
+      "colors": 5,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": true,
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "id": "jpeg_q60",
+    "expected_colors": 2,
+    "before": {
+      "mode": "logo",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": true,
+      "is_pixel_art": false,
+      "width": 128,
+      "height": 128
+    },
+    "after": {
+      "mode": "logo",
+      "colors": 3,
+      "has_alpha": false,
+      "is_jpeg_like": true,
+      "is_pixel_art": false,
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "id": "logo_original_1",
+    "expected_colors": 3,
+    "before": {
+      "mode": "logo",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": true,
+      "is_pixel_art": true,
+      "width": 128,
+      "height": 128
+    },
+    "after": {
+      "mode": "logo",
+      "colors": 3,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": true,
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "id": "logo_original_2",
+    "expected_colors": 3,
+    "before": {
+      "mode": "logo",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": true,
+      "is_pixel_art": true,
+      "width": 128,
+      "height": 128
+    },
+    "after": {
+      "mode": "logo",
+      "colors": 3,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": true,
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "id": "logo_original_3",
+    "expected_colors": 3,
+    "before": {
+      "mode": "logo",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": true,
+      "is_pixel_art": true,
+      "width": 128,
+      "height": 128
+    },
+    "after": {
+      "mode": "logo",
+      "colors": 3,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": true,
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "id": "logo_original_4",
+    "expected_colors": 3,
+    "before": {
+      "mode": "logo",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": true,
+      "is_pixel_art": true,
+      "width": 128,
+      "height": 128
+    },
+    "after": {
+      "mode": "logo",
+      "colors": 3,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": true,
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "id": "logo_original_5",
+    "expected_colors": 3,
+    "before": {
+      "mode": "logo",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": true,
+      "is_pixel_art": true,
+      "width": 128,
+      "height": 128
+    },
+    "after": {
+      "mode": "logo",
+      "colors": 3,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": true,
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "id": "edge_1x1",
+    "expected_colors": 1,
+    "before": {
+      "mode": "line_art",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": true,
+      "width": 1,
+      "height": 1
+    },
+    "after": {
+      "mode": "line_art",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": true,
+      "width": 1,
+      "height": 1
+    }
+  },
+  {
+    "id": "edge_transparent",
+    "expected_colors": 0,
+    "before": {
+      "mode": "line_art",
+      "colors": 2,
+      "has_alpha": true,
+      "is_jpeg_like": false,
+      "is_pixel_art": true,
+      "width": 8,
+      "height": 8
+    },
+    "after": {
+      "mode": "line_art",
+      "colors": 2,
+      "has_alpha": true,
+      "is_jpeg_like": false,
+      "is_pixel_art": true,
+      "width": 8,
+      "height": 8
+    }
+  },
+  {
+    "id": "edge_uniform",
+    "expected_colors": 1,
+    "before": {
+      "mode": "line_art",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": true,
+      "width": 16,
+      "height": 16
+    },
+    "after": {
+      "mode": "line_art",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": true,
+      "width": 16,
+      "height": 16
+    }
+  },
+  {
+    "id": "edge_1xn",
+    "expected_colors": 1,
+    "before": {
+      "mode": "line_art",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": true,
+      "width": 1,
+      "height": 16
+    },
+    "after": {
+      "mode": "line_art",
+      "colors": 2,
+      "has_alpha": false,
+      "is_jpeg_like": false,
+      "is_pixel_art": true,
+      "width": 1,
+      "height": 16
+    }
+  }
+]

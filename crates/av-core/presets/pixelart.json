@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "mode": "logo",
+  "colors": "auto",
+  "palette_lock": [],
+  "denoise": 0.0,
+  "min_region_area": 33,
+  "antialias_resolve": true,
+  "corner_threshold_deg": 100.0,
+  "smoothness": 0.5,
+  "fit_tolerance_px": 0.9,
+  "detail": 0.5,
+  "transparency_alpha_cut": 128,
+  "seed": 0
+}

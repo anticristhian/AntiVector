@@ -1,0 +1,896 @@
+{
+  "label": "f3-vtracer",
+  "engine": "vtracer 0.6.5 (common quantized palette)",
+  "params": {
+    "experimental": {
+      "quantizer": "kmeans"
+    },
+    "version": 1,
+    "mode": "logo",
+    "colors": "auto",
+    "palette_lock": [],
+    "denoise": 0.2,
+    "min_region_area": 33,
+    "antialias_resolve": true,
+    "corner_threshold_deg": 100.0,
+    "smoothness": 0.5,
+    "fit_tolerance_px": 0.9,
+    "detail": 0.5,
+    "transparency_alpha_cut": 128,
+    "seed": 0
+  },
+  "profile": "release",
+  "os": "windows-x86_64",
+  "memory_method": "process RSS sampled every 2ms during pipeline; approximate, includes process overhead",
+  "rows": [
+    {
+      "id": "circle_r50",
+      "category": "synthetic",
+      "paths": 2,
+      "nodes": 18,
+      "colors": 2,
+      "input_palette_colors": 2,
+      "svg_bytes": 933,
+      "delta_e_mean": 0.6518764592878921,
+      "delta_e_p95": 0.6106373506918306,
+      "ssim": 0.9912111334319241,
+      "gap_pixels": 18,
+      "hausdorff": 0.5273707026948768,
+      "corner_recall": 1.0,
+      "total_ms": 4.8044,
+      "stages_ms": {
+        "quantize": 2.12,
+        "vtracer": 2.6275
+      },
+      "sampled_peak_rss": 11075584,
+      "detection": {
+        "mode": "logo",
+        "colors": 2,
+        "has_alpha": false,
+        "is_jpeg_like": false,
+        "is_pixel_art": false,
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "id": "square_rot30",
+      "category": "synthetic",
+      "paths": 2,
+      "nodes": 52,
+      "colors": 2,
+      "input_palette_colors": 2,
+      "svg_bytes": 2113,
+      "delta_e_mean": 0.5803416724772626,
+      "delta_e_p95": 0.7097606972565875,
+      "ssim": 0.9732561342089748,
+      "gap_pixels": 4,
+      "hausdorff": 0.6551357214532219,
+      "corner_recall": 1.0,
+      "total_ms": 4.8575,
+      "stages_ms": {
+        "quantize": 1.7857999999999998,
+        "vtracer": 3.0442
+      },
+      "sampled_peak_rss": 12603392,
+      "detection": {
+        "mode": "logo",
+        "colors": 2,
+        "has_alpha": false,
+        "is_jpeg_like": false,
+        "is_pixel_art": false,
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "id": "star5",
+      "category": "synthetic",
+      "paths": 2,
+      "nodes": 94,
+      "colors": 2,
+      "input_palette_colors": 2,
+      "svg_bytes": 3527,
+      "delta_e_mean": 1.1424188643413127,
+      "delta_e_p95": 1.246904544264414,
+      "ssim": 0.9684951770133918,
+      "gap_pixels": 35,
+      "hausdorff": 1.6891639646445287,
+      "corner_recall": 0.6428571428571429,
+      "total_ms": 3.7261,
+      "stages_ms": {
+        "quantize": 1.5439,
+        "vtracer": 2.1500999999999997
+      },
+      "sampled_peak_rss": 12697600,
+      "detection": {
+        "mode": "logo",
+        "colors": 2,
+        "has_alpha": false,
+        "is_jpeg_like": true,
+        "is_pixel_art": false,
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "id": "ring",
+      "category": "synthetic",
+      "paths": 3,
+      "nodes": 32,
+      "colors": 2,
+      "input_palette_colors": 2,
+      "svg_bytes": 1538,
+      "delta_e_mean": 1.1175189742849894,
+      "delta_e_p95": 1.2267708257986218,
+      "ssim": 0.9732772961881326,
+      "gap_pixels": 31,
+      "hausdorff": 0.6158150489685791,
+      "corner_recall": 1.0,
+      "total_ms": 4.2066,
+      "stages_ms": {
+        "quantize": 1.4748,
+        "vtracer": 2.7101
+      },
+      "sampled_peak_rss": 12845056,
+      "detection": {
+        "mode": "logo",
+        "colors": 2,
+        "has_alpha": false,
+        "is_jpeg_like": true,
+        "is_pixel_art": false,
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "id": "concentric",
+      "category": "synthetic",
+      "paths": 4,
+      "nodes": 46,
+      "colors": 4,
+      "input_palette_colors": 4,
+      "svg_bytes": 2138,
+      "delta_e_mean": 1.6032141136904599,
+      "delta_e_p95": 2.933429266068556,
+      "ssim": 0.9278621941683456,
+      "gap_pixels": 48,
+      "hausdorff": 0.8002390937481144,
+      "corner_recall": 1.0,
+      "total_ms": 5.8081000000000005,
+      "stages_ms": {
+        "quantize": 1.5872,
+        "vtracer": 4.1567
+      },
+      "sampled_peak_rss": 13033472,
+      "detection": {
+        "mode": "logo",
+        "colors": 3,
+        "has_alpha": false,
+        "is_jpeg_like": false,
+        "is_pixel_art": false,
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "id": "junction_t",
+      "category": "synthetic",
+      "paths": 3,
+      "nodes": 12,
+      "colors": 3,
+      "input_palette_colors": 3,
+      "svg_bytes": 642,
+      "delta_e_mean": 0.0,
+      "delta_e_p95": 0.0,
+      "ssim": 1.0,
+      "gap_pixels": 0,
+      "hausdorff": 0.04223911481787468,
+      "corner_recall": 1.0,
+      "total_ms": 3.6413,
+      "stages_ms": {
+        "quantize": 1.7173,
+        "vtracer": 1.8908
+      },
+      "sampled_peak_rss": 12939264,
+      "detection": {
+        "mode": "logo",
+        "colors": 3,
+        "has_alpha": false,
+        "is_jpeg_like": true,
+        "is_pixel_art": true,
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "id": "junction_y",
+      "category": "synthetic",
+      "paths": 3,
+      "nodes": 33,
+      "colors": 3,
+      "input_palette_colors": 3,
+      "svg_bytes": 1456,
+      "delta_e_mean": 1.2919574804820335,
+      "delta_e_p95": 1.0985742191699484,
+      "ssim": 0.9360196519682124,
+      "gap_pixels": 2,
+      "hausdorff": 5.227812677196951,
+      "corner_recall": 1.0,
+      "total_ms": 3.1338999999999997,
+      "stages_ms": {
+        "quantize": 1.4009999999999998,
+        "vtracer": 1.7167000000000001
+      },
+      "sampled_peak_rss": 13086720,
+      "detection": {
+        "mode": "logo",
+        "colors": 3,
+        "has_alpha": false,
+        "is_jpeg_like": true,
+        "is_pixel_art": false,
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "id": "line_1px",
+      "category": "synthetic",
+      "paths": 2,
+      "nodes": 12,
+      "colors": 2,
+      "input_palette_colors": 2,
+      "svg_bytes": 600,
+      "delta_e_mean": 0.0,
+      "delta_e_p95": 0.0,
+      "ssim": 0.9999999999999143,
+      "gap_pixels": 0,
+      "hausdorff": 0.04223930525393316,
+      "corner_recall": 1.0,
+      "total_ms": 3.5165,
+      "stages_ms": {
+        "quantize": 1.5367,
+        "vtracer": 1.9393
+      },
+      "sampled_peak_rss": 12877824,
+      "detection": {
+        "mode": "line_art",
+        "colors": 2,
+        "has_alpha": false,
+        "is_jpeg_like": true,
+        "is_pixel_art": true,
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "id": "line_2px",
+      "category": "synthetic",
+      "paths": 2,
+      "nodes": 12,
+      "colors": 2,
+      "input_palette_colors": 2,
+      "svg_bytes": 600,
+      "delta_e_mean": 0.0,
+      "delta_e_p95": 0.0,
+      "ssim": 0.9999999999999212,
+      "gap_pixels": 0,
+      "hausdorff": 0.04223930525393316,
+      "corner_recall": 1.0,
+      "total_ms": 3.8095999999999997,
+      "stages_ms": {
+        "quantize": 1.5484,
+        "vtracer": 2.2003
+      },
+      "sampled_peak_rss": 12943360,
+      "detection": {
+        "mode": "line_art",
+        "colors": 2,
+        "has_alpha": false,
+        "is_jpeg_like": false,
+        "is_pixel_art": true,
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "id": "checker",
+      "category": "synthetic",
+      "paths": 3,
+      "nodes": 20,
+      "colors": 2,
+      "input_palette_colors": 2,
+      "svg_bytes": 873,
+      "delta_e_mean": 0.0,
+      "delta_e_p95": 0.0,
+      "ssim": 0.9999999999999442,
+      "gap_pixels": 0,
+      "hausdorff": 0.04223930525393316,
+      "corner_recall": 1.0,
+      "total_ms": 3.4637000000000002,
+      "stages_ms": {
+        "quantize": 1.3532,
+        "vtracer": 2.0679000000000003
+      },
+      "sampled_peak_rss": 12951552,
+      "detection": {
+        "mode": "line_art",
+        "colors": 2,
+        "has_alpha": false,
+        "is_jpeg_like": true,
+        "is_pixel_art": true,
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "id": "diagonal_touch",
+      "category": "synthetic",
+      "paths": 3,
+      "nodes": 20,
+      "colors": 2,
+      "input_palette_colors": 2,
+      "svg_bytes": 865,
+      "delta_e_mean": 0.0,
+      "delta_e_p95": 0.0,
+      "ssim": 0.9999999999999202,
+      "gap_pixels": 0,
+      "hausdorff": 0.04223930525393316,
+      "corner_recall": 1.0,
+      "total_ms": 3.9389000000000003,
+      "stages_ms": {
+        "quantize": 1.9197000000000002,
+        "vtracer": 1.9623000000000002
+      },
+      "sampled_peak_rss": 13119488,
+      "detection": {
+        "mode": "line_art",
+        "colors": 2,
+        "has_alpha": false,
+        "is_jpeg_like": true,
+        "is_pixel_art": true,
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "id": "nested_squares",
+      "category": "synthetic",
+      "paths": 4,
+      "nodes": 28,
+      "colors": 3,
+      "input_palette_colors": 3,
+      "svg_bytes": 1130,
+      "delta_e_mean": 0.0,
+      "delta_e_p95": 0.0,
+      "ssim": 0.9999999999999393,
+      "gap_pixels": 0,
+      "hausdorff": 0.04223930525393316,
+      "corner_recall": 1.0,
+      "total_ms": 4.7061,
+      "stages_ms": {
+        "quantize": 1.5343,
+        "vtracer": 3.0869
+      },
+      "sampled_peak_rss": 12939264,
+      "detection": {
+        "mode": "logo",
+        "colors": 2,
+        "has_alpha": false,
+        "is_jpeg_like": false,
+        "is_pixel_art": true,
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "id": "bezier_leaf",
+      "category": "synthetic",
+      "paths": 2,
+      "nodes": 22,
+      "colors": 2,
+      "input_palette_colors": 2,
+      "svg_bytes": 1032,
+      "delta_e_mean": 1.2678013582226149,
+      "delta_e_p95": 0.8240039632663363,
+      "ssim": 0.9580040933363745,
+      "gap_pixels": 28,
+      "hausdorff": 1.550120348744382,
+      "corner_recall": 1.0,
+      "total_ms": 3.9883,
+      "stages_ms": {
+        "quantize": 1.674,
+        "vtracer": 2.2575
+      },
+      "sampled_peak_rss": 13201408,
+      "detection": {
+        "mode": "logo",
+        "colors": 2,
+        "has_alpha": false,
+        "is_jpeg_like": true,
+        "is_pixel_art": false,
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "id": "rounded_rectangle",
+      "category": "synthetic",
+      "paths": 2,
+      "nodes": 76,
+      "colors": 2,
+      "input_palette_colors": 2,
+      "svg_bytes": 3079,
+      "delta_e_mean": 0.5036103918955136,
+      "delta_e_p95": 0.3169742323864373,
+      "ssim": 0.9811992989282419,
+      "gap_pixels": 2,
+      "hausdorff": 0.5087559727270002,
+      "corner_recall": 1.0,
+      "total_ms": 3.6140999999999996,
+      "stages_ms": {
+        "quantize": 1.4076,
+        "vtracer": 2.1908000000000003
+      },
+      "sampled_peak_rss": 13115392,
+      "detection": {
+        "mode": "logo",
+        "colors": 2,
+        "has_alpha": false,
+        "is_jpeg_like": true,
+        "is_pixel_art": false,
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "id": "ellipse",
+      "category": "synthetic",
+      "paths": 2,
+      "nodes": 18,
+      "colors": 2,
+      "input_palette_colors": 2,
+      "svg_bytes": 902,
+      "delta_e_mean": 0.5873134499522404,
+      "delta_e_p95": 0.6873416920877776,
+      "ssim": 0.9748629438094729,
+      "gap_pixels": 20,
+      "hausdorff": 0.9609725713165679,
+      "corner_recall": 1.0,
+      "total_ms": 3.4516999999999998,
+      "stages_ms": {
+        "quantize": 1.438,
+        "vtracer": 1.9903999999999997
+      },
+      "sampled_peak_rss": 13434880,
+      "detection": {
+        "mode": "logo",
+        "colors": 2,
+        "has_alpha": false,
+        "is_jpeg_like": false,
+        "is_pixel_art": false,
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "id": "text_path",
+      "category": "synthetic",
+      "paths": 3,
+      "nodes": 77,
+      "colors": 2,
+      "input_palette_colors": 2,
+      "svg_bytes": 3029,
+      "delta_e_mean": 1.0499336213805095,
+      "delta_e_p95": 1.2605316323762579,
+      "ssim": 0.9634271636799693,
+      "gap_pixels": 23,
+      "hausdorff": 1.9964795377265172,
+      "corner_recall": 0.9333333333333333,
+      "total_ms": 4.4593,
+      "stages_ms": {
+        "quantize": 2.0170000000000003,
+        "vtracer": 2.4053999999999998
+      },
+      "sampled_peak_rss": 12918784,
+      "detection": {
+        "mode": "logo",
+        "colors": 2,
+        "has_alpha": false,
+        "is_jpeg_like": false,
+        "is_pixel_art": false,
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "id": "triangles",
+      "category": "synthetic",
+      "paths": 3,
+      "nodes": 74,
+      "colors": 3,
+      "input_palette_colors": 3,
+      "svg_bytes": 2877,
+      "delta_e_mean": 0.9703158623780882,
+      "delta_e_p95": 1.5699474229063877,
+      "ssim": 0.9607671379721828,
+      "gap_pixels": 16,
+      "hausdorff": 2.000014063094295,
+      "corner_recall": 0.9,
+      "total_ms": 3.9318,
+      "stages_ms": {
+        "quantize": 1.463,
+        "vtracer": 2.4066
+      },
+      "sampled_peak_rss": 13234176,
+      "detection": {
+        "mode": "logo",
+        "colors": 3,
+        "has_alpha": false,
+        "is_jpeg_like": true,
+        "is_pixel_art": false,
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "id": "circle_noaa",
+      "category": "synthetic",
+      "paths": 2,
+      "nodes": 18,
+      "colors": 2,
+      "input_palette_colors": 2,
+      "svg_bytes": 922,
+      "delta_e_mean": 0.3721709827319895,
+      "delta_e_p95": 0.0,
+      "ssim": 0.9766763254654197,
+      "gap_pixels": 27,
+      "hausdorff": 0.49666065789874175,
+      "corner_recall": 1.0,
+      "total_ms": 4.2798,
+      "stages_ms": {
+        "quantize": 1.7879,
+        "vtracer": 2.4751
+      },
+      "sampled_peak_rss": 13254656,
+      "detection": {
+        "mode": "line_art",
+        "colors": 2,
+        "has_alpha": false,
+        "is_jpeg_like": false,
+        "is_pixel_art": true,
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "id": "multicolor_logo",
+      "category": "synthetic",
+      "paths": 6,
+      "nodes": 41,
+      "colors": 5,
+      "input_palette_colors": 5,
+      "svg_bytes": 1710,
+      "delta_e_mean": 0.20577562012488776,
+      "delta_e_p95": 0.5692748507408087,
+      "ssim": 0.9923779497254144,
+      "gap_pixels": 28,
+      "hausdorff": 0.9143839564185529,
+      "corner_recall": 1.0,
+      "total_ms": 3.9604000000000004,
+      "stages_ms": {
+        "quantize": 1.4323000000000001,
+        "vtracer": 2.4898
+      },
+      "sampled_peak_rss": 13623296,
+      "detection": {
+        "mode": "logo",
+        "colors": 5,
+        "has_alpha": false,
+        "is_jpeg_like": true,
+        "is_pixel_art": true,
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "id": "jpeg_q60",
+      "category": "synthetic",
+      "paths": 2,
+      "nodes": 18,
+      "colors": 2,
+      "input_palette_colors": 2,
+      "svg_bytes": 905,
+      "delta_e_mean": 0.9135146229074665,
+      "delta_e_p95": 3.395384535667799,
+      "ssim": 0.9738393631797778,
+      "gap_pixels": 26,
+      "hausdorff": 0.5540488994465815,
+      "corner_recall": 1.0,
+      "total_ms": 3.1023,
+      "stages_ms": {
+        "quantize": 1.4042,
+        "vtracer": 1.6852
+      },
+      "sampled_peak_rss": 13332480,
+      "detection": {
+        "mode": "logo",
+        "colors": 2,
+        "has_alpha": false,
+        "is_jpeg_like": true,
+        "is_pixel_art": false,
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "id": "logo_original_1",
+      "category": "logo",
+      "paths": 3,
+      "nodes": 37,
+      "colors": 2,
+      "input_palette_colors": 2,
+      "svg_bytes": 1407,
+      "delta_e_mean": 4.478560509126289,
+      "delta_e_p95": 11.998996096273862,
+      "ssim": 0.9838972028165146,
+      "gap_pixels": 7,
+      "hausdorff": 0.4504771059449215,
+      "corner_recall": 1.0,
+      "total_ms": 3.8434,
+      "stages_ms": {
+        "quantize": 1.4335,
+        "vtracer": 2.3926
+      },
+      "sampled_peak_rss": 13447168,
+      "detection": {
+        "mode": "logo",
+        "colors": 2,
+        "has_alpha": false,
+        "is_jpeg_like": true,
+        "is_pixel_art": true,
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "id": "logo_original_2",
+      "category": "logo",
+      "paths": 3,
+      "nodes": 37,
+      "colors": 2,
+      "input_palette_colors": 2,
+      "svg_bytes": 1403,
+      "delta_e_mean": 4.5133699874811075,
+      "delta_e_p95": 11.570632624395877,
+      "ssim": 0.9842655498200252,
+      "gap_pixels": 7,
+      "hausdorff": 0.45047739885553173,
+      "corner_recall": 1.0,
+      "total_ms": 3.8633,
+      "stages_ms": {
+        "quantize": 1.4552,
+        "vtracer": 2.3909000000000002
+      },
+      "sampled_peak_rss": 13340672,
+      "detection": {
+        "mode": "logo",
+        "colors": 2,
+        "has_alpha": false,
+        "is_jpeg_like": true,
+        "is_pixel_art": true,
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "id": "logo_original_3",
+      "category": "logo",
+      "paths": 2,
+      "nodes": 37,
+      "colors": 2,
+      "input_palette_colors": 2,
+      "svg_bytes": 1349,
+      "delta_e_mean": 4.643964257258905,
+      "delta_e_p95": 11.266893690403936,
+      "ssim": 0.9739643308546434,
+      "gap_pixels": 6,
+      "hausdorff": 6.2472216046637685,
+      "corner_recall": 0.9285714285714286,
+      "total_ms": 3.8390999999999997,
+      "stages_ms": {
+        "quantize": 1.3996,
+        "vtracer": 2.4208
+      },
+      "sampled_peak_rss": 13795328,
+      "detection": {
+        "mode": "logo",
+        "colors": 2,
+        "has_alpha": false,
+        "is_jpeg_like": true,
+        "is_pixel_art": true,
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "id": "logo_original_4",
+      "category": "logo",
+      "paths": 2,
+      "nodes": 41,
+      "colors": 2,
+      "input_palette_colors": 2,
+      "svg_bytes": 1513,
+      "delta_e_mean": 4.6275043995854945,
+      "delta_e_p95": 10.962408489502389,
+      "ssim": 0.9750228671981718,
+      "gap_pixels": 6,
+      "hausdorff": 9.959776210132995,
+      "corner_recall": 0.9285714285714286,
+      "total_ms": 4.0041,
+      "stages_ms": {
+        "quantize": 1.6451,
+        "vtracer": 2.3415
+      },
+      "sampled_peak_rss": 13484032,
+      "detection": {
+        "mode": "logo",
+        "colors": 2,
+        "has_alpha": false,
+        "is_jpeg_like": true,
+        "is_pixel_art": true,
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "id": "logo_original_5",
+      "category": "logo",
+      "paths": 2,
+      "nodes": 38,
+      "colors": 2,
+      "input_palette_colors": 2,
+      "svg_bytes": 1389,
+      "delta_e_mean": 4.758311612582537,
+      "delta_e_p95": 10.657329671794924,
+      "ssim": 0.9745428004884058,
+      "gap_pixels": 7,
+      "hausdorff": 2.23606797749979,
+      "corner_recall": 0.9285714285714286,
+      "total_ms": 3.9880000000000004,
+      "stages_ms": {
+        "quantize": 1.4792,
+        "vtracer": 2.4673999999999996
+      },
+      "sampled_peak_rss": 13500416,
+      "detection": {
+        "mode": "logo",
+        "colors": 2,
+        "has_alpha": false,
+        "is_jpeg_like": true,
+        "is_pixel_art": true,
+        "width": 128,
+        "height": 128
+      }
+    },
+    {
+      "id": "edge_1x1",
+      "category": "edge",
+      "paths": 0,
+      "nodes": 0,
+      "colors": 0,
+      "input_palette_colors": 1,
+      "svg_bytes": 224,
+      "delta_e_mean": 45.81052438809032,
+      "delta_e_p95": 45.81052438809032,
+      "ssim": 0.4068693241346116,
+      "gap_pixels": 1,
+      "hausdorff": null,
+      "corner_recall": null,
+      "total_ms": 0.3136,
+      "stages_ms": {
+        "quantize": 0.2904,
+        "vtracer": 0.021500000000000002
+      },
+      "sampled_peak_rss": 13197312,
+      "detection": {
+        "mode": "line_art",
+        "colors": 2,
+        "has_alpha": false,
+        "is_jpeg_like": false,
+        "is_pixel_art": true,
+        "width": 1,
+        "height": 1
+      }
+    },
+    {
+      "id": "edge_transparent",
+      "category": "edge",
+      "paths": 0,
+      "nodes": 0,
+      "colors": 0,
+      "input_palette_colors": 0,
+      "svg_bytes": 62,
+      "delta_e_mean": 0.0,
+      "delta_e_p95": 0.0,
+      "ssim": 0.9999999999997526,
+      "gap_pixels": 0,
+      "hausdorff": null,
+      "corner_recall": null,
+      "total_ms": 0.268,
+      "stages_ms": {
+        "quantize": 0.2661
+      },
+      "sampled_peak_rss": 13139968,
+      "detection": {
+        "mode": "line_art",
+        "colors": 2,
+        "has_alpha": true,
+        "is_jpeg_like": false,
+        "is_pixel_art": true,
+        "width": 8,
+        "height": 8
+      }
+    },
+    {
+      "id": "edge_uniform",
+      "category": "edge",
+      "paths": 1,
+      "nodes": 4,
+      "colors": 1,
+      "input_palette_colors": 1,
+      "svg_bytes": 321,
+      "delta_e_mean": 0.0,
+      "delta_e_p95": 0.0,
+      "ssim": 1.0,
+      "gap_pixels": 0,
+      "hausdorff": null,
+      "corner_recall": null,
+      "total_ms": 0.5642,
+      "stages_ms": {
+        "quantize": 0.4878,
+        "vtracer": 0.0742
+      },
+      "sampled_peak_rss": 13049856,
+      "detection": {
+        "mode": "line_art",
+        "colors": 2,
+        "has_alpha": false,
+        "is_jpeg_like": false,
+        "is_pixel_art": true,
+        "width": 16,
+        "height": 16
+      }
+    },
+    {
+      "id": "edge_1xn",
+      "category": "edge",
+      "paths": 1,
+      "nodes": 4,
+      "colors": 1,
+      "input_palette_colors": 1,
+      "svg_bytes": 314,
+      "delta_e_mean": 0.0,
+      "delta_e_p95": 0.0,
+      "ssim": 1.0,
+      "gap_pixels": 0,
+      "hausdorff": null,
+      "corner_recall": null,
+      "total_ms": 0.4258,
+      "stages_ms": {
+        "quantize": 0.3883,
+        "vtracer": 0.0317
+      },
+      "sampled_peak_rss": 13156352,
+      "detection": {
+        "mode": "line_art",
+        "colors": 2,
+        "has_alpha": false,
+        "is_jpeg_like": false,
+        "is_pixel_art": true,
+        "width": 1,
+        "height": 16
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+[package]
+name = "av-cli"
+description = "AntiVector headless command-line application"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[dependencies]
+av-core = { path = "../av-core" }
+av-export = { path = "../av-export" }
+clap = { version = "4", features = ["derive"] }
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "bmp", "gif", "tiff", "webp"] }
+
+[[bin]]
+name = "antivector"
+path = "src/main.rs"
+
+[lints]
+workspace = true

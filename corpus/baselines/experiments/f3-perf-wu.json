@@ -1,0 +1,411 @@
+{
+  "profile": "release",
+  "rows": [
+    {
+      "id": "circle_r50",
+      "median_ms": 4.0259,
+      "median_stages_ms": {
+        "assemble": 0.0054,
+        "export_svg": 0.5297000000000001,
+        "extract_boundaries": 0.358,
+        "fit_edges_polygon": 0.0083,
+        "label": 0.4354,
+        "merge_small": 0.48319999999999996,
+        "quantize": 1.9956
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "square_rot30",
+      "median_ms": 4.1798,
+      "median_stages_ms": {
+        "assemble": 0.005699999999999999,
+        "export_svg": 0.5849,
+        "extract_boundaries": 0.3475,
+        "fit_edges_polygon": 0.0171,
+        "label": 0.5,
+        "merge_small": 0.6092,
+        "quantize": 2.1418
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "star5",
+      "median_ms": 3.7666,
+      "median_stages_ms": {
+        "assemble": 0.005699999999999999,
+        "export_svg": 0.6219,
+        "extract_boundaries": 0.3845,
+        "fit_edges_polygon": 0.017499999999999998,
+        "label": 0.37310000000000004,
+        "merge_small": 0.4662,
+        "quantize": 1.8516
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "ring",
+      "median_ms": 4.5372,
+      "median_stages_ms": {
+        "assemble": 0.005699999999999999,
+        "export_svg": 0.7990999999999999,
+        "extract_boundaries": 0.4559,
+        "fit_edges_polygon": 0.0189,
+        "label": 0.42069999999999996,
+        "merge_small": 0.4743,
+        "quantize": 2.0303
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "concentric",
+      "median_ms": 6.4963,
+      "median_stages_ms": {
+        "assemble": 0.0066,
+        "export_svg": 1.0809000000000002,
+        "extract_boundaries": 0.5555,
+        "fit_edges_polygon": 0.024300000000000002,
+        "label": 0.45489999999999997,
+        "merge_small": 0.5761,
+        "quantize": 3.4591000000000003
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "junction_t",
+      "median_ms": 3.7605999999999997,
+      "median_stages_ms": {
+        "assemble": 0.0046,
+        "export_svg": 0.33340000000000003,
+        "extract_boundaries": 0.2361,
+        "fit_edges_polygon": 0.0053,
+        "label": 0.3149,
+        "merge_small": 0.3264,
+        "quantize": 2.4352
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "junction_y",
+      "median_ms": 4.2067,
+      "median_stages_ms": {
+        "assemble": 0.0047,
+        "export_svg": 0.5349,
+        "extract_boundaries": 0.3417,
+        "fit_edges_polygon": 0.013600000000000001,
+        "label": 0.3795,
+        "merge_small": 0.45399999999999996,
+        "quantize": 2.4398000000000004
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "line_1px",
+      "median_ms": 3.7996000000000003,
+      "median_stages_ms": {
+        "assemble": 0.0056,
+        "export_svg": 0.49089999999999995,
+        "extract_boundaries": 0.29550000000000004,
+        "fit_edges_polygon": 0.013900000000000001,
+        "label": 0.3794,
+        "merge_small": 0.4728,
+        "quantize": 2.0444
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "line_2px",
+      "median_ms": 3.4662,
+      "median_stages_ms": {
+        "assemble": 0.0059,
+        "export_svg": 0.4109,
+        "extract_boundaries": 0.2787,
+        "fit_edges_polygon": 0.0014,
+        "label": 0.38949999999999996,
+        "merge_small": 0.4944,
+        "quantize": 1.8011
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "checker",
+      "median_ms": 3.3538,
+      "median_stages_ms": {
+        "assemble": 0.0048,
+        "export_svg": 0.5438,
+        "extract_boundaries": 0.2973,
+        "fit_edges_polygon": 0.0153,
+        "label": 0.31829999999999997,
+        "merge_small": 0.3658,
+        "quantize": 1.8385
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "diagonal_touch",
+      "median_ms": 3.5756,
+      "median_stages_ms": {
+        "assemble": 0.0054,
+        "export_svg": 0.4797,
+        "extract_boundaries": 0.3009,
+        "fit_edges_polygon": 0.002,
+        "label": 0.4174,
+        "merge_small": 0.4671,
+        "quantize": 1.9124999999999999
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "nested_squares",
+      "median_ms": 4.8253,
+      "median_stages_ms": {
+        "assemble": 0.0058000000000000005,
+        "export_svg": 1.0151,
+        "extract_boundaries": 0.4831,
+        "fit_edges_polygon": 0.020999999999999998,
+        "label": 0.3434,
+        "merge_small": 0.47859999999999997,
+        "quantize": 2.3417999999999997
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "bezier_leaf",
+      "median_ms": 4.2360999999999995,
+      "median_stages_ms": {
+        "assemble": 0.0058000000000000005,
+        "export_svg": 0.6302,
+        "extract_boundaries": 0.3837,
+        "fit_edges_polygon": 0.0172,
+        "label": 0.3982,
+        "merge_small": 0.5469999999999999,
+        "quantize": 2.2334
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "rounded_rectangle",
+      "median_ms": 4.0725,
+      "median_stages_ms": {
+        "assemble": 0.0061,
+        "export_svg": 0.5609000000000001,
+        "extract_boundaries": 0.3851,
+        "fit_edges_polygon": 0.0058000000000000005,
+        "label": 0.47150000000000003,
+        "merge_small": 0.4577,
+        "quantize": 2.1107
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "ellipse",
+      "median_ms": 3.9121,
+      "median_stages_ms": {
+        "assemble": 0.0058000000000000005,
+        "export_svg": 0.5183,
+        "extract_boundaries": 0.3154,
+        "fit_edges_polygon": 0.0019,
+        "label": 0.3812,
+        "merge_small": 0.4484,
+        "quantize": 2.2391
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "text_path",
+      "median_ms": 3.6487999999999996,
+      "median_stages_ms": {
+        "assemble": 0.0047,
+        "export_svg": 0.5778,
+        "extract_boundaries": 0.32989999999999997,
+        "fit_edges_polygon": 0.009099999999999999,
+        "label": 0.3012,
+        "merge_small": 0.3688,
+        "quantize": 2.0593
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "triangles",
+      "median_ms": 4.6039,
+      "median_stages_ms": {
+        "assemble": 0.0054,
+        "export_svg": 0.7974,
+        "extract_boundaries": 0.4258,
+        "fit_edges_polygon": 0.0167,
+        "label": 0.3813,
+        "merge_small": 0.40030000000000004,
+        "quantize": 2.5747
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "circle_noaa",
+      "median_ms": 3.6491000000000002,
+      "median_stages_ms": {
+        "assemble": 0.0052,
+        "export_svg": 0.5752,
+        "extract_boundaries": 0.3356,
+        "fit_edges_polygon": 0.0104,
+        "label": 0.3389,
+        "merge_small": 0.41819999999999996,
+        "quantize": 1.8224
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "multicolor_logo",
+      "median_ms": 5.205699999999999,
+      "median_stages_ms": {
+        "assemble": 0.005,
+        "export_svg": 0.7020000000000001,
+        "extract_boundaries": 0.375,
+        "fit_edges_polygon": 0.0184,
+        "label": 0.3088,
+        "merge_small": 0.4029,
+        "quantize": 3.0878
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "jpeg_q60",
+      "median_ms": 3.9972000000000003,
+      "median_stages_ms": {
+        "assemble": 0.0052,
+        "export_svg": 0.5557,
+        "extract_boundaries": 0.3236,
+        "fit_edges_polygon": 0.0063,
+        "label": 0.34049999999999997,
+        "merge_small": 0.4171,
+        "quantize": 2.3083
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "logo_original_1",
+      "median_ms": 3.3392999999999997,
+      "median_stages_ms": {
+        "assemble": 0.0048,
+        "export_svg": 0.5444,
+        "extract_boundaries": 0.28800000000000003,
+        "fit_edges_polygon": 0.0014,
+        "label": 0.26580000000000004,
+        "merge_small": 0.3306,
+        "quantize": 1.8272
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "logo_original_2",
+      "median_ms": 3.2956000000000003,
+      "median_stages_ms": {
+        "assemble": 0.0043,
+        "export_svg": 0.571,
+        "extract_boundaries": 0.2925,
+        "fit_edges_polygon": 0.0017000000000000001,
+        "label": 0.2793,
+        "merge_small": 0.3247,
+        "quantize": 1.6936
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "logo_original_3",
+      "median_ms": 3.7933,
+      "median_stages_ms": {
+        "assemble": 0.0053,
+        "export_svg": 0.6826,
+        "extract_boundaries": 0.3772,
+        "fit_edges_polygon": 0.0017000000000000001,
+        "label": 0.3276,
+        "merge_small": 0.4133,
+        "quantize": 1.9841
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "logo_original_4",
+      "median_ms": 3.9388,
+      "median_stages_ms": {
+        "assemble": 0.0052,
+        "export_svg": 0.6241000000000001,
+        "extract_boundaries": 0.3448,
+        "fit_edges_polygon": 0.0015,
+        "label": 0.3637,
+        "merge_small": 0.4285,
+        "quantize": 2.0147
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "logo_original_5",
+      "median_ms": 3.6441,
+      "median_stages_ms": {
+        "assemble": 0.0054,
+        "export_svg": 0.758,
+        "extract_boundaries": 0.404,
+        "fit_edges_polygon": 0.0191,
+        "label": 0.32180000000000003,
+        "merge_small": 0.39990000000000003,
+        "quantize": 1.7374999999999998
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "edge_1x1",
+      "median_ms": 0.5651,
+      "median_stages_ms": {
+        "assemble": 0.0003,
+        "export_svg": 0.0042,
+        "extract_boundaries": 0.0031999999999999997,
+        "fit_edges_polygon": 0.00019999999999999998,
+        "label": 0.00039999999999999996,
+        "merge_small": 0.0007999999999999999,
+        "quantize": 0.5543
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "edge_transparent",
+      "median_ms": 0.2115,
+      "median_stages_ms": {
+        "assemble": 0.00019999999999999998,
+        "export_svg": 0.001,
+        "extract_boundaries": 0.0084,
+        "fit_edges_polygon": 0.0005,
+        "label": 0.0018,
+        "merge_small": 0.0022,
+        "quantize": 0.18939999999999999
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "edge_uniform",
+      "median_ms": 0.7499,
+      "median_stages_ms": {
+        "assemble": 0.0007,
+        "export_svg": 0.0276,
+        "extract_boundaries": 0.0218,
+        "fit_edges_polygon": 0.00039999999999999996,
+        "label": 0.0059,
+        "merge_small": 0.0070999999999999995,
+        "quantize": 0.6979
+      },
+      "repetitions": 5
+    },
+    {
+      "id": "edge_1xn",
+      "median_ms": 0.7532,
+      "median_stages_ms": {
+        "assemble": 0.00039999999999999996,
+        "export_svg": 0.0207,
+        "extract_boundaries": 0.0177,
+        "fit_edges_polygon": 0.0014,
+        "label": 0.002,
+        "merge_small": 0.0021,
+        "quantize": 0.6981
+      },
+      "repetitions": 5
+    }
+  ]
+}
