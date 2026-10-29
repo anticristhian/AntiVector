@@ -151,6 +151,32 @@ fn worker_cancels_under_200ms_and_preserves_the_completed_document() {
 }
 
 #[test]
+fn circular_option_invalidates_only_fitting_and_undo_restores_the_exact_document() {
+    let image = image();
+    let session = Session::new(image.clone()).unwrap();
+    let mut p = Params {
+        min_region_area: 4,
+        ..Params::default()
+    };
+    let before = session.vectorize(&p, &Control::default()).unwrap();
+    let counters = session.counters().unwrap().executions;
+    p.experimental.circular_loops = true;
+    let after = session.vectorize(&p, &Control::default()).unwrap();
+    let updated = session.counters().unwrap().executions;
+    assert_eq!(&counters[..7], &updated[..7]);
+    assert_eq!(updated[7], counters[7] + 1);
+    assert_eq!(updated[8], counters[8] + 1);
+    assert_eq!(
+        *after,
+        av_core::vectorize(&image, &p, &Control::default()).unwrap()
+    );
+    assert_ne!(before.edges, after.edges);
+    let restored = session.undo().unwrap();
+    assert!(Arc::ptr_eq(&before, &restored.doc));
+    assert!(!restored.params.experimental.circular_loops);
+}
+
+#[test]
 fn a_new_job_supersedes_old_results() {
     let session = Arc::new(Session::new(image()).unwrap());
     let (tx, rx) = mpsc::channel();

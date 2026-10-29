@@ -414,6 +414,7 @@ fn measure(
 }
 
 pub struct RunOptions {
+    pub circular_loops: bool,
     pub baseline: bool,
     pub overlap: bool,
     pub opaque_canvas: bool,
@@ -432,6 +433,7 @@ pub fn run(
     let overlap = options.overlap;
     let mut params = params(config, quantizer)?;
     params.experimental.opaque_canvas_overlap |= options.opaque_canvas;
+    params.experimental.circular_loops |= options.circular_loops;
     let out = output_root.join(label);
     for dir in ["svgs", "renders", "diffs"] {
         fs::create_dir_all(out.join(dir))?;
@@ -460,6 +462,7 @@ pub fn run(
             params.clone()
         };
         category_params.experimental.opaque_canvas_overlap |= options.opaque_canvas;
+        category_params.experimental.circular_loops |= options.circular_loops;
         let row = measure(
             root,
             &entry,

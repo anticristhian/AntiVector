@@ -39,10 +39,12 @@ pub fn trial(
     colors: u16,
     output: &Path,
     opaque_canvas: bool,
+    circular_loops: bool,
 ) -> Result<()> {
     let image = av_session::decode::load(input, 64_000_000)?;
     let mut params = av_core::Params::preset(config)?;
     params.experimental.opaque_canvas_overlap = opaque_canvas;
+    params.experimental.circular_loops = circular_loops;
     params.colors = av_core::ColorCount::Fixed(colors);
     params.min_region_area =
         av_core::params::default_min_region_area(params.detail, image.w, image.h);
@@ -65,10 +67,17 @@ pub fn trial(
     Ok(())
 }
 
-pub fn profile(input: &Path, config: &str, colors: u16, opaque_canvas: bool) -> Result<()> {
+pub fn profile(
+    input: &Path,
+    config: &str,
+    colors: u16,
+    opaque_canvas: bool,
+    circular_loops: bool,
+) -> Result<()> {
     let image = av_session::decode::load(input, 64_000_000)?;
     let mut params = av_core::Params::preset(config)?;
     params.experimental.opaque_canvas_overlap = opaque_canvas;
+    params.experimental.circular_loops = circular_loops;
     params.colors = av_core::ColorCount::Fixed(colors);
     params.min_region_area =
         av_core::params::default_min_region_area(params.detail, image.w, image.h);
@@ -108,7 +117,7 @@ fn fixture(size: u32, colors: u16) -> String {
     svg
 }
 
-pub fn run(root: &Path, label: &str, opaque_canvas: bool) -> Result<()> {
+pub fn run(root: &Path, label: &str, opaque_canvas: bool, circular_loops: bool) -> Result<()> {
     runner::safe_name(label)?;
     let directory = root.join(label);
     fs::create_dir_all(&directory)?;
@@ -131,6 +140,9 @@ pub fn run(root: &Path, label: &str, opaque_canvas: bool) -> Result<()> {
             child.env("RAYON_NUM_THREADS", "8").arg("rnf-trial");
             if opaque_canvas {
                 child.arg("--opaque-canvas");
+            }
+            if circular_loops {
+                child.arg("--circular-loops");
             }
             let status = child
                 .arg(&input)
@@ -170,6 +182,7 @@ pub fn run(root: &Path, label: &str, opaque_canvas: bool) -> Result<()> {
             "memory_method":"Windows OS PeakWorkingSet64, lifetime high-water mark",
             "fixtures":"original deterministic geometric reference scenes, not a worst-case guarantee",
             "opaque_canvas_overlap":opaque_canvas,
+            "circular_loops":circular_loops,
             "passed":accepted,"rows":rows
         }))?,
     )?;

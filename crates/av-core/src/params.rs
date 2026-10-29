@@ -53,6 +53,9 @@ pub enum PixelArtStrategy {
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ExperimentalParams {
+    /// Fit circular isolated loops, allowing only their artificial seam to move.
+    #[serde(default)]
+    pub circular_loops: bool,
     /// Opt-in exporter composition experiment; leaves all engine stages unchanged.
     #[serde(default)]
     pub opaque_canvas_overlap: bool,
@@ -84,6 +87,7 @@ fn default_corner_radius() -> f64 {
 impl Default for ExperimentalParams {
     fn default() -> Self {
         Self {
+            circular_loops: false,
             opaque_canvas_overlap: false,
             quality_v5: true,
             denoise_kind: DenoiseKind::Bilateral,

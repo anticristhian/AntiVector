@@ -221,6 +221,7 @@ Cada estágio tem testes unitários com imagens sintéticas geradas no próprio 
 | ADR-014 | Exceção NCSA restrita ao libfuzzer-sys0.4.13 no workspace de fuzz | DEFINITIVO, ferramenta de teste fora do produto |
 | ADR-015 | AppImage com WebView do SO e bootstrap independente auditável | DEFINITIVO, tamanho/ldd/smoke/fontes verificados em F9 |
 | ADR-016 | Composição opaca com prova topológica de cobertura do quadro | EXPERIMENTO F9, A/B completo antes de ativar o padrão |
+| ADR-017 | Ajuste circular de laços isolados, sem mover junções reais | EXPERIMENTO F9, opt-in e sujeito aos gates completos |
 
 Novos ADRs: acrescentar linha + seção abaixo com contexto, decisão, evidência, consequências.
 
@@ -464,6 +465,14 @@ não é autossuficiente em distribuições sem esses pacotes. A baseline testada
 Ubuntu24.04,sem alegar compatibilidade com versões anteriores ou todo Linux.
 Documentar esses pré-requisitos e conservar os avisos/fontes a cada build.
 
+Reprodução de build (2026-10-29):o asset continuous de appimagetool mudou e
+o guardSHA256 rejeitou o pacote noCI. Fixado o build tool na release oficial
+1.9.1,commit8c8c91f762b412a19f4e8d2c4b35afb98f2d7c81,asset324406736,
+SHA256ed4ce84f0d9caff66f50bcca6ff6f35aae54ce8135408b3fa33abfc3cb384eb0,
+conforme metadados oficiais da release. README dessa tag confirma --runtime-file
+e --comp. O runtime distribuído continua617aa773.../fedfad51,com os mesmos
+fontes/avisos;apenas o empacotador de build foi versionado. Não ignorar hashes.
+
 ### ADR-016 — Primeiro paint opaco com cobertura comprovada (2026-10-29)
 
 Contexto: a avaliação humana final marcou25vitórias/19empates/28derrotas,
@@ -502,3 +511,34 @@ candidato avaliado;gate geral72 e baseline34 aprovados. Nós+fidelidade passaram
 cache de geometria não é invalidado;projeto/CLI/IPC preservam a escolha explícita.
 Defaultfalse permanece até validação técnica completa e nova avaliação humana
 aprovada. Não transportar votos antigos para saídas ou apresentação alteradas.
+
+### ADR-017 — Laços circulares e emenda artificial (2026-10-29)
+
+Contexto: cinco logos originais e os casos circle_r50,ring e concentric perderam
+na avaliação humana. Inspeção das saídas mostra assimetria na emenda artificial
+de contornos circulares;por exemplo,o primeiro ponto do círculo ideal de raio12
+fica no crack(93,12),fora do círculo ideal de centro(96,24). A emenda não é uma
+junção entre três regiões,mas até aqui recebia a mesma restrição de posição.
+Não se deduz preferência humana futura a partir desse diagnóstico.
+
+Experimento `Params.experimental.circular_loops`,defaultfalse:qualificar apenas
+uma aresta fechada,isolada em sua junção artificial,com≥4cúbicos e sem cantos,
+pixel-art,frame ou guarda de transparência. Ajustar centro/raio por equações
+normais centradas e aceitar somente raio4..256px,resíduo radial máximo mais
+erro dos cúbicos dentro da tolerância do usuário e do teto0,75px. Manter dentro
+do quadro. Elipses e contornos irregulares devem falhar no teste de resíduo.
+
+Quatro arcos cúbicos de90° usam k=4/3·tan(pi/8). A emenda artificial pode ser
+projetada sobre o círculo ajustado;início e fim permanecem exatamente iguais.
+Exceção experimental à restrição de03/04 sobre a posição da junção: somente a
+emenda de um único self-loop sem outra aresta incidente. Junções reais continuam
+bit-idênticas ao grafo. Arestas continuam ajustadas uma vez,orientadas/reusadas
+pelas duas regiões;não muda conectividade nem geometria de vizinhas separadamente.
+O modo desligado conserva o contrato e os bytes anteriores. Não aumentar nós:
+substituição apenas se o ajuste geral já tinha pelo menos quatro cúbicos.
+
+Verificar círculo/quartos,elipse rejeitada,fixação das junções reais,pixel-art e
+transparência,gates completos de regressão/geometria/nós,determinismo,fuzz e RNF.
+Comparar todo o corpus e controles vencedores,não só os casos perdedores. Nova
+avaliação cega continua obrigatória. Só dados positivos permitem considerar
+mudança futura de padrão;nenhum critério de aceite é alterado.

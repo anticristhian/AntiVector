@@ -29,6 +29,7 @@ fuzz_target!(|data: &[u8]| {
     };
     let presets = ["logo", "illustration", "photo", "lineart", "pixelart"];
     let mut params = Params::preset(presets[usize::from(kind / 3) % presets.len()]).unwrap();
+    params.experimental.circular_loops = kind & 0x20 != 0;
     if let Some(&value) = payload.first() {
         params.colors = ColorCount::Fixed(2 + u16::from(value % 7));
         params.detail = f32::from(value) / 255.0;

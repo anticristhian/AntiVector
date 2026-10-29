@@ -4,7 +4,7 @@ export type Params = {
   denoise: number; min_region_area: number; antialias_resolve: boolean;
   corner_threshold_deg: number; smoothness: number; fit_tolerance_px: number; detail: number;
   transparency_alpha_cut: number; seed: string | number;
-  experimental: { opaque_canvas_overlap?: boolean; quality_v5: boolean; denoise_kind: 'bilateral' | 'mean_shift' | 'guided';
+  experimental: { circular_loops?: boolean; opaque_canvas_overlap?: boolean; quality_v5: boolean; denoise_kind: 'bilateral' | 'mean_shift' | 'guided';
     force_pixel_art: boolean; pixel_art_strategy: 'preserve_grid' | 'scale_corners';
     upscale_small: boolean; curve_fit: boolean; corner_recovery_radius: number; quantizer: string };
 };

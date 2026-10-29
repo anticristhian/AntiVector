@@ -3,6 +3,7 @@
 //! No Potrace implementation source was used.
 
 pub mod bezier;
+mod circle;
 pub mod corners;
 pub mod optimize;
 pub mod polygon;
@@ -167,6 +168,8 @@ pub fn fit_edges_for_regions(
 
 /// Fit in original pixel units after preprocessing enlarged the segmentation.
 /// Return coordinates in the graph's units, preserving junctions exactly.
+/// Opt-in circular_loops may move only an isolated closed edge's artificial seam
+/// (ADR-017); every real multi-edge junction remains exact.
 pub fn fit_edges_for_regions_at_scale(
     graph: &BoundaryGraph,
     map: &crate::segment::RegionMap,
@@ -246,6 +249,7 @@ fn fit_impl(
         return Err(CoreError::InvalidParams("zero fitting scale".into()));
     }
     let scale = f64::from(scale);
+    let original_scale = scale;
     ctl.report(Stage::FitEdges, 0.0)?;
     for (i, edge) in graph.edges.iter().enumerate() {
         if edge.id as usize != i
@@ -263,6 +267,28 @@ fn fit_impl(
             ));
         }
     }
+    let degree = params.experimental.circular_loops.then(|| {
+        let mut degree = vec![0; graph.junctions.len()];
+        for edge in &graph.edges {
+            degree[edge.start as usize] += 1;
+            if edge.end != edge.start {
+                degree[edge.end as usize] += 1;
+            }
+        }
+        degree
+    });
+    let frame = if params.experimental.circular_loops {
+        graph
+            .edges
+            .iter()
+            .filter(|edge| edge.on_frame)
+            .flat_map(|edge| &edge.pts)
+            .fold([0.0_f64, 0.0_f64], |m, p| {
+                [m[0].max(f64::from(p.x)), m[1].max(f64::from(p.y))]
+            })
+    } else {
+        [0.0, 0.0]
+    };
     let mut order: Vec<_> = graph.edges.iter().collect();
     order.sort_by_key(|edge| (std::cmp::Reverse(edge.pts.len()), edge.id));
     let mut fitted: Vec<FittedEdge> = order
@@ -302,6 +328,26 @@ fn fit_impl(
             } else {
                 straight_aware(&points, span(0).min(span(1)), params, ctl)?
             };
+            let mut start = points[0];
+            if params.experimental.circular_loops
+                && !pixel_art
+                && !edge.on_frame
+                && !preserve.get(edge.id as usize).copied().unwrap_or(false)
+                && edge.start == edge.end
+                && degree.as_ref().is_some_and(|d| d[edge.start as usize] == 1)
+                && segs.len() >= 4
+                && segs.iter().all(|seg| matches!(seg, Seg::Cubic(..)))
+            {
+                if let Some((point, arcs)) = circle::fit(
+                    &points,
+                    f64::from(params.fit_tolerance_px),
+                    scale / original_scale,
+                    [frame[0] / scale, frame[1] / scale],
+                ) {
+                    start = point;
+                    segs = arcs;
+                }
+            }
             let rescale = |p: &mut Point| {
                 p[0] *= scale;
                 p[1] *= scale;
@@ -318,7 +364,7 @@ fn fit_impl(
             }
             Ok(FittedEdge {
                 id: edge.id,
-                start: [points[0][0] * scale, points[0][1] * scale],
+                start: [start[0] * scale, start[1] * scale],
                 segs,
             })
         })

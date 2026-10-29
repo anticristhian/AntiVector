@@ -36,6 +36,30 @@ integração com os demais formatos. Resultados/detalhes em PROGRESS.
 
 ### Candidato de correção após a primeira avaliação
 
+O candidato atual combina composição opaca e ajuste circular isolado (ADR-017),
+ambos opt-in e com default false. O ajuste circular preserva todas as junções
+reais e só permite deslocar a costura artificial de um laço circular isolado.
+Não altera elipses, pixel-art ou contornos com junções reais. Reprodução:
+
+```text
+cargo run -p av-bench --release -- run --config corpus --opaque-canvas --circular-loops --label f9-circles-candidate --check-baseline corpus/baselines/metrics.json
+cargo run -p av-bench --release -- compare f9-complete f9-circles-candidate --check
+cargo run -p av-bench --release -- gate-quality bench-out/f9-circles-candidate/metrics.json bench-out/f9-reference/metrics.json
+cargo run -p av-bench --release -- gate-curves bench-out/f9-circles-candidate/metrics.json bench-out/f9-reference/metrics.json
+cargo run -p av-bench --release -- visual f9-circles-candidate f9-reference --label 2026-10-29-revision2 --seed 107
+cargo run -p av-bench --release -- score-visual 2026-10-29-revision2 bench-out/visual/2026-10-29-revision2.json --candidate f9-circles-candidate
+cargo run -p av-bench --release -- rnf --opaque-canvas --circular-loops --label f9-revision2-rnf
+```
+
+A página revision2 já existe, com 72 pares pendentes; não regenerar. Seu score
+humano ainda não foi medido. Resultados numéricos do candidato:22/25 (88%) no
+gate de logos/ilustrações;Hausdorff médio0,421196691556px,corner recall
+0,988095238095,18/20 synthetic (90%),zero gaps. Evidências em
+`corpus/baselines/quality/f9/revision2/`. RNF, fuzz de1h e CI desta revisão
+precisam de evidências próprias; a tabela inicial descreve o produto anterior.
+
+O experimento de composição isolada abaixo continua preservado como histórico.
+
 A correção de composição está em `experimental.opaque_canvas_overlap`,false
 por padrão. O harness pode ligá-la explicitamente com `--opaque-canvas`:
 

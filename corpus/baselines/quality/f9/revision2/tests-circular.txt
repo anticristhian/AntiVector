@@ -1,0 +1,11 @@
+   Compiling av-export v0.1.0 (C:\Users\csgaz\OneDrive\Documentos\ChatGPT\AntiVector\crates\av-export)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.76s
+     Running tests\circular_loops.rs (target\debug\deps\circular_loops-e04091c373d825c8.exe)
+
+running 3 tests
+test real_junctions_are_fixed_and_isolated_circles_have_four_shared_arcs ... ok
+test circular_fidelity_improves_without_changing_non_circular_or_pixel_art_controls ... ok
+test circular_candidate_is_thread_deterministic_and_keeps_node_monotonicity ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 42.43s
+

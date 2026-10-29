@@ -107,6 +107,7 @@ fn changed(a: &Params, b: &Params) -> usize {
         || x.corner_recovery_radius != y.corner_recovery_radius
         || x.curve_fit != y.curve_fit
         || x.pixel_art_strategy != y.pixel_art_strategy
+        || x.circular_loops != y.circular_loops
     {
         7
     } else {

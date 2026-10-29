@@ -105,6 +105,11 @@ Reimplementação a partir do artigo de Selinger (2003, "Potrace: a polygon‑ba
 5. Junções são sempre cantos (pontos fixos).
    A junção artificial de um laço é uma âncora fixa, mas pode ter tangentes
    contínuas para não criar um canto visual onde o contorno é suave.
+   Experimento ADR-017 (`experimental.circular_loops`,defaultfalse):somente a
+   emenda de um self-loop isolado pode ser projetada no círculo ajustado. Todas
+   as junções com outras arestas incidentes continuam exatamente fixas. Exige
+   resíduo radial+erro cúbico dentro da tolerância,raio4..256px e quatro arcos;
+   não altera pixel-art,frame,transparência ou contornos não circulares.
 6. Modo pixel‑art: [EXPERIMENTO] trocar etapa 4 por heurística Kopf‑Lischinski simplificada (só cantos de 90° com lados ≥ fator de pixel).
 
 ## 9. Ajuste Bézier e otimização de nós (`fit/bezier.rs`, `fit/optimize.rs`)
@@ -161,6 +166,8 @@ Todas as decisões por aresta são independentes ⇒ paralelo por aresta (rayon)
 | smoothness | 0..1 | 0,5 | alphamax e tolerância | 8 |
 | fit_tolerance_px | 0,1..3 | derivado | Menos nós × fidelidade | 9 |
 | transparency_alpha_cut | 1..255 | 128 | Limite de transparência | 2 |
+| experimental.circular_loops | bool | false | Laços circulares isolados (ADR-017) | 8 |
+| experimental.opaque_canvas_overlap | bool | false | Composição opaca comprovada (ADR-016) | Somente exportação/prévia |
 Presets em `crates/av-core/presets/{logo,illustration,photo,lineart,pixelart}.json`.
 
 ## 12. Fora do v1 (planejado)

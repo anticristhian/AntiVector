@@ -32,6 +32,8 @@ enum Command {
     /// Portable CPU profiling workload; instrumented times are not RNF evidence.
     Profile {
         #[arg(long)]
+        circular_loops: bool,
+        #[arg(long)]
         opaque_canvas: bool,
         input: PathBuf,
         #[arg(long, default_value = "illustration")]
@@ -42,12 +44,16 @@ enum Command {
     /// Measure RNF01–03 using five fresh processes per reference image.
     Rnf {
         #[arg(long)]
+        circular_loops: bool,
+        #[arg(long)]
         opaque_canvas: bool,
         #[arg(long, default_value = "rnf")]
         label: String,
     },
     #[command(hide = true)]
     RnfTrial {
+        #[arg(long)]
+        circular_loops: bool,
         #[arg(long)]
         opaque_canvas: bool,
         input: PathBuf,
@@ -98,6 +104,8 @@ enum Command {
     },
     /// Measure AntiVector using a preset or complete parameter JSON file.
     Run {
+        #[arg(long)]
+        circular_loops: bool,
         /// Opt in to the opaque-canvas composition experiment; defaults stay unchanged.
         #[arg(long)]
         opaque_canvas: bool,
@@ -159,22 +167,32 @@ fn execute(cli: Cli) -> Result<()> {
             candidate,
         } => visual_score::run(&cli.output_root, &label, &answers, &candidate),
         Command::Profile {
+            circular_loops,
             opaque_canvas,
             input,
             config,
             colors,
-        } => rnf::profile(&input, &config, colors, opaque_canvas),
+        } => rnf::profile(&input, &config, colors, opaque_canvas, circular_loops),
         Command::Rnf {
+            circular_loops,
             label,
             opaque_canvas,
-        } => rnf::run(&cli.output_root, &label, opaque_canvas),
+        } => rnf::run(&cli.output_root, &label, opaque_canvas, circular_loops),
         Command::RnfTrial {
+            circular_loops,
             opaque_canvas,
             input,
             config,
             colors,
             output,
-        } => rnf::trial(&input, &config, colors, &output, opaque_canvas),
+        } => rnf::trial(
+            &input,
+            &config,
+            colors,
+            &output,
+            opaque_canvas,
+            circular_loops,
+        ),
         Command::Fixture4mp { path } => {
             let scene = std::fs::read_to_string(cli.corpus.join("gt/logo_original_1.svg"))?
                 .replacen("width=\"128\"", "width=\"2000\"", 1)
@@ -218,6 +236,7 @@ fn execute(cli: Cli) -> Result<()> {
             }
         }
         Command::Run {
+            circular_loops,
             opaque_canvas,
             stacking,
             config,
@@ -232,6 +251,7 @@ fn execute(cli: Cli) -> Result<()> {
                 &config,
                 quantizer.as_deref(),
                 runner::RunOptions {
+                    circular_loops,
                     baseline: false,
                     overlap: overlap(stacking.as_deref())?,
                     opaque_canvas,
@@ -258,6 +278,7 @@ fn execute(cli: Cli) -> Result<()> {
                 &config,
                 None,
                 runner::RunOptions {
+                    circular_loops: false,
                     baseline: true,
                     overlap: overlap(stacking.as_deref())?,
                     opaque_canvas: false,

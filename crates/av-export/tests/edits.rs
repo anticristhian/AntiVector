@@ -36,7 +36,11 @@ fn verify(map: &RegionMap, palette: &Palette) {
         assert_eq!(count, if edge.on_frame { 1 } else { 2 });
     }
     let doc = assemble(map, &graph, palette, polygon_edges(&graph), &ctl).unwrap();
-    let svg = av_export::svg::to_string(&doc).unwrap();
+    let export_options = av_export::svg::SvgOptions {
+        opaque_canvas: true,
+        ..Default::default()
+    };
+    let svg = av_export::svg::to_string_with_options(&doc, &export_options).unwrap();
     let options = resvg::usvg::Options {
         shape_rendering: resvg::usvg::ShapeRendering::CrispEdges,
         ..Default::default()
@@ -62,15 +66,19 @@ fn verify(map: &RegionMap, palette: &Palette) {
             "edit introduced a gap or changed an unrelated pixel"
         );
     }
-    let params = av_core::Params {
+    let mut params = av_core::Params {
         min_region_area: 2,
         ..Default::default()
     };
+    params.experimental.circular_loops = true;
     let edges =
         av_core::fit::fit_edges_for_regions(&graph, map, palette, &params, false, &ctl).unwrap();
     let fitted = assemble(map, &graph, palette, edges, &ctl).unwrap();
-    let tree = resvg::usvg::Tree::from_str(&av_export::svg::to_string(&fitted).unwrap(), &options)
-        .unwrap();
+    let tree = resvg::usvg::Tree::from_str(
+        &av_export::svg::to_string_with_options(&fitted, &export_options).unwrap(),
+        &options,
+    )
+    .unwrap();
     let mut coverage = resvg::tiny_skia::Pixmap::new(map.w, map.h).unwrap();
     resvg::render(
         &tree,

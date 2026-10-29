@@ -37,6 +37,7 @@ fn all_formats_parse_and_preserve_the_entire_corpus() {
             av_core::params::resolve_defaults(av_core::Mode::Logo, &av_core::detect(&image));
         params.min_region_area =
             av_core::params::default_min_region_area(params.detail, image.w, image.h);
+        params.experimental.circular_loops = true;
         let doc = av_core::vectorize(&image, &params, &Control::default()).unwrap();
         let before = doc.clone();
         // Validate the opt-in candidate across every source and format; defaults

@@ -25,8 +25,8 @@ if grep -q 'not found' "$work/system-dependencies.txt"; then exit 1; fi
 
 fetch() { curl --fail --location --retry 3 "$1" --output "$2"; }
 # Official tool/runtime assets. A moving upstream asset must fail the hash check.
-fetch https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage "$work/appimagetool"
-echo "95cbe7cce9717fce90c484e34052ee7c7f1d7635b33c12525b4776826a7d29b6  $work/appimagetool" | sha256sum -c -
+fetch https://github.com/AppImage/appimagetool/releases/download/1.9.1/appimagetool-x86_64.AppImage "$work/appimagetool"
+echo "ed4ce84f0d9caff66f50bcca6ff6f35aae54ce8135408b3fa33abfc3cb384eb0  $work/appimagetool" | sha256sum -c -
 fetch https://github.com/AppImage/type2-runtime/releases/download/continuous/runtime-x86_64 "$work/runtime"
 echo "617aa77314d57c8b8e4fae9c3f0b35af7b30d5529cb69e98f64f92510ed98a46  $work/runtime" | sha256sum -c -
 chmod +x "$work/appimagetool"
