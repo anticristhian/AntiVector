@@ -12,11 +12,15 @@ Atualizar ao fim de cada tarefa. Apenas resultados medidos.
 | F4 Curvas | ✅ Concluída localmente | 2026-10-28 | 32 testes; Hausdorff médio 0,49040756px; corner recall 0,97666667; 18/20 synthetic com nós/SSIM ≥ baseline vtracer; 0 gaps; gate geral aprovado. |
 | F5 Qualidade multicor | ✅ Concluída localmente | 2026-10-28 | 44 testes; 34 imagens sem gaps; 5/5 logos vencem nós+fidelidade com cores equivalentes. Avaliação cega gerada, pendente humana. Pausa antes de F6 solicitada. |
 | F6 Export/CLI | ✅ Concluída | 2026-10-28 | 51 testes; cinco formatos nas 34 imagens; SVG idêntico à F5. CI remoto nos três SOs + quality aprovados no SHA8d89508. |
-| F7 Sessão/app | 🚧 Em implementação | 2026-10-28 | Sessão/cache/jobs, IPC e UI escritos; testes de cache/cancelamento e 7 Vitest aprovados. QA nativa, medição 4MP, rodada completa e CI ainda pendentes. |
+| F7 Sessão/app | ✅ Concluída | 2026-10-29 | 57 testes Rust/8 Vitest, QA nativa4MP e Performance API aprovados; builds offline e checks Windows/Linux/macOS verdes no SHA8853d78. |
 | F8 Edição | ⏳ Pendente | | |
 | F9 Otimização/release | ⏳ Pendente | | |
 
 ## Log
+
+### 2026-10-29 — F7 / Aceite remoto e liberação da F8
+- CI https://github.com/anticristhian/AntiVector/actions/runs/40821259846 terminou com success no SHA8853d7816c7887bbbd92e56415980db46a8c0eb4. Jobs macOS123274019717, Windows123274019778, Ubuntu123274019824 e qualidade123274019723 concluídos com success. Cada SO executou fmt/clippy/test, oito Vitest/lint/build, build Tauri offline, WASM e licenças; nenhum skip usado como aprovação. Evidência real e horários UTC em corpus/baselines/session/f7/ci.json.
+- F7 aceita: verificações locais e remotas aprovadas, cache/cancelamento cobertos, fluxo rápido observado no Windows e builds dos três SOs aprovados conforme plano; Performance API em4MP sem longtask≥50ms. Limites das medições e checklist constam abaixo. F8 liberada; nenhuma implementação F8 havia começado antes desse gate.
 
 ### 2026-10-29 — F7 / Validação local e preparação da matriz desktop
 - Fechamento da UI: indicadores centrais de carregamento e exportação adicionados conforme05§4; lint/build e8 Vitest aprovados. Último build offline debug e nova abertura4MP aprovados: Performance API, documento visível, zero longtasks≥50ms, desenho máximo0,399999991ms; abrir→pronto+600ms12608,100000009ms. Screenshot native-comparison.jpg e JSONL atualizados. SHA final de implementação8853d78, matriz de CI https://github.com/anticristhian/AntiVector/actions/runs/40821259846 em execução; a rodada e8290fa permanece evidência intermediária.
@@ -26,6 +30,17 @@ Atualizar ao fim de cada tarefa. Apenas resultados medidos.
 - Performance API real, frontend production/Rust debug, janela visível e longtask suportado: repetição após correção registrou zero tarefas≥50ms e desenho máximo0,399999991ms; intervalo abrir→pronto+600ms=13002,5ms (não é tempo release do motor). JSONL bruto preserva também execução anterior ao reparo, em corpus/baselines/session/f7/ui-performance.jsonl.
 - QA complementada: Cancelar por Escape manteve o vetor; nova execução concluiu. Diálogo de exportação salvou target/f7-native-export.svg (817bytes), XML independente confirmou width/height2000 e viewBox0 0 2000 2000; banner Arquivo exportado observado. Evidências SVG/JPEG e JSONL em corpus/baselines/session/f7. Reprocessamento após ajuste: nenhuma longtask≥50ms, desenho máximo0,100000009ms. Não foi lido o clipboard pessoal nem alegado teste nativo de todos os codecs; testes de decodificação/IPC cobrem esses contratos.
 - F7 ainda em andamento: implementação publicada no commit e8290fa, CI https://github.com/anticristhian/AntiVector/actions/runs/40820721867 em execução; aguardar resultados reais de build nos três SOs. F8/F9 continuam pendentes.
+
+Checklist e2e manual F7 — Windows/WebView2, frontend empacotado:
+- [x] Abrir PNG2000×2000 pelo diálogo; detecção3 cores e vetorização automática.
+- [x] Comparar original/vetor; vistas lado a lado, slider, vetor e contorno com nós.
+- [x] Alterar detalhe50→74%, observar estado de atualização e progresso.
+- [x] Escape cancela e conserva documento anterior; Vetorizar conclui a retomada.
+- [x] Exportar SVG pelo diálogo Salvar como; banner de sucesso e arquivo/XML válidos.
+- [x] Medição Performance API real em4MP e captura da comparação final.
+- [x] Indicador central de carregamento observado após abrir na última compilação.
+- Prévia/completo: eventos e tempos medidos no harness, não inferidos da captura final.
+- Outros codecs, imagens grandes, rejeição de erro e diálogo cancelado: testes automatizados; sem alegação de QA manual desses casos. Fluxo nativo macOS/Linux não foi observado localmente; seu aceite F7 usa os builds de CI exigidos pelo plano.
 
 ### 2026-10-28 — F7 / Sessão, cache, scaffold e primeiras validações
 - Scaffold oficial `pnpm create tauri-app app --template react-ts --manager pnpm --identifier com.antivector.app --yes` executado após aceite F6. Template ajustado para React18 conforme05_UI_UX, Tauri2.12, TypeScript6/Vite8 e Zustand5; ícones originais AV gerados da fonte SVG pelo CLI Tauri. Não há assets do Vector Magic. Workspace agora inclui av-desktop; MSRV elevada para1.90 após cargo metadata identificar essa exigência em Tauri/tauri-build/codegen/dialog/clipboard (toolchain instalado1.99.1).

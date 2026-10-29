@@ -2,7 +2,7 @@
 
 Motor offline em Rust para converter raster em vetores multicor, usando um grafo
 de fronteiras compartilhadas. Exporta SVG, PDF, EPS, DXF R12 e PNG. Aplicativo
-desktop Tauri/React previsto nas próximas fases; estado real em
+desktop Tauri/React implementado na F7; estado de aceite e evidências em
 [docs/PROGRESS.md](docs/PROGRESS.md).
 
 ```text
