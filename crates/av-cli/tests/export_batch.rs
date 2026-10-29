@@ -104,21 +104,12 @@ fn batch_continues_after_corruption_and_rejects_collisions() {
     assert!(String::from_utf8_lossy(&result.stdout).contains("succeeded=2 failed=1"));
     assert!(String::from_utf8_lossy(&result.stderr).contains("exit 3"));
     // A second file with the same stem must not overwrite a previous conversion.
-    fixture(&input.join("a.PNG"));
-    let result = run(&[
-        "batch".as_ref(),
-        input.as_os_str(),
-        "-o".as_ref(),
-        output.as_os_str(),
-    ]);
-    // On case-insensitive filesystems a.PNG is the same input, so use another extension.
-    let jpeg = input.join("a.jpg");
+    // Different extensions remain distinct even on case-insensitive APFS/NTFS.
+    // The stems also exercise portable case folding on case-sensitive Unix.
+    let jpeg = input.join("A.jpg");
     image::RgbImage::from_pixel(1, 1, image::Rgb([1, 2, 3]))
         .save(&jpeg)
         .unwrap();
-    if cfg!(not(windows)) {
-        assert_eq!(result.status.code(), Some(2));
-    }
     let result = run(&[
         "batch".as_ref(),
         input.as_os_str(),
