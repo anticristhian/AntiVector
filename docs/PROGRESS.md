@@ -5,18 +5,22 @@ Atualizar ao fim de cada tarefa. Apenas resultados medidos.
 | Fase | Status | Data | Notas |
 |---|---|---|---|
 | Planejamento (docs) | ✅ Concluído | 2026-10-28 | Artifacts 00–07 criados |
-| F0 Fundação | ✅ Concluída localmente | 2026-10-28 | Cinco verificações aprovadas com Rust 1.99.1; CI remoto nos três SOs permanece gate antes de concluir F6. |
+| F0 Fundação | ✅ Concluída, gate remoto cumprido em F6 | 2026-10-28 | Cinco verificações locais e CI remoto Windows/Linux/macOS aprovados; evidência no registro de conclusão F6. |
 | F1 Raster/cor/params | ✅ Concluída | 2026-10-28 | 15 testes aprovados; erro máximo OKLab ida/volta 0,000001667305; CLI info validado. |
 | F2 Segmentação/grafo | ✅ Concluída | 2026-10-28 | 20 testes; 512 casos aleatórios antes/depois da mesclagem, área exata, 0 frestas e reprodução pixel a pixel. |
 | F3 Harness/baseline | ✅ Concluída localmente | 2026-10-28 | 28 testes; 29 imagens; baselines/HTML salvos; ADR-007 fixado com A/B e 5 repetições; gate de qualidade aprovado. |
 | F4 Curvas | ✅ Concluída localmente | 2026-10-28 | 32 testes; Hausdorff médio 0,49040756px; corner recall 0,97666667; 18/20 synthetic com nós/SSIM ≥ baseline vtracer; 0 gaps; gate geral aprovado. |
 | F5 Qualidade multicor | ✅ Concluída localmente | 2026-10-28 | 44 testes; 34 imagens sem gaps; 5/5 logos vencem nós+fidelidade com cores equivalentes. Avaliação cega gerada, pendente humana. Pausa antes de F6 solicitada. |
-| F6 Export/CLI | 🚧 Implementada e validada localmente; CI remoto pendente | 2026-10-28 | 51 testes; cinco formatos válidos nas 34 imagens; SVG idêntico à F5. Não avançar a F7 antes do gate remoto. |
+| F6 Export/CLI | ✅ Concluída | 2026-10-28 | 51 testes; cinco formatos nas 34 imagens; SVG idêntico à F5. CI remoto nos três SOs + quality aprovados no SHA8d89508. |
 | F7 Sessão/app | ⏳ Pendente | | |
 | F8 Edição | ⏳ Pendente | | |
 | F9 Otimização/release | ⏳ Pendente | | |
 
 ## Log
+
+### 2026-10-28 — F6 / CI remoto aprovado e gate F0 cumprido
+- Workflow https://github.com/anticristhian/AntiVector/actions/runs/40810242782 concluído com success no commit `8d89508c4f328ac0a2b71b14a9e4cbc04379ff0e`. Jobs Rust (windows-latest), Rust (ubuntu-latest), Rust (macos-latest) e Minimal corpus quality regression concluídos com success; nenhum skip usado como aprovação. Matriz executou fmt, clippy -D warnings, testes, WASM e licenças nos três sistemas. Evidência com IDs/steps/horários UTC reais em corpus/baselines/exports/f6/ci.json.
+- F6 aceita: testes/exportações/checks locais e CI remoto aprovados. Gate remoto adiado desde F0 cumprido. Correção da fixture de colisão validada nos três sistemas. Baseline permanece F5, sem relaxar limites. F7 liberada; sessão/cache/cancelamento são o próximo trabalho.
 
 ### 2026-10-28 — F6 / Exportações completas, CLI/lote e preparação de CI remoto
 - Retomada autorizada pelo usuário após a pausa F5. AGENTS.md §7 corrigido com autorização explícita: pnpm obrigatório a partir de F7, quando app/ é criado; sem scaffold antecipado. Usuário criou o repositório público https://github.com/anticristhian/AntiVector; remoto origin configurado e branch local renomeada para main, sem sobrescrever refs remotas (repositório vazio verificado com ls-remote).
