@@ -38,5 +38,12 @@ Ctrl+S salva um .avproj; o diálogo Abrir também aceita projetos. O arquivo
 preserva os pixels RGBA8 originais, parâmetros e comandos de edição; ao abrir,
 reconstrói o documento completo e inicia um novo histórico de sessão.
 
-Estado das fases e evidências reais em ../docs/PROGRESS.md.
-Acessibilidade/i18n/release pertencem à F9.
+Escolha Português (Brasil) ou English e tema claro, escuro ou do sistema no
+cabeçalho; as preferências são locais. Tabs de comparação aceitam setas,
+Home/End. As ações de região têm controles por teclado; os diálogos contêm o
+foco e Escape os fecha. No painel de imagem, setas movem a vista e +/−/0
+controlam o zoom.
+
+Estado das fases e evidências reais em ../docs/PROGRESS.md. A F9 ainda aguarda
+os gates finais de instaladores e avaliação visual humana. Instruções de
+reprodução e limites das medições em ../docs/09_RELEASE_VALIDATION.md.

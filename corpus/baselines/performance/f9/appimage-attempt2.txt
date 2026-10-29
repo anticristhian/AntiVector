@@ -1,0 +1,10 @@
+2026-10-29T16:28:36.9619804Z /home/runner/work/AntiVector/AntiVector/target/lean-appimage.udLA1C/appimagetool: OK
+2026-10-29T16:28:37.1540357Z /home/runner/work/AntiVector/AntiVector/target/lean-appimage.udLA1C/runtime: OK
+2026-10-29T16:28:37.8252650Z /home/runner/work/AntiVector/AntiVector/target/lean-appimage.udLA1C/AntiVector.AppDir/runtime-notices/fuse-3.15.0.tar.xz: OK
+2026-10-29T16:28:38.2497005Z /home/runner/work/AntiVector/AntiVector/target/lean-appimage.udLA1C/AntiVector.AppDir/runtime-notices/squashfuse-0.5.2.tar.gz: OK
+2026-10-29T16:28:49.3570711Z appimagetool, continuous build (git version 854e19e), build 313 built on 2026-10-04 14:58:08 UTC
+2026-10-29T16:28:49.3577291Z /home/runner/work/AntiVector/AntiVector/target/lean-appimage.udLA1C/AntiVector.AppDir should be packaged as /home/runner/work/AntiVector/AntiVector/target/release/bundle/appimage/AntiVector_0.1.0_amd64-system-webview.AppImage
+2026-10-29T16:28:49.3579005Z av-desktop{.png,.svg,.xpm} defined in desktop file but not found
+2026-10-29T16:28:49.3580949Z /home/runner/work/AntiVector/AntiVector/target/lean-appimage.udLA1C/AntiVector.AppDir/av-desktop.png
+2026-10-29T16:28:49.3607059Z ##[error]Process completed with exit code 1.
+target/release/bundle/appimage/*.sha256

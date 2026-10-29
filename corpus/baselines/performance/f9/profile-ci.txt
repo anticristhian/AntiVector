@@ -1,0 +1,32 @@
+2026-10-29T16:18:35.2960633Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-29T16:18:35.3109735Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-29T16:18:35.3217696Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-29T16:18:35.3326303Z [36;1m  if rustup toolchain install "$toolchain" "${flags[@]}" --profile minimal --no-self-update --force-non-host 2>&1 | tee "$log"; then[0m
+2026-10-29T16:18:35.3350913Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-29T16:18:35.6064301Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-29T16:18:35.6307287Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-29T16:18:35.6687779Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-29T16:18:35.6819486Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-29T16:18:35.6940639Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-29T16:18:35.7285466Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-29T16:18:35.7507930Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-29T16:18:37.9565261Z     v0-rust-profile-Linux-x64-01b81e85
+2026-10-29T16:18:37.9565591Z     v0-rust-profile-Linux-x64-01b81e85-0212152d
+2026-10-29T16:18:37.9565884Z   - v0-rust-profile-Linux-x64
+2026-10-29T16:18:38.1819819Z ##[group]Run sudo apt-get update
+2026-10-29T16:18:38.1819999Z [36;1msudo apt-get update[0m
+2026-10-29T16:18:38.1820161Z [36;1msudo apt-get install -y linux-tools-generic[0m
+2026-10-29T16:19:07.1440508Z [1m[92m    Finished[0m `release` profile [optimized] target(s) in 18.50s
+2026-10-29T16:19:07.2291885Z [36;1mmkdir -p bench-out/profile[0m
+2026-10-29T16:19:07.2292261Z [36;1mcargo flamegraph --root -p av-bench --output bench-out/profile/illustration.svg -- profile corpus/baselines/performance/f9/before/illustration-4mp-32.png[0m
+2026-10-29T16:20:12.3218843Z [1m[92m    Finished[0m `release` profile [optimized + debuginfo] target(s) in 1m 05s
+2026-10-29T16:20:22.8701382Z [ perf record: Woken up 4679 times to write data ]
+2026-10-29T16:20:23.2002340Z [ perf record: Captured and wrote 1411.369 MB perf.data (23038 samples) ]
+2026-10-29T16:20:29.2878313Z writing flamegraph to "bench-out/profile/illustration.svg"
+2026-10-29T16:20:29.2976295Z   name: cpu-profile
+2026-10-29T16:20:29.2976432Z   path: bench-out/profile/
+2026-10-29T16:20:30.8671841Z Artifact cpu-profile.zip successfully finalized. Artifact ID 12913661282
+2026-10-29T16:20:30.8672435Z Artifact cpu-profile has been successfully uploaded! Final size is 50416 bytes. Artifact ID is 12913661282
+2026-10-29T16:20:30.9595631Z     v0-rust-profile-Linux-x64-01b81e85
+2026-10-29T16:20:30.9596079Z     v0-rust-profile-Linux-x64-01b81e85-0212152d
+2026-10-29T16:20:30.9596644Z   - v0-rust-profile-Linux-x64

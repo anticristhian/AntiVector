@@ -14,9 +14,17 @@ Atualizar ao fim de cada tarefa. Apenas resultados medidos.
 | F6 Export/CLI | ✅ Concluída | 2026-10-28 | 51 testes; cinco formatos nas 34 imagens; SVG idêntico à F5. CI remoto nos três SOs + quality aprovados no SHA8d89508. |
 | F7 Sessão/app | ✅ Concluída | 2026-10-29 | 57 testes Rust/8 Vitest, QA nativa4MP e Performance API aprovados; builds offline e checks Windows/Linux/macOS verdes no SHA8853d78. |
 | F8 Edição | ✅ Concluída | 2026-10-29 | 66 testes Rust/13 Vitest;128 níveis, máscaras RLE, projetos e fluxo refinado nativo aprovados;34 SVGs iguais à F7. CI remoto370fa71 verde nos três SOs e quality. |
-| F9 Otimização/release | 🚧 Em andamento | 2026-10-29 | RNF de referência,73entradas,66Rust/16Vitest e fuzz1h aprovados localmente; faltam CI/instaladores/perfil e votos humanos. |
+| F9 Otimização/release | 🚧 Em andamento | 2026-10-29 | RNF de referência,73entradas,67Rust/17Vitest,fuzz1h e perfilCPU aprovados; faltam matrizCI/instaladores finais e votos humanos. |
 
 ## Log
+
+### 2026-10-29 — F9 / Perfil CPU coletado no CI
+- Commit c32ef5c69b86c81e5636e94e3cfb118de02dfdb4 enviado; CI40910268612 em execução. Jobs de perfilCPU e regressão de qualidade concluídos com success; matriz Windows/Linux/macOS ainda em testes, sem aceite antecipado.
+- cargo flamegraph0.6.14/perf coletou23.038 amostras,gerando illustration-flamegraph.svg de380.624bytes,SHA2560ee1c1f492b32ae624dda28fa53fd9530042f8a7fae0c8aa780f60a59377a62d. Log e SVG em corpus/baselines/performance/f9. Artefato cpu-profile12913661282,ZIP SHA25656d663253f8260760c31039cefa92e6a6ede27b6cc2c7ad695dd480ca47e4394.
+- Perfil da referência original4MP,repetida cinco vezes,8workers:quantização32,28% do peso amostrado,preprocess11,77%,resolveAA4,10%,ajuste0,38%,montagem0,19%. Duas ocorrências label12,08%/12,50% são ramos de rotulagem distintos; percentuais inclusivos não devem ser somados com seus filhos. O SVG chama pesos de samples,mas a contagem real de eventos é a informada pelo perf. Não usar esses pesos/tempos instrumentados como RNF. Metas release já passaram nas medições isoladas; não foi feita alteração de algoritmo com base apenas nesse perfil.
+- Usuário confirmou que preencherá a avaliação humana. Arquivos/ordem/chave dos72pares preservados; votos permanecem pendentes.
+- Revalidação local do frontend após retomada:lint/TypeScript,17Vitest e build Vite passaram,exit0;JS197,66kB/CSS16,38kB. Nenhuma nova alteração funcional após o SHA c32ef5c.
+- CI40910268612 passou testes Rust nos três sistemas. Linux concluiu build Tauri e verificou ldd/hashes dos assets,fontes e avisos,mas o repack falhou antes de produzir o novo AppImage:desktop declara Icon=av-desktop,enquanto o script copiou AntiVector.png. Corrigido nome do ícone para av-desktop.png; não há medição de tamanho ou smoke aprovado nessa tentativa. Windows/macOS ainda em build no momento do registro.
 
 ### 2026-10-29 — F9 / Robustez, corpus completo e QA de acessibilidade
 - Fuzz local AddressSanitizer/nightly,exit0:90.151execuções em3.601segundos,nenhum panic/crash ou artefato de falha. Cobertura informada14.881,features63.373,corpus final2.475entradas/712KiB,RSS707MiB do processo instrumentado. Limite de comprimento configurado65.536bytes; limite explorado na rodada3.193bytes. Seeds iniciais PNG/projeto/RGBA; não se alega cobertura completa dos seis codecs. Alvo/script/lockfile e log bruto reproduzíveis em fuzz/ e corpus/baselines/robustness/f9/fuzz.txt. av-core/av-session não mudaram durante a rodada.

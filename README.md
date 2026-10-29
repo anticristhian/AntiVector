@@ -30,7 +30,9 @@ cargo check -p av-core --target wasm32-unknown-unknown
 cargo run -p av-bench --release -- run --label local --check-baseline corpus/baselines/metrics.json
 ```
 
-O harness inclui corpus original CC0, métricas, comparação vtracer isolada do
-produto, relatórios e avaliação visual cega. Corpus completo/metas de desempenho
-ainda são trabalho de F9. Decisões, arquitetura e fases em
+O harness inclui corpus geométrico original CC0 e fotos CC0/domínio público com
+proveniência, métricas, comparação vtracer isolada do produto e avaliação visual
+cega. O corpus completo contém73 entradas; medições de desempenho e robustez
+estão registradas, mas a F9 ainda aguarda seus gates finais. Reprodução em
+[docs/09_RELEASE_VALIDATION.md](docs/09_RELEASE_VALIDATION.md). Decisões, arquitetura e fases em
 [docs/00_INDEX.md](docs/00_INDEX.md); regras do implementador em [AGENTS.md](AGENTS.md).

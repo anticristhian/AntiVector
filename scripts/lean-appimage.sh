@@ -11,8 +11,9 @@ mkdir -p "$appdir/usr/bin" "$appdir/usr/lib/AntiVector" "$appdir/runtime-notices
 cp "$source_dir/usr/bin/av-desktop" "$appdir/usr/bin/av-desktop"
 cp -a "$source_dir/usr/lib/AntiVector/notices" "$appdir/usr/lib/AntiVector/notices"
 cp -L "$source_dir/AntiVector.desktop" "$appdir/AntiVector.desktop"
-cp -L "$source_dir/AntiVector.png" "$appdir/AntiVector.png"
-ln -s AntiVector.png "$appdir/.DirIcon"
+# Tauri's desktop entry declares Icon=av-desktop.
+cp -L "$source_dir/AntiVector.png" "$appdir/av-desktop.png"
+ln -s av-desktop.png "$appdir/.DirIcon"
 cat > "$appdir/AppRun" <<'ENTRY'
 #!/bin/sh
 set -eu
