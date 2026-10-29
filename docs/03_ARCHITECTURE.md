@@ -115,17 +115,30 @@ omissão de furos/agrupamento; DXF conta arestas únicas e vértices aproximados
 ### IPC Tauri (comandos)
 | Comando | Entrada | Saída |
 |---|---|---|
-| `open_image` | path | `{session_id, w, h, detection, thumb_png_b64}` |
-| `vectorize` | session_id, Params | job_id; eventos `progress{job_id,stage,frac}`, `done{job_id, doc_json_compact}`, `error{job_id, code, msg}` |
-| `cancel` | job_id | () |
+| `open_image` | path, reduce_to opcional | `{session_id, name, w, h, detection, params, thumb_png_b64, original_png_b64}` |
+| `open_image_bytes` / `open_clipboard` | nome+bytes / sem entrada; reduce_to opcional | mesma sessão decodificada de open_image |
+| `vectorize` | session_id, Params, request_id | job_id; eventos progress/preview/done/error com session_id, request_id e job_id; progress inclui stage/frac, preview/done incluem doc compacto, error inclui code/msg |
+| `cancel` / `close_session` | session_id | cancela o job corrente / cancela e libera a sessão |
 | `edit` | session_id, EditOp | doc delta |
 | `undo`/`redo` | session_id | doc |
 | `export` | session_id, format, options, path | () |
 | `save_project`/`open_project` | path | session |
 `doc_json_compact`: por shape `{color, d: "M…Z"}` string SVG path pré‑montada (o front não reconstrói geometria).
 
+Contrato concretizado em F7: cancelamento usa a sessão para também cobrir a
+janela em que vectorize ainda não retornou job_id ao frontend. request_id é o
+nonce do frontend; session_id+request_id filtram eventos atrasados, inclusive
+ao abrir outra imagem. O job_id Rust continua monotônico por sessão. A prévia
+nunca substitui o documento completo exportável. Paths também incluem region
+e âncoras para inspeção, sem recalcular geometria no JavaScript.
+
 ## 5. Cache e re‑execução (av-session)
 Estágios encadeados com chave = hash(entrada do estágio + parâmetros relevantes). Mudança de `smoothness`/`corner_threshold` ⇒ re‑executa só `fit_edges`+`assemble`. Mudança de `colors` ⇒ a partir de `quantize`. Edições de paleta ⇒ re‑rotulagem dos pixels das cores afetadas + estágios seguintes. Tabela de dependência em 04 §11.
+
+F7 implementa a chave por igualdade explícita dos parâmetros relevantes e
+fonte imutável, evitando colisões de hash. Produtos usam Arc; somente estágios
+concluídos são publicados no cache. A chave e invalidações são atualizadas
+antes da execução, para uma interrupção não reutilizar produtos de outra chave.
 
 ## 6. Concorrência
 - Um job ativo por sessão; novo `vectorize` cancela o anterior (cancelamento cooperativo checado a cada ~64 linhas/arestas).

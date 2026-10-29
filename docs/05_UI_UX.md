@@ -27,6 +27,10 @@ Tecnologia: React 18 + TypeScript + Zustand + Vite dentro de Tauri 2. Idiomas: p
 - Ao abrir: chama `open_image`, aplica detecção, inicia vetorização automaticamente.
 - Sliders: re‑vetorização com debounce de 250 ms; job anterior cancelado. Resultado antigo permanece visível com indicador "atualizando".
 - Pré‑visualização progressiva: primeiro processar versão reduzida (≤ 1 MP) e exibir; depois resolução total substitui [HIPÓTESE de valor UX; implementar em F7].
+  F7 mediu cinco execuções release em4MP: orçamento250k teve mediana100,77ms
+  para prévia contra340,5135ms em1MP. Padrão250k; imagem final continua integral.
+  Evidência em corpus/baselines/session/f7/preview-*.json, sem alegação de
+  desempenho geral em fotos/ilustrações antes da medição RNF de F9.
 - Vista Contorno: paths com stroke 1px de tela, nós como quadrados 4px (cantos) e círculos (suaves); limitar a 50k nós visíveis (acima: aviso e apenas strokes).
 - Borracha de região: hover destaca região (hit test via `isPointInPath` no Path2D da shape); clique ⇒ `edit{MergeRegion{region, into: auto}}`; Shift+clique ⇒ remover (tornar transparente).
 - Paleta: arrastar swatch sobre outro ⇒ mesclar; clique ⇒ seletor de cor; cadeado ⇒ travar (vai para `palette_lock`).

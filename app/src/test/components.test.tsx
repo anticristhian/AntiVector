@@ -19,6 +19,14 @@ it('maps detail and smoothness to the documented pixel parameters', () => {
   fireEvent.change(screen.getByRole('slider', { name: 'Suavidade' }), { target: { value: '0.7' } });
   expect(update).toHaveBeenCalledWith(expect.objectContaining({ smoothness: 0.7, fit_tolerance_px: 1.14 }));
 });
+it('announces loading and export progress while preventing conflicting actions', () => {
+  useAppStore.setState({ phase: 'loading' }); const { rerender } = render(<AppShell />);
+  expect(screen.getByRole('dialog', { name: 'Abrindo imagem' })).toHaveAttribute('aria-busy', 'true');
+  expect(screen.getByRole('progressbar', { name: 'Carregamento da imagem' })).toBeVisible();
+  useAppStore.setState({ phase: 'exporting' }); rerender(<AppShell />);
+  expect(screen.getByRole('dialog', { name: 'Exportando vetor' })).toBeVisible();
+  expect(screen.getByRole('button', { name: /Exportar/ })).toBeDisabled();
+});
 it('color grouping selects exact stacking instead of changing paint order silently', () => {
   render(<ExportDialog onClose={vi.fn()} />); fireEvent.click(screen.getByRole('checkbox', { name: 'Agrupar caminhos por cor' }));
   expect(screen.getByRole('checkbox', { name: 'Sobreposição opaca segura' })).not.toBeChecked();
