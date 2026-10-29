@@ -4,7 +4,7 @@ image="$(realpath target/release/bundle/appimage/AntiVector_0.1.0_amd64-system-w
 work="$(mktemp -d "$(pwd)/target/smoke-appimage.XXXXXX")"
 set +e
 AV_STARTUP_MARKER_PATH="$work/ready.txt" APPIMAGE_EXTRACT_AND_RUN=1 \
-    timeout 30s dbus-run-session -- xvfb-run --auto-servernum "$image" > "$work/output.txt" 2>&1
+    timeout 30s xvfb-run --auto-servernum dbus-run-session -- "$image" > "$work/output.txt" 2>&1
 result=$?
 set -e
 cat "$work/output.txt"
