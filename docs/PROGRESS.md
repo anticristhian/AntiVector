@@ -13,10 +13,23 @@ Atualizar ao fim de cada tarefa. Apenas resultados medidos.
 | F5 Qualidade multicor | ✅ Concluída localmente | 2026-10-28 | 44 testes; 34 imagens sem gaps; 5/5 logos vencem nós+fidelidade com cores equivalentes. Avaliação cega gerada, pendente humana. Pausa antes de F6 solicitada. |
 | F6 Export/CLI | ✅ Concluída | 2026-10-28 | 51 testes; cinco formatos nas 34 imagens; SVG idêntico à F5. CI remoto nos três SOs + quality aprovados no SHA8d89508. |
 | F7 Sessão/app | ✅ Concluída | 2026-10-29 | 57 testes Rust/8 Vitest, QA nativa4MP e Performance API aprovados; builds offline e checks Windows/Linux/macOS verdes no SHA8853d78. |
-| F8 Edição | 🚧 Em implementação | 2026-10-29 | Operações puras, replay e histórico128 implementados; testes iniciais aprovados. Projeto/IPC/interface e aceite completo pendentes. |
+| F8 Edição | ✅ Concluída localmente | 2026-10-29 | 66 testes Rust/13 Vitest;128 níveis, máscaras RLE, projetos e fluxo refinado nativo aprovados;34 SVGs iguais à F7. CI remoto370fa71 em execução. |
 | F9 Otimização/release | ⏳ Pendente | | |
 
 ## Log
+
+### 2026-10-29 — F8 / Aceite local e início da F9
+- Implementação commit370fa714217c8fcf31b2b8b88458bf2fd91fd551 publicada. Harness repetido no commit exato (`f8-commit-check`): gate aprovado nas34 imagens, zero gaps e34 SVGs byte-idênticos à F7. Métricas atualizadas em corpus/baselines/session/f8; baseline ativa permanece inalterada. Verificações finais AGENTS§7 e checks deny/WASM aprovados, conforme registro abaixo.
+- Fluxo refinado nativo completo e round-trip de projeto/exportação aprovados. Critérios F8 satisfeitos localmente; F9 liberada. CI remoto adicional em https://github.com/anticristhian/AntiVector/actions/runs/40865746626 ainda em execução, sem alegação de resultado remoto desta versão. Gate obrigatório anterior de build nos três sistemas já cumprido em F7.
+
+Checklist nativo F8 — Windows/WebView2:
+- [x] Abrir → escolher Ilustração → ajustar detalhe75%.
+- [x] Recolorir RGB, selecionar com conta-gotas e travar cor.
+- [x] Borracha de região, desfazer e refazer com restauração visual.
+- [x] Comparar em Diferença e consultar SSIM estimado real.
+- [x] Salvar/reabrir .avproj com parâmetros, locks e máscara conservados.
+- [x] Exportar antes/depois de reabrir: SVGs303bytes com SHA256 idêntico.
+- Mesclas/exclusões adicionais, Shift-remover e≥100 revisões também têm cobertura automatizada; não são declarados cliques nativos não executados.
 
 ### 2026-10-29 — F8 / Operações topológicas e histórico transacional
 - QA nativa Windows aprovada: logo_original_1.png128×128 → modo Ilustração → detalhe75% → recolor #D06820 para #40A0E0 → conta-gotas selecionou essa cor → lock → borracha mesclou o círculo ao fundo → undo restaurou círculo/3paths20nós → redo removeu/2paths14nós → diferença e SSIM estimado0,9622 em128×128 → salvar .avproj → reabrir → exportar. Dois SVGs de303bytes, antes/depois de reabrir, têm SHA256 idêntico B1004182ED37164339769B0DD4526BC05A7FB64CD7F3262449D30E0A27D6BC19. Leitor ZIP independente .NET confirmou quatro membros, três comandos e48runs de máscara; projeto3192bytes. Artefatos/capturas em corpus/baselines/session/f8.
