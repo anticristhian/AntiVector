@@ -16,6 +16,9 @@ Entrada PNG/JPEG/BMP/GIF/TIFF/WebP, até64MP. Presets logo, illustration, photo,
 lineart e pixelart; parâmetros JSON e diagnósticos por estágio. Veja
 [uso da CLI](docs/08_CLI.md) para opções, composição, precisão e códigos de saída.
 
+O [aplicativo desktop](app/README.md) usa Tauri/React, com processamento offline,
+cache por estágio, comparação sincronizada, cancelamento e exportação nativa.
+
 Requer Rust stable com rustfmt/clippy e alvo wasm32-unknown-unknown. Verificações:
 
 ```text
