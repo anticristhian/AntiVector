@@ -3,6 +3,23 @@
 F9 permanece em andamento até todos os critérios de06/01 passarem. Não publicar
 um release como aprovado a partir de um build ou de uma avaliação parcial.
 
+## Estado medido (2026-10-29)
+
+| Gate | Resultado registrado | Evidência |
+|---|---|---|
+| Corpus/cobertura |72 válidas sem gaps;1 corrupção rejeitada |`corpus/baselines/quality/f9/metrics.json` |
+| Fidelidade/compactação |Limites absolutos aprovados;20/25 logos/ilustrações vencem ou empatam em nós e fidelidade |`corpus/baselines/quality/f9/` |
+| RNF01/02 |Logo1MP:282,902ms;ilustração4MP:997,3239ms (mediana de5) |`corpus/baselines/performance/f9/final/metrics.json` |
+| RNF03 |Picos67.817.472/235.687.936bytes nas duas referências |Mesmo relatório RNF |
+| UI |Abertura4MP:zero longtasks≥50ms,drawmáximo0,5ms;frontendproduction/Rustdebug |`corpus/baselines/session/f9/ui-final.jsonl` |
+| Fuzz |90.151 execuções/3.601s,sem crash/panic |`corpus/baselines/robustness/f9/fuzz.txt` |
+| PerfilCPU |23.038 eventos perf;quantização32,28% do peso amostrado |`corpus/baselines/performance/f9/profile-ci.json` e SVG |
+| Instaladores |MSI5.099.520bytes e DMG4.764.465bytes no SHA c32ef5c;AppImage corrigido e nova matriz ainda pendentes |Relatórios `installer-*-attempt2.json` em `corpus/baselines/performance/f9/` |
+| Preferência humana≥80% |Pendente;usuário está preenchendo os72pares |Avaliação local abaixo |
+
+Esses resultados têm os limites de método descritos nas seções seguintes.
+Não substituem gates pendentes nem garantem pior caso em qualquer entrada.
+
 ## Corpus e qualidade
 
 `av-bench gen` conserva o corpus mínimo histórico de34 entradas para testes

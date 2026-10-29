@@ -1,0 +1,11 @@
+{
+  "head_sha": "c32ef5c69b86c81e5636e94e3cfb118de02dfdb4",
+  "artifact_id": 12914322459,
+  "method": "WindowsInstaller.Installer OpenDatabase mode 0 (read-only), File table",
+  "files": [
+    { "name": "av-desktop.exe", "bytes": 13806080 },
+    { "name": "manifest.json", "bytes": 209553 },
+    { "name": "THIRD_PARTY_NOTICES.txt", "bytes": 4499401 }
+  ],
+  "note": "Selected installed file records, not a full file inventory; MSI was not installed."
+}

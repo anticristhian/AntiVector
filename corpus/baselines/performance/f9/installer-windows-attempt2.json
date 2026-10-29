@@ -1,0 +1,11 @@
+{
+  "limit_bytes": 25000000,
+  "platform": "win32",
+  "files": [
+    {
+      "file": "target/release/bundle/msi/AntiVector_0.1.0_x64_en-US.msi",
+      "bytes": 5099520,
+      "sha256": "148b1215e624a22ff31c3c09ee4aaa8ad75d61df9e7f2027f4866c33ee9c299d"
+    }
+  ]
+}

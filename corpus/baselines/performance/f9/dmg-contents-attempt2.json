@@ -1,0 +1,12 @@
+{
+  "head_sha": "c32ef5c69b86c81e5636e94e3cfb118de02dfdb4",
+  "artifact_id": 12913564078,
+  "method": "7-Zip 26.05 read-only DMG/HFS inventory",
+  "files": [
+    { "name": "AntiVector.app/Contents/MacOS/av-desktop", "bytes": 12321232 },
+    { "name": "AntiVector.app/Contents/Resources/notices/manifest.json", "bytes": 202118 },
+    { "name": "AntiVector.app/Contents/Resources/notices/THIRD_PARTY_NOTICES.txt", "bytes": 4414859 }
+  ],
+  "notices_and_manifest_equal_to_local_after_crlf_normalization": true,
+  "note": "Selected archived records; the macOS application was not executed on Windows. Both text files were extracted and compared: differences are checkout line endings only."
+}

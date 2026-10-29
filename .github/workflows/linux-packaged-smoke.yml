@@ -1,0 +1,44 @@
+name: Linux packaged WebView diagnostic
+
+on:
+  push:
+    paths:
+      - scripts/smoke-appimage.sh
+      - .github/workflows/linux-packaged-smoke.yml
+  workflow_dispatch:
+    inputs:
+      artifact_run_id:
+        description: Existing CI run containing installer-ubuntu-latest
+        required: true
+        default: '40912209916'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install operating system WebView and headless session services
+        run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-0 libxdo3 libayatana-appindicator3-1 xvfb dbus-x11 at-spi2-core
+      - uses: actions/download-artifact@v4
+        with:
+          name: installer-ubuntu-latest
+          run-id: ${{ inputs.artifact_run_id || '40912209916' }}
+          github-token: ${{ github.token }}
+          path: target/release/bundle
+      - name: Restore executable permission lost by the ZIP artifact
+        run: chmod +x target/release/bundle/appimage/*-system-webview.AppImage
+      - name: Measure the existing installer
+        run: node scripts/check-installers.mjs
+      - name: Test embedded page startup
+        run: bash scripts/smoke-appimage.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: packaged-webview-diagnostic
+          path: |
+            target/release/bundle/installer-sizes.json
+            target/release/bundle/appimage/smoke-*.txt
