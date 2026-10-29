@@ -10,6 +10,6 @@
    - `cargo fmt --all -- --check`
    - `cargo clippy --workspace --all-targets -- -D warnings`
    - `cargo test --workspace`
-   - (a partir de F6) `pnpm -C app lint && pnpm -C app test && pnpm -C app build`
+   - (a partir de F7) `pnpm -C app lint && pnpm -C app test && pnpm -C app build`
 8. Proibido: linkar código GPL/AGPL (ex.: potrace) no produto; copiar código ou assets do Vector Magic.
 9. Prossiga autonomamente; só interrompa por bloqueio real (ambiente, decisão impossível de tomar com os docs).

@@ -7,24 +7,68 @@ use av_core::{
 };
 use std::path::PathBuf;
 
-#[derive(clap::Args)]
+#[derive(Clone, clap::Args)]
 pub struct VectorizeArgs {
-    #[arg(long,value_parser=["exact","overlap"])]
-    pub stacking: Option<String>,
+    #[command(flatten)]
+    pub settings: Settings,
     pub input: PathBuf,
     #[arg(short, long)]
     pub output: PathBuf,
+    #[arg(long,num_args=0..=1,default_missing_value="bench-out/stages")]
+    pub dump_stages: Option<PathBuf>,
+}
+
+#[derive(Clone, clap::Args)]
+pub struct Settings {
+    #[arg(long,value_parser=["exact","overlap"])]
+    pub stacking: Option<String>,
+    /// Override the output extension (svg/pdf/eps/dxf/png).
+    #[arg(long,value_parser=["svg","pdf","eps","dxf","png"])]
+    pub format: Option<String>,
+    #[arg(long,default_value_t=2,value_parser=clap::value_parser!(u8).range(0..=8))]
+    pub precision: u8,
+    /// Combine equal RGB colors into one SVG path; requires exact stacking.
+    #[arg(long)]
+    pub group_by_color: bool,
+    #[arg(long,default_value_t=av_core::raster::DEFAULT_PIXEL_LIMIT)]
+    pub max_pixels: u64,
     #[arg(long, default_value = "logo")]
     pub preset: String,
     #[arg(long)]
     pub params: Option<PathBuf>,
     #[arg(long)]
     pub colors: Option<u16>,
-    #[arg(long,num_args=0..=1,default_missing_value="bench-out/stages")]
-    pub dump_stages: Option<PathBuf>,
 }
 
-type Failure = (u8, String);
+pub type Failure = (u8, String);
+
+impl Settings {
+    pub fn options(&self) -> Result<av_export::svg::SvgOptions, Failure> {
+        let options = av_export::svg::SvgOptions {
+            overlap: self
+                .stacking
+                .as_deref()
+                .map_or(!self.group_by_color, |s| s == "overlap"),
+            precision: self.precision,
+            group_by_color: self.group_by_color,
+        };
+        options.validate().map_err(core_error)?;
+        Ok(options)
+    }
+    pub fn parameters(&self) -> Result<Params, Failure> {
+        let mut p = if let Some(path) = &self.params {
+            Params::from_json(&std::fs::read_to_string(path).map_err(|e| (4, e.to_string()))?)
+                .map_err(core_error)?
+        } else {
+            Params::preset(&self.preset).map_err(core_error)?
+        };
+        if let Some(n) = self.colors {
+            p.colors = ColorCount::Fixed(n);
+        }
+        p.validate().map_err(core_error)?;
+        Ok(p)
+    }
+}
 
 fn core_error(error: CoreError) -> Failure {
     (
@@ -56,19 +100,24 @@ fn raster(
 }
 
 pub fn run(args: VectorizeArgs) -> Result<(), Failure> {
-    let mut params = if let Some(path) = &args.params {
-        Params::from_json(&std::fs::read_to_string(path).map_err(|e| (4, e.to_string()))?)
-            .map_err(core_error)?
-    } else {
-        Params::preset(&args.preset).map_err(core_error)?
-    };
-    if let Some(n) = args.colors {
-        params.colors = ColorCount::Fixed(n);
+    let options = args.settings.options()?;
+    let format = av_export::Format::parse(
+        args.settings
+            .format
+            .as_deref()
+            .or_else(|| args.output.extension().and_then(|e| e.to_str()))
+            .ok_or_else(|| (2, "output needs a supported extension or --format".into()))?,
+    )
+    .map_err(core_error)?;
+    let mut params = args.settings.parameters()?;
+    if let (Ok(input), Ok(output)) = (args.input.canonicalize(), args.output.canonicalize()) {
+        if input == output {
+            return Err((2, "output must differ from input".into()));
+        }
     }
-    params.validate().map_err(core_error)?;
-    let image = crate::decode::load(&args.input, av_core::raster::DEFAULT_PIXEL_LIMIT)
+    let image = crate::decode::load(&args.input, args.settings.max_pixels)
         .map_err(|e| (e.exit_code(), e.to_string()))?;
-    if args.params.is_none() {
+    if args.settings.params.is_none() {
         params.min_region_area =
             av_core::params::default_min_region_area(params.detail, image.w, image.h);
         if params.experimental.quality_v5 {
@@ -126,17 +175,12 @@ pub fn run(args: VectorizeArgs) -> Result<(), Failure> {
         }
     }
     let doc = finish(&stages, &ctl).map_err(core_error)?;
-    let options = av_export::svg::SvgOptions {
-        overlap: args.stacking.as_deref().map_or_else(
-            || av_export::svg::SvgOptions::default().overlap,
-            |mode| mode == "overlap",
-        ),
-    };
-    let svg = av_export::svg::to_string_with_options(&doc, &options).map_err(core_error)?;
-    std::fs::write(&args.output, svg).map_err(|e| (4, e.to_string()))?;
+    let bytes = av_export::export(&doc, format, &options).map_err(core_error)?;
+    let stats = av_export::statistics(&doc, format, &options).map_err(core_error)?;
+    std::fs::write(&args.output, bytes).map_err(|e| (4, e.to_string()))?;
     println!(
         "paths={} nodes={} colors={}",
-        doc.stats.paths, doc.stats.nodes, doc.stats.colors
+        stats.paths, stats.nodes, stats.colors
     );
     Ok(())
 }

@@ -103,6 +103,57 @@ fn escape(text: &str) -> String {
         .replace('"', "&quot;")
 }
 
+/// Measure external rasterizers; this does not replace the non-AA topology gate.
+pub fn render_check(reference: &Path, rendered: &Path, out: &Path, label: &str) -> Result<()> {
+    safe_name(label)?;
+    let load = |path: &Path| -> Result<av_core::RgbaImage> {
+        let image = image::open(path)?.to_rgba8();
+        Ok(av_core::RgbaImage::new(
+            image.width(),
+            image.height(),
+            image.pixels().map(|p| p.0).collect(),
+        )?)
+    };
+    let mut files = fs::read_dir(reference)?
+        .map(|entry| entry.map(|e| e.path()))
+        .collect::<std::io::Result<Vec<_>>>()?;
+    files.sort();
+    let mut rows = Vec::new();
+    for path in files
+        .into_iter()
+        .filter(|p| p.is_file() && p.extension().is_some_and(|e| e == "png"))
+    {
+        let original = load(&path)?;
+        let candidate = load(&rendered.join(path.file_name().ok_or("missing filename")?))?;
+        let metrics = av_metrics::compare(&original, &candidate, &candidate, 128)?;
+        rows.push(serde_json::json!({"id":path.file_stem().unwrap().to_string_lossy(),"ssim":metrics.ssim,"delta_e_mean":metrics.delta_e_mean,"width":original.w,"height":original.h}));
+    }
+    if rows.is_empty() {
+        return Err("no PNG references".into());
+    }
+    let minimum = rows
+        .iter()
+        .map(|r| r["ssim"].as_f64().unwrap())
+        .fold(1.0, f64::min);
+    let mean = rows
+        .iter()
+        .map(|r| r["ssim"].as_f64().unwrap())
+        .sum::<f64>()
+        / rows.len() as f64;
+    fs::create_dir_all(out.join(label))?;
+    fs::write(
+        out.join(label).join("render-metrics.json"),
+        serde_json::to_vec_pretty(
+            &serde_json::json!({"method":"AA export renders, white-composited; not a non-AA topology test","min_ssim":minimum,"mean_ssim":mean,"rows":rows}),
+        )?,
+    )?;
+    println!(
+        "export renders: {} images, min SSIM={minimum:.12}, mean SSIM={mean:.12}",
+        rows.len()
+    );
+    Ok(())
+}
+
 /// Generate anonymous pairs plus a separate key and an unanswered JSON template.
 pub fn visual(root: &Path, a: &str, b: &str, label: &str, seed: u64) -> Result<()> {
     for value in [a, b, label] {

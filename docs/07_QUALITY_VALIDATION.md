@@ -52,6 +52,22 @@ escala, stacking e parâmetros resolvidos por imagem constam nas métricas.
 - EPS: validação estrutural (cabeçalho DSC, BoundingBox); visual manual com Ghostscript **local** (não distribuído).
 - DXF: parse com crate `dxf` (MIT) e contagem de entidades.
 
+F6: `cargo test -p av-export --test formats` percorre o manifest inteiro e grava
+os cinco formatos e `summary.json` em `target/f6-export-tests/`. PNG e SVG têm
+render RGBA idêntico. PDF é reaberto com lopdf, EPS tem DSC/BoundingBox verificados,
+DXF é reaberto com dxf e deve conter uma POLYLINE por fronteira compartilhada.
+Há snapshots adicionais de EPS, DXF e stream vetorial PDF. O teste de subdivisão
+DXF amostra 10.001 pontos de uma cúbica com inflexão contra a polilinha.
+
+Conferência visual local: Poppler `pdftoppm -scale-to-x W -scale-to-y H -png
+-singlefile entrada.pdf saída` e Ghostscript externo `-dSAFER -dBATCH -dNOPAUSE
+-sDEVICE=pngalpha -dGraphicsAlphaBits=4 -r96 -dEPSCrop`. W/H são os pixels da fonte;
+o modo somente `-r96` do Poppler 26.07 arredondou 1px para2px em dois edge cases,
+apesar de MediaBox=0,75pt correto. Ghostscript não integra dependências/produto.
+`av-bench compare-renders target/f6-export-tests <pasta-renders> --label <nome>`
+salva SSIM/ΔE00 por imagem; diferenças entre AA de renderizadores não substituem
+o gap test sem AA nem a avaliação visual humana cega de F5/F9.
+
 ## 6. Avaliação visual cega (por marco F5, F9)
 Script do harness gera página HTML com pares (A/B embaralhados) de AntiVector × vtracer (e, se disponível localmente, potrace/Inkscape) a 100% e 400%. Avaliador humano escolhe melhor/empate; resultados salvos em `bench-out/visual/<data>.json`. O implementador **não** preenche esta avaliação; registra como pendente em PROGRESS.md para o usuário.
 

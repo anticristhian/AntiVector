@@ -96,6 +96,22 @@ pub mod stages { preprocess, quantize, resolve_aa, label, merge_small, extract_b
 pub struct Control { pub cancel: Arc<AtomicBool>, pub progress: Arc<dyn Fn(Stage, f32) + Send + Sync> }
 ```
 
+### API pública av-export (F6)
+`export(&VectorDoc, Format, &SvgOptions) -> Result<Vec<u8>, CoreError>` não faz
+I/O nem modifica o documento. `statistics` conta a representação emitida, após
+omissão de furos/agrupamento; DXF conta arestas únicas e vértices aproximados.
+
+- SVG 1.1: `precision=0..8` (padrão 2), viewBox no tamanho de entrada; agrupamento
+  por RGB mescla subpaths em um path. Agrupamento exige recorte exato, pois
+  reordenar cores com sobreposição alteraria a ordem de pintura de ADR-010.
+- PDF (`pdf-writer`) e EPS Level 2/DSC: paths vetoriais, preenchimento even-odd;
+  96px equivalem a 72pt, Y convertido para cima. Nenhum raster é embutido.
+- DXF: R12/AC1009, POLYLINE+VERTEX+SEQEND, sem LWPOLYLINE/SPLINE; cada fronteira
+  compartilhada usada é emitida uma vez. Unidade = pixel, Y para cima. Cúbicas
+  subdivididas por de Casteljau até limite conservador ≤0,1px, preservando extremos.
+- PNG: resvg, resolução original, RGBA com transparência; mesmos paths/opções
+  usados no SVG. Recursos externos e fontes não fazem parte da saída.
+
 ### IPC Tauri (comandos)
 | Comando | Entrada | Saída |
 |---|---|---|

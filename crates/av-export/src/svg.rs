@@ -1,7 +1,7 @@
 //! SVG 1.1 writer with shared paths and safe opaque overlap (ADR-010).
 
 use av_core::{
-    assemble::{loop_geometry, Seg, VectorDoc},
+    assemble::{Seg, VectorDoc},
     CoreError,
 };
 use std::collections::{BTreeMap, BTreeSet};
@@ -11,15 +11,28 @@ use std::fmt::Write;
 #[derive(Clone, Copy, Debug)]
 pub struct SvgOptions {
     pub overlap: bool,
+    /// Decimal places, 0..=8. Two preserves the validated F5 default bytes.
+    pub precision: u8,
+    /// Merge paths by RGB. Uses exact holes; overlap and grouping are exclusive.
+    pub group_by_color: bool,
 }
 
 impl Default for SvgOptions {
     fn default() -> Self {
-        Self { overlap: true }
+        Self {
+            overlap: true,
+            precision: 2,
+            group_by_color: false,
+        }
     }
 }
 
-fn omit_hole(doc: &VectorDoc, index: usize, hole: usize, regions: &BTreeMap<u32, usize>) -> bool {
+pub(crate) fn omit_hole(
+    doc: &VectorDoc,
+    index: usize,
+    hole: usize,
+    regions: &BTreeMap<u32, usize>,
+) -> bool {
     let Some(contents) = doc.shapes[index].hole_regions.get(hole) else {
         return false;
     };
@@ -43,19 +56,37 @@ fn omit_hole(doc: &VectorDoc, index: usize, hole: usize, regions: &BTreeMap<u32,
     true
 }
 
-fn number(value: f64) -> Result<String, CoreError> {
+fn number(value: f64, precision: u8) -> Result<String, CoreError> {
     if !value.is_finite() {
         return Err(CoreError::InvalidParams("non-finite SVG coordinate".into()));
     }
     let value = if value == 0.0 { 0.0 } else { value };
-    let mut text = format!("{value:.2}");
+    let mut text = format!("{value:.precision$}", precision = usize::from(precision));
     while text.contains('.') && text.ends_with('0') {
         text.pop();
     }
     if text.ends_with('.') {
         text.pop();
     }
+    if text == "-0" {
+        text = "0".into();
+    }
     Ok(text)
+}
+
+impl SvgOptions {
+    /// Validate precision and the paint-order constraint for grouped paths.
+    pub fn validate(&self) -> Result<(), CoreError> {
+        if self.precision > 8 {
+            return Err(CoreError::InvalidParams("precision must be 0..=8".into()));
+        }
+        if self.group_by_color && self.overlap {
+            return Err(CoreError::InvalidParams(
+                "color grouping requires exact stacking".into(),
+            ));
+        }
+        Ok(())
+    }
 }
 
 /// Serialize deterministically; path coordinates use the identical shared edge data.
@@ -66,28 +97,25 @@ pub fn to_string(doc: &VectorDoc) -> Result<String, CoreError> {
 /// Omit only holes whose complete opaque contents are painted later. Exact mode
 /// retains all loops; both modes preserve the canonical shared curve geometry.
 pub fn to_string_with_options(doc: &VectorDoc, options: &SvgOptions) -> Result<String, CoreError> {
+    options.validate()?;
+    let number = |v| number(v, options.precision);
     let width = number(doc.width)?;
     let height = number(doc.height)?;
     let mut output = format!("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"{width}\" height=\"{height}\" viewBox=\"0 0 {width} {height}\">\n");
-    let regions: BTreeMap<_, _> = doc
-        .shapes
-        .iter()
-        .enumerate()
-        .map(|(i, s)| (s.region, i))
-        .collect();
-    for (index, shape) in doc.shapes.iter().enumerate() {
-        let color = doc
-            .palette
-            .colors
-            .get(shape.color as usize)
-            .ok_or_else(|| CoreError::InvalidParams("SVG palette reference".into()))?;
+    let mut paints = crate::paths::paint(doc, options.overlap)?;
+    if options.group_by_color {
+        let mut groups: BTreeMap<[u8; 3], Vec<_>> = BTreeMap::new();
+        for paint in paints {
+            groups.entry(paint.rgb).or_default().extend(paint.paths);
+        }
+        paints = groups
+            .into_iter()
+            .map(|(rgb, paths)| crate::paths::Paint { rgb, paths })
+            .collect();
+    }
+    for paint in paints {
         let mut d = String::new();
-        for (loop_index, path) in shape.loops.iter().enumerate() {
-            if options.overlap && loop_index > 0 && omit_hole(doc, index, loop_index - 1, &regions)
-            {
-                continue;
-            }
-            let geometry = loop_geometry(&doc.edges, path)?;
+        for geometry in paint.paths {
             write!(
                 d,
                 "M{} {}",
@@ -116,7 +144,7 @@ pub fn to_string_with_options(doc: &VectorDoc, options: &SvgOptions) -> Result<S
         writeln!(
             output,
             "<path fill=\"#{:02x}{:02x}{:02x}\" fill-rule=\"evenodd\" d=\"{}\"/>",
-            color.rgb[0], color.rgb[1], color.rgb[2], d
+            paint.rgb[0], paint.rgb[1], paint.rgb[2], d
         )
         .unwrap();
     }

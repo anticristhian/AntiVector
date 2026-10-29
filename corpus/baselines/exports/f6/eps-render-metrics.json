@@ -1,0 +1,245 @@
+{
+  "mean_ssim": 0.9980637250620866,
+  "method": "AA export renders, white-composited; not a non-AA topology test",
+  "min_ssim": 0.9835851853064872,
+  "rows": [
+    {
+      "delta_e_mean": 0.14021966263330157,
+      "height": 128,
+      "id": "bezier_leaf",
+      "ssim": 0.9961583068203502,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.0,
+      "height": 128,
+      "id": "checker",
+      "ssim": 0.9999999999999442,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.0,
+      "height": 128,
+      "id": "circle_noaa",
+      "ssim": 0.999999999999954,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.1671621592383456,
+      "height": 128,
+      "id": "circle_r50",
+      "ssim": 0.9968073790174232,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.3560467840402505,
+      "height": 128,
+      "id": "concentric",
+      "ssim": 0.9941667035318071,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.0,
+      "height": 128,
+      "id": "diagonal_touch",
+      "ssim": 0.9999999999999202,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.0,
+      "height": 1,
+      "id": "edge_1x1",
+      "ssim": 1.0,
+      "width": 1
+    },
+    {
+      "delta_e_mean": 0.0,
+      "height": 16,
+      "id": "edge_1xn",
+      "ssim": 1.0,
+      "width": 1
+    },
+    {
+      "delta_e_mean": 0.0,
+      "height": 8,
+      "id": "edge_transparent",
+      "ssim": 0.9999999999997526,
+      "width": 8
+    },
+    {
+      "delta_e_mean": 0.0,
+      "height": 16,
+      "id": "edge_uniform",
+      "ssim": 1.0,
+      "width": 16
+    },
+    {
+      "delta_e_mean": 0.12145492798178664,
+      "height": 128,
+      "id": "ellipse",
+      "ssim": 0.9970171921141883,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.17405425161173388,
+      "height": 128,
+      "id": "jpeg_q60",
+      "ssim": 0.9961449341169215,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.0,
+      "height": 128,
+      "id": "junction_t",
+      "ssim": 1.0,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.10738243112602563,
+      "height": 128,
+      "id": "junction_y",
+      "ssim": 0.9835851853064872,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.0,
+      "height": 128,
+      "id": "line_1px",
+      "ssim": 0.9999999999999143,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.0,
+      "height": 128,
+      "id": "line_2px",
+      "ssim": 0.9999999999999212,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.031354519975831434,
+      "height": 128,
+      "id": "logo_original_1",
+      "ssim": 0.9991886830833017,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.031354519975831434,
+      "height": 128,
+      "id": "logo_original_2",
+      "ssim": 0.9992098080153717,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.032530839111876445,
+      "height": 128,
+      "id": "logo_original_3",
+      "ssim": 0.9992374385897963,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.032352912951518854,
+      "height": 128,
+      "id": "logo_original_4",
+      "ssim": 0.999260334168705,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.03127347988314501,
+      "height": 128,
+      "id": "logo_original_5",
+      "ssim": 0.9992927786774969,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.04996857138277435,
+      "height": 128,
+      "id": "multicolor_logo",
+      "ssim": 0.9986699211896728,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.0,
+      "height": 128,
+      "id": "nested_squares",
+      "ssim": 0.9999999999999393,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.0,
+      "height": 96,
+      "id": "pixel_avatar",
+      "ssim": 0.9999999999999084,
+      "width": 96
+    },
+    {
+      "delta_e_mean": 0.0,
+      "height": 96,
+      "id": "pixel_checker",
+      "ssim": 0.9999999999999944,
+      "width": 96
+    },
+    {
+      "delta_e_mean": 0.0,
+      "height": 96,
+      "id": "pixel_flower",
+      "ssim": 0.9999999999999228,
+      "width": 96
+    },
+    {
+      "delta_e_mean": 0.0,
+      "height": 96,
+      "id": "pixel_robot",
+      "ssim": 0.9999999999999187,
+      "width": 96
+    },
+    {
+      "delta_e_mean": 0.0,
+      "height": 96,
+      "id": "pixel_sword",
+      "ssim": 0.9999999999998912,
+      "width": 96
+    },
+    {
+      "delta_e_mean": 0.2799958799914217,
+      "height": 128,
+      "id": "ring",
+      "ssim": 0.9941797060437897,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.06804609840781518,
+      "height": 128,
+      "id": "rounded_rectangle",
+      "ssim": 0.9983953150497383,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.14312942908934148,
+      "height": 128,
+      "id": "square_rot30",
+      "ssim": 0.9963339341910609,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.18404483243842493,
+      "height": 128,
+      "id": "star5",
+      "ssim": 0.9953689086741428,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.20038173640657228,
+      "height": 128,
+      "id": "text_path",
+      "ssim": 0.9957394506483964,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.21038998586658375,
+      "height": 128,
+      "id": "triangles",
+      "ssim": 0.9954106728733186,
+      "width": 128
+    }
+  ]
+}

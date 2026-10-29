@@ -48,7 +48,10 @@ fn snapshots(curves: bool, quality: bool) {
         let doc = av_core::vectorize(&raster, &params, &Default::default()).unwrap();
         let svg = av_export::svg::to_string_with_options(
             &doc,
-            &av_export::svg::SvgOptions { overlap: quality },
+            &av_export::svg::SvgOptions {
+                overlap: quality,
+                ..Default::default()
+            },
         )
         .unwrap();
         let snapshot_name = if quality {

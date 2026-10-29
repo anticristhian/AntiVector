@@ -1,0 +1,37 @@
+---
+source: crates/av-export/tests/formats.rs
+expression: "av_export::eps::to_string(&doc, &options).unwrap()"
+---
+%!PS-Adobe-3.0 EPSF-3.0
+%%Creator: AntiVector
+%%BoundingBox: 0 0 3 3
+%%HiResBoundingBox: 0 0 2.250000 2.250000
+%%LanguageLevel: 2
+%%Pages: 1
+%%EndComments
+%%Page: 1 1
+gsave
+0 2.250000 translate
+0.75 -0.75 scale
+1.00000000 0.00000000 0.00000000 setrgbcolor
+newpath
+0.00000000 0.00000000 moveto
+3.00000000 0.00000000 lineto
+3.00000000 3.00000000 lineto
+0.00000000 3.00000000 lineto
+0.00000000 0.00000000 lineto
+closepath
+eofill
+0.00000000 0.00000000 1.00000000 setrgbcolor
+newpath
+1.00000000 1.00000000 moveto
+2.00000000 1.00000000 lineto
+2.00000000 2.00000000 lineto
+1.00000000 2.00000000 lineto
+1.00000000 1.00000000 lineto
+closepath
+eofill
+grestore
+showpage
+%%Trailer
+%%EOF

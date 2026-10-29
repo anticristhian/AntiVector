@@ -57,6 +57,10 @@ flowchart LR
 **Aceite**: todos critérios 01 §6 e RNF medidos e registrados; zero panics no fuzz; instaladores gerados no CI.
 
 ## Definição de pronto (por tarefa)
+Verificações pnpm passam a ser obrigatórias em F7, quando o app é criado. Correção
+de direção técnica autorizada pelo usuário em 2026-10-28; F6 mantém os checks Rust
+e o gate remoto Windows/Linux/macOS. Não antecipar scaffold de UI para F6.
+
 Código + testes + docs atualizados (rustdoc em APIs públicas) + comandos AGENTS §7 verdes + sem regressão no harness (a partir de F3) + PROGRESS.md atualizado.
 
 ## Evolução e refatoração

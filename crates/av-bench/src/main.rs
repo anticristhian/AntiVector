@@ -19,6 +19,13 @@ struct Cli {
 }
 #[derive(Subcommand)]
 enum Command {
+    /// Measure independently rasterized exports against source-resolution PNGs.
+    CompareRenders {
+        reference: PathBuf,
+        rendered: PathBuf,
+        #[arg(long)]
+        label: String,
+    },
     /// Check F5 fidelity and equivalent-color compactness on the current corpus.
     GateQuality {
         candidate: PathBuf,
@@ -94,6 +101,11 @@ fn overlap(stacking: Option<&str>) -> Result<bool> {
 
 fn execute(cli: Cli) -> Result<()> {
     match cli.command {
+        Command::CompareRenders {
+            reference,
+            rendered,
+            label,
+        } => report::render_check(&reference, &rendered, &cli.output_root, &label),
         Command::GateQuality {
             candidate,
             reference,

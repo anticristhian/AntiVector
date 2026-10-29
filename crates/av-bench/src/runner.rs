@@ -281,7 +281,10 @@ fn vectorize(
     let svg = timed(&mut times, "export_svg", || {
         Ok(av_export::svg::to_string_with_options(
             &doc,
-            &av_export::svg::SvgOptions { overlap },
+            &av_export::svg::SvgOptions {
+                overlap,
+                ..Default::default()
+            },
         )?)
     })?;
     Ok((svg, count, times))

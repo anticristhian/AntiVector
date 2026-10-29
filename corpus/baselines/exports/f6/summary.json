@@ -1,0 +1,240 @@
+[
+  {
+    "dxf_shared_boundaries": 2,
+    "formats": 5,
+    "id": "circle_r50",
+    "pdf_fills": 2,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 2,
+    "formats": 5,
+    "id": "square_rot30",
+    "pdf_fills": 2,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 2,
+    "formats": 5,
+    "id": "star5",
+    "pdf_fills": 2,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 3,
+    "formats": 5,
+    "id": "ring",
+    "pdf_fills": 3,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 4,
+    "formats": 5,
+    "id": "concentric",
+    "pdf_fills": 4,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 6,
+    "formats": 5,
+    "id": "junction_t",
+    "pdf_fills": 3,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 6,
+    "formats": 5,
+    "id": "junction_y",
+    "pdf_fills": 3,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 2,
+    "formats": 5,
+    "id": "line_1px",
+    "pdf_fills": 2,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 2,
+    "formats": 5,
+    "id": "line_2px",
+    "pdf_fills": 2,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 3,
+    "formats": 5,
+    "id": "checker",
+    "pdf_fills": 3,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 3,
+    "formats": 5,
+    "id": "diagonal_touch",
+    "pdf_fills": 3,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 4,
+    "formats": 5,
+    "id": "nested_squares",
+    "pdf_fills": 4,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 2,
+    "formats": 5,
+    "id": "bezier_leaf",
+    "pdf_fills": 2,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 2,
+    "formats": 5,
+    "id": "rounded_rectangle",
+    "pdf_fills": 2,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 2,
+    "formats": 5,
+    "id": "ellipse",
+    "pdf_fills": 2,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 3,
+    "formats": 5,
+    "id": "text_path",
+    "pdf_fills": 3,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 3,
+    "formats": 5,
+    "id": "triangles",
+    "pdf_fills": 3,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 2,
+    "formats": 5,
+    "id": "circle_noaa",
+    "pdf_fills": 2,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 12,
+    "formats": 5,
+    "id": "multicolor_logo",
+    "pdf_fills": 6,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 2,
+    "formats": 5,
+    "id": "jpeg_q60",
+    "pdf_fills": 2,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 3,
+    "formats": 5,
+    "id": "logo_original_1",
+    "pdf_fills": 3,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 3,
+    "formats": 5,
+    "id": "logo_original_2",
+    "pdf_fills": 3,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 4,
+    "formats": 5,
+    "id": "logo_original_3",
+    "pdf_fills": 3,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 4,
+    "formats": 5,
+    "id": "logo_original_4",
+    "pdf_fills": 3,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 4,
+    "formats": 5,
+    "id": "logo_original_5",
+    "pdf_fills": 3,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 1,
+    "formats": 5,
+    "id": "edge_1x1",
+    "pdf_fills": 1,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 0,
+    "formats": 5,
+    "id": "edge_transparent",
+    "pdf_fills": 0,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 1,
+    "formats": 5,
+    "id": "edge_uniform",
+    "pdf_fills": 1,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 1,
+    "formats": 5,
+    "id": "edge_1xn",
+    "pdf_fills": 1,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 16,
+    "formats": 5,
+    "id": "pixel_robot",
+    "pdf_fills": 9,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 5,
+    "formats": 5,
+    "id": "pixel_flower",
+    "pdf_fills": 4,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 9,
+    "formats": 5,
+    "id": "pixel_sword",
+    "pdf_fills": 4,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 9,
+    "formats": 5,
+    "id": "pixel_avatar",
+    "pdf_fills": 6,
+    "svg_png_identical": true
+  },
+  {
+    "dxf_shared_boundaries": 140,
+    "formats": 5,
+    "id": "pixel_checker",
+    "pdf_fills": 64,
+    "svg_png_identical": true
+  }
+]

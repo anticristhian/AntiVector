@@ -1,0 +1,33 @@
+# AntiVector
+
+Motor offline em Rust para converter raster em vetores multicor, usando um grafo
+de fronteiras compartilhadas. Exporta SVG, PDF, EPS, DXF R12 e PNG. Aplicativo
+desktop Tauri/React previsto nas próximas fases; estado real em
+[docs/PROGRESS.md](docs/PROGRESS.md).
+
+```text
+cargo run -p av-cli --release -- corpus/images/logo_original_1.png -o logo.svg
+cargo run -p av-cli --release -- vectorize in.png -o out.pdf --preset logo --colors 8
+cargo run -p av-cli --release -- batch ./in -o ./out --preset illustration --format svg
+cargo run -p av-cli -- info in.png
+```
+
+Entrada PNG/JPEG/BMP/GIF/TIFF/WebP, até64MP. Presets logo, illustration, photo,
+lineart e pixelart; parâmetros JSON e diagnósticos por estágio. Veja
+[uso da CLI](docs/08_CLI.md) para opções, composição, precisão e códigos de saída.
+
+Requer Rust stable com rustfmt/clippy e alvo wasm32-unknown-unknown. Verificações:
+
+```text
+cargo fmt --all -- --check
+cargo clippy --workspace --all-targets -- -D warnings
+cargo test --workspace
+cargo deny check licenses
+cargo check -p av-core --target wasm32-unknown-unknown
+cargo run -p av-bench --release -- run --label local --check-baseline corpus/baselines/metrics.json
+```
+
+O harness inclui corpus original CC0, métricas, comparação vtracer isolada do
+produto, relatórios e avaliação visual cega. Corpus completo/metas de desempenho
+ainda são trabalho de F9. Decisões, arquitetura e fases em
+[docs/00_INDEX.md](docs/00_INDEX.md); regras do implementador em [AGENTS.md](AGENTS.md).

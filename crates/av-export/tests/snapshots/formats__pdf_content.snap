@@ -1,0 +1,21 @@
+---
+source: crates/av-export/tests/formats.rs
+expression: "String::from_utf8(parsed.get_page_content(parsed.get_pages()[&1]).unwrap()).unwrap()"
+---
+0.75 0 0 -0.75 0 2.25 cm
+1 0 0 rg
+0 0 m
+3 0 l
+3 3 l
+0 3 l
+0 0 l
+h
+f*
+0 0 1 rg
+1 1 m
+2 1 l
+2 2 l
+1 2 l
+1 1 l
+h
+f*

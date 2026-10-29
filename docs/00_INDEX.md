@@ -15,6 +15,7 @@ Projeto: vetorizador automático raster→vetor, qualidade de referência Vector
 | 7 | [07_QUALITY_VALIDATION.md](07_QUALITY_VALIDATION.md) | Corpus, métricas, regressão, benchmarks |
 | 8 | [06_IMPLEMENTATION_PLAN.md](06_IMPLEMENTATION_PLAN.md) | Fases, tarefas, critérios de aceite, DoD |
 | 9 | [PROGRESS.md](PROGRESS.md) | Registro vivo de progresso (atualizado pelo implementador) |
+| 10 | [08_CLI.md](08_CLI.md) | Uso da CLI e opções de exportação implementadas em F6 |
 
 ## Ordem de execução
 Seguir as fases de [06_IMPLEMENTATION_PLAN.md](06_IMPLEMENTATION_PLAN.md) estritamente: F0 → F1 → … → F9. Nenhuma fase começa sem os critérios de aceite da anterior passarem.

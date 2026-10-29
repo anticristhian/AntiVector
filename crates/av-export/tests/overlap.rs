@@ -46,8 +46,22 @@ fn verify(image: RgbaImage, colors: u16) -> (String, String) {
     // These exact-color grid fixtures exercise composition, without interpolation.
     params.experimental.force_pixel_art = true;
     let doc = av_core::vectorize(&image, &params, &Control::default()).unwrap();
-    let exact = to_string_with_options(&doc, &SvgOptions { overlap: false }).unwrap();
-    let overlap = to_string_with_options(&doc, &SvgOptions { overlap: true }).unwrap();
+    let exact = to_string_with_options(
+        &doc,
+        &SvgOptions {
+            overlap: false,
+            ..Default::default()
+        },
+    )
+    .unwrap();
+    let overlap = to_string_with_options(
+        &doc,
+        &SvgOptions {
+            overlap: true,
+            ..Default::default()
+        },
+    )
+    .unwrap();
     let a = av_metrics::render::svg(&exact, false).unwrap();
     let b = av_metrics::render::svg(&overlap, false).unwrap();
     assert_eq!(a, b);

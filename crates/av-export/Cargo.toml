@@ -8,12 +8,16 @@ publish.workspace = true
 
 [dependencies]
 av-core = { path = "../av-core" }
+pdf-writer = "0.12"
+resvg = { version = "0.45", default-features = false }
 
 [dev-dependencies]
 proptest = { version = "1", default-features = false, features = ["std"] }
-resvg = { version = "0.45", default-features = false }
+lopdf = { version = "0.38", default-features = false }
+dxf = "0.6"
 insta = { version = "1", default-features = false }
-image = { version = "0.25", default-features = false, features = ["png"] }
+image = { version = "0.25", default-features = false, features = ["png", "jpeg"] }
+serde_json = "1"
 av-metrics = { path = "../av-metrics" }
 rayon = "1"
 
