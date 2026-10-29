@@ -35,6 +35,12 @@ Tecnologia: React 18 + TypeScript + Zustand + Vite dentro de Tauri 2. Idiomas: p
 - Borracha de região: hover destaca região (hit test via `isPointInPath` no Path2D da shape); clique ⇒ `edit{MergeRegion{region, into: auto}}`; Shift+clique ⇒ remover (tornar transparente).
 - Paleta: arrastar swatch sobre outro ⇒ mesclar; clique ⇒ seletor de cor; cadeado ⇒ travar (vai para `palette_lock`).
 - Desfazer/refazer: Ctrl+Z / Ctrl+Shift+Z; cobre parâmetros e edições.
+  F8 mantém128 revisões. Borracha/mescla/conta-gotas destacam a região sob o
+  cursor; conta-gotas seleciona sua cor na paleta. A paleta também oferece
+  destino de mescla por select, RGB hexadecimal, aplicar, travar e excluir.
+  Ctrl+S salva projeto; abrir/drop de .avproj restaura documento e comandos.
+  Diferença compõe os dois resultados sobre branco, com operação difference;
+  SSIM estimado é solicitado no painel e informa o tamanho da amostra.
 - Exportar: diálogo com formato, agrupamento por cor, modo empilhamento (ADR‑006), escala, precisão decimal (default 2), "hairline seal".
 
 ## 3. Renderização

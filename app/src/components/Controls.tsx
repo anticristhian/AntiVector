@@ -9,8 +9,9 @@ function Range({ label, value, min = 0, max = 1, step = 0.01, onChange }:
 }
 
 export function Controls() {
-  const [choice,setChoice]=useState('auto');
-  const { image, params, update, start, phase } = useAppStore(); if (!params || !image) return null;
+  const { image, params, update, start, phase } = useAppStore();
+  const [choice,setChoice]=useState(() => params?.experimental.force_pixel_art ? 'pixelart' : params?.mode === image?.detection.mode ? 'auto' : params?.mode ?? 'auto');
+  if (!params || !image) return null;
   function changeMode(value: string) {
     if (!params || !image) return;
     setChoice(value);
@@ -37,7 +38,7 @@ export function Controls() {
       <Range label="Tolerância" value={params.fit_tolerance_px} min={0.1} max={3} step={0.05} onChange={fit_tolerance_px => update({ fit_tolerance_px })} />
       <label className="check-label"><input type="checkbox" checked={params.antialias_resolve} onChange={e => update({ antialias_resolve: e.target.checked })} />Remover cores de anti-aliasing</label>
     </details>
-    <button className="primary full-width" onClick={start} disabled={phase === 'loading' || phase === 'exporting'}>Vetorizar</button>
+    <button className="primary full-width" onClick={start} disabled={phase === 'loading' || phase === 'exporting' || phase === 'saving'}>Vetorizar</button>
     <p className="local-note"><span className="status-dot" />Processamento local. Sua imagem fica aqui.</p>
   </aside>;
 }

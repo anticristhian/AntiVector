@@ -4,6 +4,7 @@ pub mod assemble;
 pub mod boundary;
 pub mod color;
 pub mod detect;
+pub mod edit;
 pub mod error;
 pub mod fit;
 pub mod params;

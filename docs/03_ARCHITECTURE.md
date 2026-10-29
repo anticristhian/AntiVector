@@ -119,10 +119,12 @@ omissão de furos/agrupamento; DXF conta arestas únicas e vértices aproximados
 | `open_image_bytes` / `open_clipboard` | nome+bytes / sem entrada; reduce_to opcional | mesma sessão decodificada de open_image |
 | `vectorize` | session_id, Params, request_id | job_id; eventos progress/preview/done/error com session_id, request_id e job_id; progress inclui stage/frac, preview/done incluem doc compacto, error inclui code/msg |
 | `cancel` / `close_session` | session_id | cancela o job corrente / cancela e libera a sessão |
-| `edit` | session_id, EditOp | doc delta |
-| `undo`/`redo` | session_id | doc |
+| `edit` | session_id, EditOp, request_id | job_id; mesmo protocolo cancellável de eventos, done inclui doc+params+history |
+| `undo`/`redo` / `current_document` | session_id | `{doc,params,history{undo_depth,redo_depth}}` |
 | `export` | session_id, format, options, path | () |
-| `save_project`/`open_project` | path | session |
+| `save_project` | session_id, path, nome da imagem | gravação atômica .avproj |
+| `open_project` / `open_project_bytes` | path / bytes | sessão com original e estado restaurado, sem re-vetorização automática que descarte edições |
+| `estimate_fidelity` | session_id | SSIM estimado, dimensões da amostra e estimated=true |
 `doc_json_compact`: por shape `{color, d: "M…Z"}` string SVG path pré‑montada (o front não reconstrói geometria).
 
 Contrato concretizado em F7: cancelamento usa a sessão para também cobrir a
@@ -132,6 +134,12 @@ ao abrir outra imagem. O job_id Rust continua monotônico por sessão. A prévia
 nunca substitui o documento completo exportável. Paths também incluem region
 e âncoras para inspeção, sem recalcular geometria no JavaScript.
 
+F8: transporte desktop serializa seed u64 como string decimal e aceita string
+ou número no IPC. Arquivos Params/projetos e a CLI mantêm u64 JSON numérico.
+Evita arredondamento JavaScript acima de2^53; teste cobre u64::MAX e overflow.
+Medição de SSIM na UI é opcional e calculada no worker em amostra≤65.536pixels,
+composta sobre branco e identificada como estimativa; não substitui o harness.
+
 ## 5. Cache e re‑execução (av-session)
 Estágios encadeados com chave = hash(entrada do estágio + parâmetros relevantes). Mudança de `smoothness`/`corner_threshold` ⇒ re‑executa só `fit_edges`+`assemble`. Mudança de `colors` ⇒ a partir de `quantize`. Edições de paleta ⇒ re‑rotulagem dos pixels das cores afetadas + estágios seguintes. Tabela de dependência em 04 §11.
 
@@ -139,6 +147,44 @@ F7 implementa a chave por igualdade explícita dos parâmetros relevantes e
 fonte imutável, evitando colisões de hash. Produtos usam Arc; somente estágios
 concluídos são publicados no cache. A chave e invalidações são atualizadas
 antes da execução, para uma interrupção não reutilizar produtos de outra chave.
+
+### Edição, histórico e projeto (F8)
+
+EditOps são transacionais sobre LabelMap/RegionMap: MergePalette, RecolorPalette,
+DeletePalette, LockColor, MergeRegion e RemoveRegion. Mudanças de cor iguais
+coalescem rótulos; remoção torna transparente; MergeRegion exige vizinhança,
+com destino automático por distância OKLab/comprimento de borda e desempate ID.
+Depois da re-rotulagem, extração/ajuste usam um único grafo compartilhado.
+
+Comandos persistidos incluem Selection com ponto em unidades da imagem original
+e RGB de referência. São resolvidos contra os IDs densos atuais no replay,
+evitando reutilizar um ID de outra região após alterar parâmetros. Seleções de
+cor usam primeiro o ponto e depois a cor perceptualmente mais próxima.
+Operações de região também persistem sua máscara em runs `[início,tamanho]`
+no grid preparado, com escala da imagem original. Replay pinta somente essa
+área, nunca a região maior resultante de uma mescla posterior de parâmetros.
+MergeRegion registra a cor/destino resolvido na criação; a máscara se conserva
+e a seleção de destino acompanha a paleta atual. Trocas de escala usam centros
+de pixel para reamostrar a máscara. Dimensões, runs e âncoras são validados.
+Novos comandos inválidos são rejeitados antes de entrar no histórico.
+
+Editor prepara rascunhos; somente o job ativo confirma documento e histórico.
+Até128 revisões anteriores guardam parâmetros, comandos e Arc do documento
+montado, compartilhando a fonte e o cache raster. Undo/redo restaura o SVG exato
+e parâmetros, inclusive locks. Uma nova edição elimina redo. Os contadores
+StageCache medem a base; replay de edições é trabalho derivado separado.
+Após haver edições, mudanças de parâmetros conservam o documento anterior até
+o completo, evitando exibir uma prévia sem as edições aplicadas.
+
+Formato `.avproj` v1: ZIP Stored sem ZIP64/comentário, quatro membros fixos:
+manifest.json (`format=antivector`, version=1, width/height e nome da imagem),
+original.png (pixels RGBA8 originais após decodificação F1, PNG sem perda),
+params.json e edits.json (RecordedEdit em ordem). Metadados do contêiner de
+entrada não integram o modelo raster do projeto. Versões futuras exigem migração.
+Não há extração de caminhos para disco. Limites de diretório/membros são
+verificados antes de alocação/decodificação; máximo64MP e10.000 comandos.
+Gravação usa arquivo temporário ao lado do destino, sync e persist atômico;
+falhas de validação/gravação não substituem o projeto anterior.
 
 ## 6. Concorrência
 - Um job ativo por sessão; novo `vectorize` cancela o anterior (cancelamento cooperativo checado a cada ~64 linhas/arestas).

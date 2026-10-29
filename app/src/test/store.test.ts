@@ -14,6 +14,31 @@ afterEach(() => { useAppStore.getState().close(); vi.useRealTimers(); });
 async function open() { await useAppStore.getState().openPath('logo.png'); await vi.runOnlyPendingTimersAsync(); }
 function done(request = useAppStore.getState().request) { handle({ kind: 'done', session_id: 1, request_id: request, job_id: 1, doc: frame }); }
 describe('session state', () => {
+  it('opens projects without discarding restored edits through automatic vectorization', async () => {
+    vi.mocked(bridge.openPath).mockResolvedValue({ ...opened, restored: { doc: frame, params: { ...opened.params, seed: '18446744073709551615' }, history: { undo_depth: 0, redo_depth: 0 } } });
+    await useAppStore.getState().openPath('work.avproj'); await vi.runOnlyPendingTimersAsync();
+    expect(bridge.vectorize).not.toHaveBeenCalled(); expect(useAppStore.getState().completed).toEqual(frame);
+    expect(useAppStore.getState().params?.seed).toBe('18446744073709551615'); expect(useAppStore.getState().phase).toBe('ready');
+  });
+  it('publishes edit history with its document and restores parameters on undo', async () => {
+    await open(); done(); vi.spyOn(bridge, 'edit').mockResolvedValue(2);
+    await useAppStore.getState().edit({ kind: 'recolor_palette', color: 0, rgb: [10, 20, 30] });
+    const request = useAppStore.getState().request;
+    handle({ kind: 'done', session_id: 1, request_id: request - 1, job_id: 1, doc: frame, history: { undo_depth: 99, redo_depth: 0 } });
+    expect(useAppStore.getState().history.undo_depth).toBe(0);
+    handle({ kind: 'done', session_id: 1, request_id: request, job_id: 2, doc: frame, params: { ...opened.params, smoothness: 0.7 }, history: { undo_depth: 1, redo_depth: 0 } });
+    expect(useAppStore.getState().history.undo_depth).toBe(1);
+    vi.spyOn(bridge, 'travel').mockResolvedValue({ doc: frame, params: opened.params, history: { undo_depth: 0, redo_depth: 1 } });
+    await useAppStore.getState().travel('undo'); expect(bridge.travel).toHaveBeenCalledWith(1, 'undo');
+    expect(useAppStore.getState().params?.smoothness).toBe(0.5); expect(useAppStore.getState().history.redo_depth).toBe(1);
+  });
+  it('saves projects only after a native destination is chosen', async () => {
+    await open(); done(); const path = vi.spyOn(bridge, 'pickProjectPath').mockResolvedValue(null);
+    const save = vi.spyOn(bridge, 'saveProject').mockResolvedValue();
+    await useAppStore.getState().saveProject(); expect(save).not.toHaveBeenCalled();
+    path.mockResolvedValue('work.avproj'); await useAppStore.getState().saveProject();
+    expect(save).toHaveBeenCalledWith(1, 'work.avproj', 'logo.png'); expect(useAppStore.getState().notice).toBe('Projeto salvo.');
+  });
   it('opens, vectorizes automatically and ignores stale job/session messages', async () => {
     await open(); expect(bridge.vectorize).toHaveBeenCalledTimes(1); expect(useAppStore.getState().phase).toBe('vectorizing');
     const request = useAppStore.getState().request;

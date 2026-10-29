@@ -31,5 +31,12 @@ longtask, duração de desenho e visibilidade; sem essas variáveis, não grava
 métricas. O teste Vitest mantém seu cache temporário em target/vitest-tmp para
 compatibilidade com o sandbox Windows.
 
-Estado das fases e evidências reais em ../docs/PROGRESS.md. Edição de regiões,
-histórico e projetos pertencem à F8; acessibilidade/i18n/release à F9.
+F8 acrescenta edição de paleta (RGB, mesclar, excluir e travar), borracha de
+região, conta-gotas, mescla de vizinhas, diferença e estimativa SSIM. Ctrl+Z e
+Ctrl+Shift+Z desfazem/refazem até128 revisões da sessão, incluindo parâmetros.
+Ctrl+S salva um .avproj; o diálogo Abrir também aceita projetos. O arquivo
+preserva os pixels RGBA8 originais, parâmetros e comandos de edição; ao abrir,
+reconstrói o documento completo e inicia um novo histórico de sessão.
+
+Estado das fases e evidências reais em ../docs/PROGRESS.md.
+Acessibilidade/i18n/release pertencem à F9.

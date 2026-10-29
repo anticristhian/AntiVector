@@ -3,9 +3,11 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import AppShell from '../AppShell';
 import { Controls } from '../components/Controls';
 import { ExportDialog } from '../components/ExportDialog';
+import { PalettePanel } from '../components/PalettePanel';
+import { CanvasStage } from '../components/CanvasStage';
 import { useAppStore } from '../state/store';
 import { bridge } from '../ipc/bridge';
-import { opened } from './fixtures';
+import { opened, frame } from './fixtures';
 beforeEach(() => { useAppStore.setState(useAppStore.getInitialState(), true); });
 it('offers a labeled opening action and keeps export disabled without a document', () => {
   const picker = vi.fn(async () => {}); useAppStore.setState({ openPicker: picker }); render(<AppShell />);
@@ -19,9 +21,25 @@ it('maps detail and smoothness to the documented pixel parameters', () => {
   fireEvent.change(screen.getByRole('slider', { name: 'Suavidade' }), { target: { value: '0.7' } });
   expect(update).toHaveBeenCalledWith(expect.objectContaining({ smoothness: 0.7, fit_tolerance_px: 1.14 }));
 });
+it('recolors the selected palette entry and provides document undo from a focused slider', () => {
+  const edit = vi.fn(async () => {}), travel = vi.fn(async () => {});
+  useAppStore.setState({ image: opened, params: opened.params, doc: frame, completed: frame, phase: 'ready', selectedColor: 0, edit, travel, history: { undo_depth: 1, redo_depth: 0 } });
+  const { unmount } = render(<PalettePanel />);
+  fireEvent.change(screen.getByLabelText('Nova cor'), { target: { value: '#4080c0' } }); fireEvent.click(screen.getByRole('button', { name: 'Aplicar cor' }));
+  expect(edit).toHaveBeenCalledWith({ kind: 'recolor_palette', color: 0, rgb: [64, 128, 192] }); unmount();
+  render(<AppShell />); fireEvent.keyDown(screen.getByRole('slider', { name: 'Detalhe' }), { key: 'z', ctrlKey: true }); expect(travel).toHaveBeenCalledWith('undo');
+});
+it('erases a hit region with Shift and selects palette colors with the eyedropper', () => {
+  const edit = vi.fn(async () => {}); useAppStore.setState({ image: opened, params: opened.params, doc: frame, completed: frame, phase: 'ready', tool: 'erase', edit });
+  const context = document.createElement('canvas').getContext('2d')!; vi.spyOn(context, 'isPointInPath').mockReturnValue(true);
+  render(<CanvasStage />); const canvas = screen.getByLabelText('Pré-visualização vetorial');
+  fireEvent.pointerDown(canvas, { button: 0, shiftKey: true, clientX: 100, clientY: 100 }); expect(edit).toHaveBeenCalledWith({ kind: 'remove_region', region: 0 });
+  fireEvent.click(screen.getByRole('button', { name: 'Conta-gotas' })); fireEvent.pointerDown(canvas, { button: 0, clientX: 100, clientY: 100 });
+  expect(useAppStore.getState().selectedColor).toBe(0); vi.mocked(context.isPointInPath).mockReturnValue(false);
+});
 it('announces loading and export progress while preventing conflicting actions', () => {
   useAppStore.setState({ phase: 'loading' }); const { rerender } = render(<AppShell />);
-  expect(screen.getByRole('dialog', { name: 'Abrindo imagem' })).toHaveAttribute('aria-busy', 'true');
+  expect(screen.getByRole('dialog', { name: 'Abrindo imagem ou projeto' })).toHaveAttribute('aria-busy', 'true');
   expect(screen.getByRole('progressbar', { name: 'Carregamento da imagem' })).toBeVisible();
   useAppStore.setState({ phase: 'exporting' }); rerender(<AppShell />);
   expect(screen.getByRole('dialog', { name: 'Exportando vetor' })).toBeVisible();

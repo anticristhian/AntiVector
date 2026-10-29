@@ -36,6 +36,9 @@ jobs:
         with:
           components: rustfmt, clippy
           targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+        with:
+          cache-on-failure: true
       - name: Check formatting
         run: cargo fmt --all -- --check
       - name: Check warnings
@@ -59,6 +62,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          cache-on-failure: true
       - name: Measure the versioned corpus and enforce fidelity/topology limits
         run: cargo run -p av-bench --release -- run --config logo --label ci --check-baseline corpus/baselines/metrics.json
       - name: Retain measured metrics, SVGs, renders and difference maps

@@ -16,6 +16,14 @@ pub fn run() {
             commands::vectorize,
             commands::cancel,
             commands::close_session,
+            commands::edit,
+            commands::undo,
+            commands::redo,
+            commands::save_project,
+            commands::open_project,
+            commands::open_project_bytes,
+            commands::current_document,
+            commands::estimate_fidelity,
             commands::export
         ])
         .run(tauri::generate_context!())

@@ -38,6 +38,47 @@ pub struct StageCache {
     counts: CacheCounters,
 }
 
+/// One shared segmentation checkpoint; history never duplicates its pixel buffers.
+#[derive(Clone)]
+pub struct SegmentationSnapshot {
+    pub image: Arc<RgbaImage>,
+    pub map: Arc<RegionMap>,
+    pub palette: Arc<Palette>,
+    pub scale: u32,
+    pub pixel_art: bool,
+}
+
+impl SegmentationSnapshot {
+    /// Rebuild all affected boundaries once, preserving shared geometry after edits.
+    pub fn assemble(
+        &self,
+        map: &RegionMap,
+        palette: &Palette,
+        params: &Params,
+        ctl: &Control,
+    ) -> Result<VectorDoc, CoreError> {
+        let graph = stages::extract_boundaries(map, ctl)?;
+        let params = av_core::pipeline::scaled_params(params, self.scale);
+        let edges = if params.experimental.curve_fit {
+            av_core::fit::fit_edges_for_regions_at_scale(
+                &graph,
+                map,
+                palette,
+                &params,
+                self.pixel_art,
+                self.scale,
+                ctl,
+            )?
+        } else {
+            av_core::assemble::polygon_edges(&graph)
+        };
+        Ok(av_core::pipeline::restore_scale(
+            av_core::assemble::assemble(map, &graph, palette, edges, ctl)?,
+            self.scale,
+        ))
+    }
+}
+
 fn changed(a: &Params, b: &Params) -> usize {
     let x = &a.experimental;
     let y = &b.experimental;
@@ -98,6 +139,19 @@ impl StageCache {
     /// Counts only completed executions, useful for cache correctness and profiling.
     pub fn counters(&self) -> CacheCounters {
         self.counts.clone()
+    }
+    /// Snapshot after a successful run; its source and labels are immutable Arc data.
+    pub fn segmentation(&self) -> Option<SegmentationSnapshot> {
+        let (image, scale) = self.prepared.as_ref()?;
+        let (map, palette) = self.merged.as_ref()?;
+        Some(SegmentationSnapshot {
+            image: image.clone(),
+            map: map.clone(),
+            palette: palette.clone(),
+            scale: *scale,
+            pixel_art: self.detection.is_pixel_art
+                || self.key.as_ref()?.experimental.force_pixel_art,
+        })
     }
     fn invalidate(&mut self, from: usize) {
         if from <= 1 {

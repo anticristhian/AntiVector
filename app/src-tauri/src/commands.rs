@@ -22,6 +22,7 @@ pub struct DesktopState {
 struct Entry {
     session: Arc<Session>,
     path: Option<PathBuf>,
+    project: bool,
 }
 
 #[derive(Clone, Debug, Serialize)]
@@ -90,9 +91,39 @@ pub struct OpenedImage {
     h: u32,
     name: String,
     detection: av_core::detect::Detection,
+    #[serde(serialize_with = "serialize_ui_params")]
     params: Params,
     thumb_png_b64: String,
     original_png_b64: String,
+    restored: Option<DocumentState>,
+}
+
+// JavaScript numbers cannot represent every u64 seed. Keep the core/CLI JSON
+// contract numeric, and encode only the desktop transport's seed as decimal text.
+fn params_json(params: &Params) -> Result<serde_json::Value, UiError> {
+    let mut value = serde_json::to_value(params).map_err(UiError::internal)?;
+    value["seed"] = params.seed.to_string().into();
+    Ok(value)
+}
+fn serialize_ui_params<S: serde::Serializer>(
+    params: &Params,
+    serializer: S,
+) -> Result<S::Ok, S::Error> {
+    params_json(params)
+        .map_err(|e| serde::ser::Error::custom(e.msg))?
+        .serialize(serializer)
+}
+fn parse_ui_params(mut value: serde_json::Value) -> Result<Params, UiError> {
+    if let Some(seed) = value.get("seed").and_then(|v| v.as_str()) {
+        let seed = seed
+            .parse::<u64>()
+            .map_err(|e| UiError::new("E_PARAMS", e.to_string()))?;
+        value["seed"] = seed.into();
+    }
+    let params: Params =
+        serde_json::from_value(value).map_err(|e| UiError::new("E_PARAMS", e.to_string()))?;
+    params.validate()?;
+    Ok(params)
 }
 
 fn register(
@@ -101,8 +132,25 @@ fn register(
     path: Option<PathBuf>,
     state: &DesktopState,
 ) -> Result<OpenedImage, UiError> {
+    register_session(Arc::new(Session::new(image)?), name, path, false, state)
+}
+fn register_session(
+    session: Arc<Session>,
+    name: String,
+    path: Option<PathBuf>,
+    project: bool,
+    state: &DesktopState,
+) -> Result<OpenedImage, UiError> {
+    let image = session.source();
     let detection = av_core::detect(&image);
-    let params = av_core::params::resolve_defaults(detection.mode, &detection);
+    let restored = session
+        .revision()?
+        .map(|revision| document_state(&session, &revision))
+        .transpose()?;
+    let params = session
+        .revision()?
+        .map(|r| r.params)
+        .unwrap_or_else(|| av_core::params::resolve_defaults(detection.mode, &detection));
     let thumb = av_session::jobs::preview_raster(&image, 65_536, &Control::default())?;
     let thumb_png_b64 = STANDARD.encode(av_session::decode::png_bytes(&thumb)?);
     let original_png_b64 = if thumb.w == image.w && thumb.h == image.h {
@@ -111,13 +159,15 @@ fn register(
         STANDARD.encode(av_session::decode::png_bytes(&image)?)
     };
     let (w, h) = (image.w, image.h);
-    let session = Arc::new(Session::new(image)?);
     let id = state.next.fetch_add(1, Ordering::Relaxed) + 1;
-    state
-        .entries
-        .lock()
-        .map_err(UiError::internal)?
-        .insert(id, Entry { session, path });
+    state.entries.lock().map_err(UiError::internal)?.insert(
+        id,
+        Entry {
+            session,
+            path,
+            project,
+        },
+    );
     Ok(OpenedImage {
         session_id: id,
         w,
@@ -127,6 +177,7 @@ fn register(
         params,
         thumb_png_b64,
         original_png_b64,
+        restored,
     })
 }
 
@@ -237,6 +288,19 @@ pub async fn open_clipboard(
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn desktop_seed_transport_preserves_all_u64_values() {
+        let params = Params {
+            seed: u64::MAX,
+            ..Params::default()
+        };
+        let json = params_json(&params).unwrap();
+        assert_eq!(json["seed"], u64::MAX.to_string());
+        assert_eq!(parse_ui_params(json).unwrap().seed, u64::MAX);
+        let mut invalid = params_json(&params).unwrap();
+        invalid["seed"] = "18446744073709551616".into();
+        assert_eq!(parse_ui_params(invalid).unwrap_err().code, "E_PARAMS");
+    }
     #[test]
     fn decoded_session_and_compact_paths_match_the_svg_writer() {
         let state = DesktopState::default();
@@ -362,7 +426,7 @@ fn frame(doc: &VectorDoc) -> Result<Frame, UiError> {
 #[tauri::command]
 pub fn vectorize(
     session_id: u64,
-    params: Params,
+    params: serde_json::Value,
     request_id: u64,
     app: AppHandle,
     state: State<'_, Arc<DesktopState>>,
@@ -370,37 +434,244 @@ pub fn vectorize(
     let session = state.session(session_id)?;
     session
         .start(
-            params,
-            Arc::new(move |event| {
-                let (name, payload) = match event {
-                    JobEvent::Progress {
-                        job_id,
-                        stage,
-                        fraction,
-                    } => (
-                        "progress",
-                        serde_json::json!({"job_id":job_id,"stage":stage,"frac":fraction}),
-                    ),
-                    JobEvent::Preview { job_id, doc } => match frame(&doc) {
-                        Ok(frame) => ("preview", serde_json::json!({"job_id":job_id,"doc":frame})),
-                        Err(error) => ("error", serde_json::json!({"job_id":job_id,"error":error})),
-                    },
-                    JobEvent::Done { job_id, doc } => match frame(&doc) {
-                        Ok(frame) => ("done", serde_json::json!({"job_id":job_id,"doc":frame})),
-                        Err(error) => ("error", serde_json::json!({"job_id":job_id,"error":error})),
-                    },
-                    JobEvent::Error { job_id, error } => (
-                        "error",
-                        serde_json::json!({"job_id":job_id,"error":UiError::from(error)}),
-                    ),
-                };
-                let mut payload = payload;
-                payload["session_id"] = session_id.into();
-                payload["request_id"] = request_id.into();
-                let _ = app.emit(name, payload);
-            }),
+            parse_ui_params(params)?,
+            notifications(session.clone(), session_id, request_id, app),
         )
         .map_err(Into::into)
+}
+fn notifications(
+    session: Arc<Session>,
+    session_id: u64,
+    request_id: u64,
+    app: AppHandle,
+) -> Arc<dyn Fn(JobEvent) + Send + Sync> {
+    Arc::new(move |event| {
+        let (name, payload) = match event {
+            JobEvent::Progress {
+                job_id,
+                stage,
+                fraction,
+            } => (
+                "progress",
+                serde_json::json!({"job_id":job_id,"stage":stage,"frac":fraction}),
+            ),
+            JobEvent::Preview { job_id, doc } => match frame(&doc) {
+                Ok(frame) => ("preview", serde_json::json!({"job_id":job_id,"doc":frame})),
+                Err(error) => ("error", serde_json::json!({"job_id":job_id,"error":error})),
+            },
+            JobEvent::Done { job_id, doc } => match completed_state(&session, &doc) {
+                Ok(result) => (
+                    "done",
+                    serde_json::json!({"job_id":job_id,"doc":result.doc,"params":params_json(&result.params).ok(),"history":result.history}),
+                ),
+                Err(error) => ("error", serde_json::json!({"job_id":job_id,"error":error})),
+            },
+            JobEvent::Error { job_id, error } => (
+                "error",
+                serde_json::json!({"job_id":job_id,"error":UiError::from(error)}),
+            ),
+        };
+        let mut payload = payload;
+        payload["session_id"] = session_id.into();
+        payload["request_id"] = request_id.into();
+        let _ = app.emit(name, payload);
+    })
+}
+
+#[derive(Serialize)]
+pub struct DocumentState {
+    doc: Frame,
+    #[serde(serialize_with = "serialize_ui_params")]
+    params: Params,
+    history: av_session::editor::HistoryStatus,
+}
+fn document_state(
+    session: &Session,
+    revision: &av_session::editor::Revision,
+) -> Result<DocumentState, UiError> {
+    Ok(DocumentState {
+        doc: frame(&revision.doc)?,
+        params: revision.params.clone(),
+        history: session.history()?,
+    })
+}
+fn completed_state(session: &Session, doc: &VectorDoc) -> Result<DocumentState, UiError> {
+    let revision = session
+        .revision()?
+        .ok_or_else(|| UiError::new("E_INTERNAL", "Revisão concluída ausente"))?;
+    Ok(DocumentState {
+        doc: frame(doc)?,
+        params: revision.params,
+        history: session.history()?,
+    })
+}
+
+#[derive(Serialize)]
+pub struct FidelityEstimate {
+    ssim: f64,
+    width: u32,
+    height: u32,
+    estimated: bool,
+}
+#[tauri::command]
+pub async fn estimate_fidelity(
+    session_id: u64,
+    state: State<'_, Arc<DesktopState>>,
+) -> Result<FidelityEstimate, UiError> {
+    let session = state.session(session_id)?;
+    let doc = session
+        .latest()?
+        .ok_or_else(|| UiError::new("E_PARAMS", "Nenhum vetor concluído"))?;
+    tauri::async_runtime::spawn_blocking(move || {
+        let original =
+            av_session::jobs::preview_raster(&session.source(), 65_536, &Control::default())?;
+        let svg = av_export::svg::to_string(&doc)?
+            .replacen(
+                &format!("width=\"{}\"", doc.width),
+                &format!("width=\"{}\"", original.w),
+                1,
+            )
+            .replacen(
+                &format!("height=\"{}\"", doc.height),
+                &format!("height=\"{}\"", original.h),
+                1,
+            );
+        let rendered = av_metrics::render::svg(&svg, true)?;
+        Ok(FidelityEstimate {
+            ssim: av_metrics::ssim::ssim(&original, &rendered)?,
+            width: original.w,
+            height: original.h,
+            estimated: true,
+        })
+    })
+    .await
+    .map_err(UiError::internal)?
+}
+#[tauri::command]
+pub fn edit(
+    session_id: u64,
+    op: av_core::edit::EditOp,
+    request_id: u64,
+    app: AppHandle,
+    state: State<'_, Arc<DesktopState>>,
+) -> Result<u64, UiError> {
+    let session = state.session(session_id)?;
+    session
+        .start_edit(
+            op,
+            notifications(session.clone(), session_id, request_id, app),
+        )
+        .map_err(Into::into)
+}
+#[tauri::command]
+pub async fn undo(
+    session_id: u64,
+    state: State<'_, Arc<DesktopState>>,
+) -> Result<DocumentState, UiError> {
+    let session = state.session(session_id)?;
+    tauri::async_runtime::spawn_blocking(move || {
+        let revision = session.undo()?;
+        document_state(&session, &revision)
+    })
+    .await
+    .map_err(UiError::internal)?
+}
+#[tauri::command]
+pub async fn redo(
+    session_id: u64,
+    state: State<'_, Arc<DesktopState>>,
+) -> Result<DocumentState, UiError> {
+    let session = state.session(session_id)?;
+    tauri::async_runtime::spawn_blocking(move || {
+        let revision = session.redo()?;
+        document_state(&session, &revision)
+    })
+    .await
+    .map_err(UiError::internal)?
+}
+#[tauri::command]
+pub async fn current_document(
+    session_id: u64,
+    state: State<'_, Arc<DesktopState>>,
+) -> Result<DocumentState, UiError> {
+    let session = state.session(session_id)?;
+    tauri::async_runtime::spawn_blocking(move || {
+        let revision = session
+            .revision()?
+            .ok_or_else(|| UiError::new("E_PARAMS", "Nenhum vetor concluído"))?;
+        document_state(&session, &revision)
+    })
+    .await
+    .map_err(UiError::internal)?
+}
+#[tauri::command]
+pub async fn save_project(
+    session_id: u64,
+    path: String,
+    name: String,
+    state: State<'_, Arc<DesktopState>>,
+) -> Result<(), UiError> {
+    let session = state.session(session_id)?;
+    let source = state
+        .entries
+        .lock()
+        .map_err(UiError::internal)?
+        .get(&session_id)
+        .filter(|e| !e.project)
+        .and_then(|e| e.path.clone());
+    tauri::async_runtime::spawn_blocking(move || {
+        let path = PathBuf::from(path);
+        if let Some(source) = source {
+            if let (Ok(a), Ok(b)) = (source.canonicalize(), path.canonicalize()) {
+                if a == b {
+                    return Err(UiError::new(
+                        "E_PARAMS",
+                        "O projeto deve ser diferente da imagem original",
+                    ));
+                }
+            }
+        }
+        let revision = session
+            .revision()?
+            .ok_or_else(|| UiError::new("E_PARAMS", "Nenhum vetor concluído"))?;
+        av_session::project::save(&path, &name, &session.source(), &revision)
+            .map_err(|e| UiError::new("E_EXPORT_IO", e.to_string()))
+    })
+    .await
+    .map_err(UiError::internal)?
+}
+#[tauri::command]
+pub async fn open_project(
+    path: String,
+    state: State<'_, Arc<DesktopState>>,
+) -> Result<OpenedImage, UiError> {
+    let state = state.inner().clone();
+    tauri::async_runtime::spawn_blocking(move || {
+        let path = PathBuf::from(path);
+        let project = av_session::project::open(&path)
+            .map_err(|e| UiError::new("E_DECODE", e.to_string()))?;
+        let session = Arc::new(Session::new(project.image)?);
+        session.restore(&project.params, project.edits, &Control::default())?;
+        register_session(session, project.name, Some(path), true, &state)
+    })
+    .await
+    .map_err(UiError::internal)?
+}
+#[tauri::command]
+pub async fn open_project_bytes(
+    bytes: Vec<u8>,
+    state: State<'_, Arc<DesktopState>>,
+) -> Result<OpenedImage, UiError> {
+    let state = state.inner().clone();
+    tauri::async_runtime::spawn_blocking(move || {
+        let project = av_session::project::open_bytes(&bytes)
+            .map_err(|e| UiError::new("E_DECODE", e.to_string()))?;
+        let session = Arc::new(Session::new(project.image)?);
+        session.restore(&project.params, project.edits, &Control::default())?;
+        register_session(session, project.name, None, true, &state)
+    })
+    .await
+    .map_err(UiError::internal)?
 }
 
 #[tauri::command]

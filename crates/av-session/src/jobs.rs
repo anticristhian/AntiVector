@@ -1,5 +1,9 @@
 //! Cooperative jobs: cancellation never waits for the worker's stage-cache lock.
-use crate::cache::{CacheCounters, StageCache};
+use crate::{
+    cache::CacheCounters,
+    editor::{Editor, HistoryStatus, RecordedEdit, Revision},
+};
+use av_core::edit::EditOp;
 use av_core::{Control, CoreError, Params, RgbaImage, Stage, VectorDoc};
 use std::sync::{
     atomic::{AtomicU64, Ordering},
@@ -32,10 +36,15 @@ pub enum JobEvent {
 /// A source, completed document and one current job with reusable stage products.
 pub struct Session {
     source: Arc<RgbaImage>,
-    cache: Mutex<StageCache>,
+    cache: Mutex<Editor>,
     latest: Mutex<Option<Arc<VectorDoc>>>,
     active: Mutex<Option<(JobId, Control)>>,
     next: AtomicU64,
+}
+
+enum Work {
+    Vectorize(Params),
+    Edit(EditOp),
 }
 
 fn poisoned<T>(_: std::sync::PoisonError<T>) -> CoreError {
@@ -46,7 +55,7 @@ impl Session {
     /// Bind a decoded image. IO and thumbnail encoding belong to the caller.
     pub fn new(image: RgbaImage) -> Result<Self, CoreError> {
         let source = Arc::new(image);
-        let cache = StageCache::new(source.clone())?;
+        let cache = Editor::new(source.clone())?;
         Ok(Self {
             source,
             cache: Mutex::new(cache),
@@ -67,15 +76,58 @@ impl Session {
     pub fn latest(&self) -> Result<Option<Arc<VectorDoc>>, CoreError> {
         Ok(self.latest.lock().map_err(poisoned)?.clone())
     }
-    fn compute(&self, p: &Params, ctl: &Control) -> Result<Arc<VectorDoc>, CoreError> {
+    fn compute(&self, p: &Params, ctl: &Control) -> Result<Revision, CoreError> {
         ctl.check()?;
-        self.cache.lock().map_err(poisoned)?.run(p, ctl)
+        self.cache.lock().map_err(poisoned)?.draft_params(p, ctl)
     }
     /// Synchronous worker API, also useful to headless consumers and cache tests.
     pub fn vectorize(&self, p: &Params, ctl: &Control) -> Result<Arc<VectorDoc>, CoreError> {
-        let doc = self.compute(p, ctl)?;
+        let mut editor = self.cache.lock().map_err(poisoned)?;
+        let revision = editor.draft_params(p, ctl)?;
+        let doc = revision.doc.clone();
+        editor.commit(revision);
         *self.latest.lock().map_err(poisoned)? = Some(doc.clone());
         Ok(doc)
+    }
+    /// Current parameters and bound edits for UI synchronization and project storage.
+    pub fn revision(&self) -> Result<Option<Revision>, CoreError> {
+        Ok(self.cache.lock().map_err(poisoned)?.current())
+    }
+    /// Availability of the shared command/document history.
+    pub fn history(&self) -> Result<HistoryStatus, CoreError> {
+        Ok(self.cache.lock().map_err(poisoned)?.history())
+    }
+    /// Cancel work and restore the exact previous assembled snapshot.
+    pub fn undo(&self) -> Result<Revision, CoreError> {
+        self.travel(false)
+    }
+    /// Cancel work and restore the next assembled snapshot.
+    pub fn redo(&self) -> Result<Revision, CoreError> {
+        self.travel(true)
+    }
+    fn travel(&self, redo: bool) -> Result<Revision, CoreError> {
+        self.cancel()?;
+        let mut editor = self.cache.lock().map_err(poisoned)?;
+        let active = self.active.lock().map_err(poisoned)?;
+        if let Some((_, ctl)) = active.as_ref() {
+            ctl.cancel.store(true, Ordering::Relaxed);
+        }
+        let revision = if redo { editor.redo()? } else { editor.undo()? };
+        *self.latest.lock().map_err(poisoned)? = Some(revision.doc.clone());
+        Ok(revision)
+    }
+    /// Reconstruct a newly opened project; call before starting asynchronous jobs.
+    pub fn restore(
+        &self,
+        params: &Params,
+        edits: Vec<RecordedEdit>,
+        ctl: &Control,
+    ) -> Result<Revision, CoreError> {
+        let mut editor = self.cache.lock().map_err(poisoned)?;
+        let revision = editor.draft_replay(params, edits, ctl)?;
+        *self.latest.lock().map_err(poisoned)? = Some(revision.doc.clone());
+        editor.commit(revision.clone());
+        Ok(revision)
     }
     /// Signal cancellation immediately, independently of stage-cache ownership.
     pub fn cancel(&self) -> Result<(), CoreError> {
@@ -89,14 +141,17 @@ impl Session {
             .lock()
             .is_ok_and(|a| a.as_ref().is_some_and(|(current, _)| *current == id))
     }
-    fn publish(&self, id: JobId, ctl: &Control, doc: &Arc<VectorDoc>) -> Result<bool, CoreError> {
+    fn publish(&self, id: JobId, ctl: &Control, revision: Revision) -> Result<bool, CoreError> {
+        // Never hold the cancellation lock while waiting for a heavy cache operation.
+        let mut editor = self.cache.lock().map_err(poisoned)?;
         let active = self.active.lock().map_err(poisoned)?;
         if !active.as_ref().is_some_and(|(current, _)| *current == id)
             || ctl.cancel.load(Ordering::Relaxed)
         {
             return Ok(false);
         }
-        *self.latest.lock().map_err(poisoned)? = Some(doc.clone());
+        *self.latest.lock().map_err(poisoned)? = Some(revision.doc.clone());
+        editor.commit(revision);
         Ok(true)
     }
     /// Cancel the previous job and run on a worker. Late events carry their old ID.
@@ -118,6 +173,22 @@ impl Session {
             return Err(CoreError::InvalidParams("zero preview budget".into()));
         }
         p.validate()?;
+        self.start_work(Work::Vectorize(p), preview_pixels, notify)
+    }
+    /// Apply an edit on the same cooperatively cancellable worker/generation protocol.
+    pub fn start_edit(
+        self: &Arc<Self>,
+        op: EditOp,
+        notify: Arc<dyn Fn(JobEvent) + Send + Sync>,
+    ) -> Result<JobId, CoreError> {
+        self.start_work(Work::Edit(op), 0, notify)
+    }
+    fn start_work(
+        self: &Arc<Self>,
+        work: Work,
+        preview_pixels: usize,
+        notify: Arc<dyn Fn(JobEvent) + Send + Sync>,
+    ) -> Result<JobId, CoreError> {
         let id = self.next.fetch_add(1, Ordering::Relaxed);
         let sink = notify.clone();
         let ctl = Control {
@@ -141,25 +212,41 @@ impl Session {
         std::thread::spawn(move || {
             let result = (|| {
                 // A cooperative box preview is independent of the full-resolution cache.
-                if session.source.px.len() > 1_000_000 {
-                    let preview = preview_raster(&session.source, preview_pixels, &ctl)?;
-                    let mut params = p.clone();
-                    params.min_region_area = av_core::params::default_min_region_area(
-                        params.detail,
-                        preview.w,
-                        preview.h,
-                    );
-                    let doc = av_core::vectorize(&preview, &params, &ctl)?;
-                    if session.current(id) {
-                        notify(JobEvent::Preview {
-                            job_id: id,
-                            doc: Arc::new(doc),
-                        });
+                if let Work::Vectorize(ref p) = work {
+                    let has_edits = session
+                        .cache
+                        .lock()
+                        .map_err(poisoned)?
+                        .current()
+                        .is_some_and(|r| !r.edits.is_empty());
+                    if session.source.px.len() > 1_000_000 && !has_edits {
+                        let preview = preview_raster(&session.source, preview_pixels, &ctl)?;
+                        let mut params = p.clone();
+                        params.min_region_area = av_core::params::default_min_region_area(
+                            params.detail,
+                            preview.w,
+                            preview.h,
+                        );
+                        let doc = av_core::vectorize(&preview, &params, &ctl)?;
+                        if session.current(id) {
+                            notify(JobEvent::Preview {
+                                job_id: id,
+                                doc: Arc::new(doc),
+                            });
+                        }
                     }
                 }
-                let doc = session.compute(&p, &ctl)?;
+                let revision = match work {
+                    Work::Vectorize(p) => session.compute(&p, &ctl)?,
+                    Work::Edit(op) => session
+                        .cache
+                        .lock()
+                        .map_err(poisoned)?
+                        .draft_edit(op, &ctl)?,
+                };
+                let doc = revision.doc.clone();
                 ctl.check()?;
-                if session.publish(id, &ctl, &doc)? {
+                if session.publish(id, &ctl, revision)? {
                     notify(JobEvent::Done { job_id: id, doc });
                 }
                 Ok::<_, CoreError>(())
