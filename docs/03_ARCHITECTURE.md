@@ -219,6 +219,7 @@ Cada estágio tem testes unitários com imagens sintéticas geradas no próprio 
 | ADR-012 | Exceção de licença restrita a target-lexicon0.12.16, dependência de build Tauri/Linux | DEFINITIVO, exceção pontual à allowlist F0 |
 | ADR-013 | Exceções BSL-1.0 nas duas dependências da área de transferência Windows | DEFINITIVO, versões auditadas |
 | ADR-014 | Exceção NCSA restrita ao libfuzzer-sys0.4.13 no workspace de fuzz | DEFINITIVO, ferramenta de teste fora do produto |
+| ADR-015 | AppImage com WebView do SO e bootstrap independente auditável | EXPERIMENTO F9, exige tamanho e smoke reais antes de aceite |
 
 Novos ADRs: acrescentar linha + seção abaixo com contexto, decisão, evidência, consequências.
 
@@ -415,3 +416,36 @@ configuração; não distribuir o runtime de fuzz nos instaladores.
 
 Impacto: viabiliza o teste exigido com AddressSanitizer sem introduzir GPL/AGPL
 ou nova dependência de produção. Versões futuras requerem nova revisão.
+
+### ADR-015 — Empacotamento Linux e limite25MB (2026-10-29)
+
+Contexto real: o AppImage padrão Tauri passou no build mas mediu84.691.448bytes,
+reprovando RNF09. Inspeção independente SquashFS mostrou WebKit95.204.697bytes,
+JavaScriptCore32.556.737 e ICUdata30.800.033, além de GTK e outras bibliotecas.
+Esse conjunto inclui o WebView nativo que ADR-003 prevê como componente do SO.
+
+Experimento: preservar o executável Tauri,ícones e recursos próprios em um novo
+AppDir e usar GTK3/WebKitGTK4.1 do SO,sem copiar esses frameworks. Baseline de
+execução:Ubuntu24.04. AppRun é um script próprio que só executa av-desktop;
+o formato continua AppImage. Manter o pacote grande como referência,sem
+substituí-lo destrutivamente. O limite25MB não muda.
+
+Bootstrap separado: runtime oficial AppImage/type2-runtime no commit
+fedfad51acc2860b2916a1eef32ba4a500ff31ef,assetSHA256
+617aa77314d57c8b8e4fae9c3f0b35af7b30d5529cb69e98f64f92510ed98a46.
+O programa éMIT e declara libfuse3LGPL-2.1 junto com bibliotecas permissivas;
+não é linkado ao av-desktop. Isso exige avisos e os fontes correspondentes do
+bootstrap,libfuse3.15 e patch,sem impor LGPL ao motor/CLI/UI. Os fontes e as
+instruções de reconstrução/substituição acompanham o contêiner em runtime-notices/.
+A allowlist Cargo/JS do produto permanece inalterada; nenhum GPL/AGPL pode ser
+linkado no produto. Ferramentas appimagetool/linuxdeploy são usadas só no build.
+
+Evidência primária:
+[runtime e licenças](https://github.com/AppImage/type2-runtime/blob/fedfad51acc2860b2916a1eef32ba4a500ff31ef/LICENSE),
+[build com libfuse e patch](https://github.com/AppImage/type2-runtime/blob/fedfad51acc2860b2916a1eef32ba4a500ff31ef/scripts/common/install-dependencies.sh),
+[appimagetool e runtime substituível](https://github.com/AppImage/appimagetool).
+Assets de build têm hash obrigatório; mudanças upstream falham a verificação.
+
+Aceite ainda pendente: novo contêiner≤25MB,ldd sem dependências ausentes,
+inicialização real do WebView sob Xvfb,avisos/fontes preservados e resultados
+registrados. Não declarar o experimento aprovado pelo simples repack.

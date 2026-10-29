@@ -4,6 +4,14 @@ mod commands;
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .on_page_load(|_, payload| {
+            // Local CI smoke hook, opt-in via environment; no telemetry or UI.
+            if matches!(payload.event(), tauri::webview::PageLoadEvent::Finished) {
+                if let Some(path) = std::env::var_os("AV_STARTUP_MARKER_PATH") {
+                    let _ = std::fs::write(path, b"embedded-webview-page-finished\n");
+                }
+            }
+        })
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_clipboard_manager::init())

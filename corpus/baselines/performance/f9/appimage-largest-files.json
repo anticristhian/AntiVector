@@ -1,0 +1,50 @@
+[
+  {
+    "Path": "usr\\lib\\libwebkit2gtk-4.1.so.0",
+    "Size": 95204697
+  },
+  {
+    "Path": "usr\\lib\\libjavascriptcoregtk-4.1.so.0",
+    "Size": 32556737
+  },
+  {
+    "Path": "usr\\lib\\libicudata.so.74",
+    "Size": 30800033
+  },
+  {
+    "Path": "usr\\bin\\av-desktop",
+    "Size": 17198521
+  },
+  {
+    "Path": "usr\\lib\\libgtk-3.so.0",
+    "Size": 8381185
+  },
+  {
+    "Path": "usr\\lib\\librsvg-2.so.2.50.0",
+    "Size": 6716225
+  },
+  {
+    "Path": "usr\\lib\\librsvg-2.so.2",
+    "Size": 6716225
+  },
+  {
+    "Path": "usr\\lib\\librsvg-2.so",
+    "Size": 6716225
+  },
+  {
+    "Path": "usr\\lib\\libcrypto.so.3",
+    "Size": 5469713
+  },
+  {
+    "Path": "usr\\lib\\AntiVector\\notices\\THIRD_PARTY_NOTICES.txt",
+    "Size": 4414859
+  },
+  {
+    "Path": "usr\\lib\\libicui18n.so.74",
+    "Size": 4015505
+  },
+  {
+    "Path": "usr\\lib\\libicuuc.so.74",
+    "Size": 2324233
+  }
+]

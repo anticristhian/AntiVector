@@ -1,0 +1,11 @@
+{
+  "limit_bytes": 25000000,
+  "platform": "linux",
+  "files": [
+    {
+      "file": "target/release/bundle/appimage/AntiVector_0.1.0_amd64.AppImage",
+      "bytes": 84691448,
+      "sha256": "53f32abd88456d6fb926933f472f92989a23411c622de4153de6881db676b5ed"
+    }
+  ]
+}

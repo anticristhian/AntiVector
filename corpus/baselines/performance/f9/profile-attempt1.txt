@@ -1,0 +1,36 @@
+2026-10-29T15:49:39.0936555Z ##[group]Run export PERF=$(find /usr/lib/linux-tools -type f -name perf | sort -V | tail -n 1)
+2026-10-29T15:49:39.0937306Z export PERF=$(find /usr/lib/linux-tools -type f -name perf | sort -V | tail -n 1)
+2026-10-29T15:49:39.0937740Z test -n "$PERF"
+2026-10-29T15:49:39.0937990Z mkdir -p bench-out/profile
+2026-10-29T15:49:39.0939032Z cargo flamegraph --root -p av-bench --output bench-out/profile/illustration.svg -- profile corpus/baselines/performance/f9/before/illustration-4mp-32.png
+2026-10-29T15:49:39.0958693Z shell: /usr/bin/bash -e {0}
+2026-10-29T15:49:39.0959089Z env:
+2026-10-29T15:49:39.0959296Z   CARGO_HOME: /home/runner/.cargo
+2026-10-29T15:49:39.0959565Z   CARGO_INCREMENTAL: 0
+2026-10-29T15:49:39.0959792Z   CARGO_TERM_COLOR: always
+2026-10-29T15:49:39.0960031Z   CACHE_ON_FAILURE: false
+2026-10-29T15:49:39.0960273Z   CARGO_PROFILE_RELEASE_DEBUG: 1
+2026-10-29T15:49:39.0960560Z   RUSTFLAGS: -Clink-arg=-Wl,--no-rosegment
+2026-10-29T15:49:39.0960874Z   RAYON_NUM_THREADS: 8
+2026-10-29T15:49:39.0961085Z ##[endgroup]
+2026-10-29T15:49:39.1037665Z ##[error]Process completed with exit code 1.
+2026-10-29T15:49:39.1112964Z ##[group]Run actions/upload-artifact@v4
+2026-10-29T15:49:39.1113272Z with:
+2026-10-29T15:49:39.1113465Z   name: cpu-profile
+2026-10-29T15:49:39.1113703Z   path: bench-out/profile/
+2026-10-29T15:49:39.1113938Z   if-no-files-found: warn
+2026-10-29T15:49:39.1114179Z   compression-level: 6
+2026-10-29T15:49:39.1114391Z   overwrite: false
+2026-10-29T15:49:39.1114611Z   include-hidden-files: false
+2026-10-29T15:49:39.1114837Z env:
+2026-10-29T15:49:39.1115030Z   CARGO_HOME: /home/runner/.cargo
+2026-10-29T15:49:39.1115277Z   CARGO_INCREMENTAL: 0
+2026-10-29T15:49:39.1115499Z   CARGO_TERM_COLOR: always
+2026-10-29T15:49:39.1115723Z   CACHE_ON_FAILURE: false
+2026-10-29T15:49:39.1115934Z ##[endgroup]
+2026-10-29T15:49:39.2863242Z (node:4213) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-29T15:49:39.2864248Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-29T15:49:39.2895412Z ##[warning]No files were found with the provided path: bench-out/profile/. No artifacts will be uploaded.
+2026-10-29T15:49:39.3105484Z Post job cleanup.
+2026-10-29T15:49:39.4066339Z [command]/usr/bin/git version
+2026-10-29T15:49:39.4113776Z git version 2.56.0

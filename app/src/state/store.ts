@@ -117,7 +117,7 @@ export const useAppStore = create<State>((set, get) => ({
     const state = get(); if (!state.image || !state.completed || ['loading', 'vectorizing', 'exporting', 'saving'].includes(state.phase)) return;
     try { const path = await bridge.pickProjectPath(state.image.name); if (!path || get().request !== state.request) return;
       set({ phase: 'saving', error: null }); await bridge.saveProject(state.image.session_id, path, state.image.name);
-      if (get().request === state.request) set({ phase: 'ready', exported: path, notice: t("Projeto salvo.") });
+      if (get().request === state.request) set({ phase: 'ready', exported: path, notice: 'Projeto salvo.' });
     } catch (error) { if (get().request === state.request) set({ phase: 'error', error: errorOf(error) }); }
   },
   estimate: async () => {

@@ -40,6 +40,13 @@ it('edits a region and changes comparison views using keyboard controls', () => 
   fireEvent.keyDown(screen.getByRole('tab', { name: 'Lado a lado' }), { key: 'ArrowRight' });
   expect(screen.getByRole('tab', { name: 'Slider' })).toHaveFocus(); expect(useAppStore.getState().view).toBe('slider');
 });
+it('zooms from fit consistently using buttons or keyboard shortcuts', () => {
+  useAppStore.setState({ image: opened, params: opened.params, doc: frame, completed: frame, phase: 'ready' });
+  render(<CanvasStage />); fireEvent.click(screen.getByRole('button', { name: 'Aumentar zoom' }));
+  const buttonZoom=useAppStore.getState().zoom;
+  fireEvent.keyDown(document.body, { key: '0' }); expect(useAppStore.getState().zoom).toBeNull();
+  fireEvent.keyDown(document.body, { key: '+' }); expect(useAppStore.getState().zoom).toBe(buttonZoom);
+});
 it('offers a labeled opening action and keeps export disabled without a document', () => {
   const picker = vi.fn(async () => {}); useAppStore.setState({ openPicker: picker }); render(<AppShell />);
   fireEvent.click(screen.getByRole('button', { name: /Abrir imagem/ })); expect(picker).toHaveBeenCalledTimes(1);

@@ -79,11 +79,20 @@ export function CanvasStage() {
     void source.decode().then(() => createImageBitmap(source)).then(value => {
       resource = value; if (disposed) value.close(); else setBitmap({ session: image.session_id, image: value });
     }).catch(() => { if (!disposed) setBitmap(null); }); return () => { disposed = true; resource?.close(); }; }, [image]);
-  if (!image) return null;
   const paneWidth = view === 'side' ? (size.width - 16) / 2 : size.width;
   const paneHeight = Math.max(120, size.height - 50);
-  const fit = Math.min((paneWidth - 40) / image.w, (paneHeight - 40) / image.h);
+  const fit = image ? Math.min((paneWidth - 40) / image.w, (paneHeight - 40) / image.h) : 1;
   const scale = zoom === null ? fit : zoom / 100;
+  useEffect(() => {
+    const keyboard = (event: KeyboardEvent) => {
+      if (event.ctrlKey || event.metaKey || document.querySelector('[role=dialog]') || event.target instanceof HTMLInputElement || event.target instanceof HTMLSelectElement || event.target instanceof HTMLTextAreaElement) return;
+      if (event.key === '+' || event.key === '=') { event.preventDefault(); setZoom(scale * 125); }
+      if (event.key === '-') { event.preventDefault(); setZoom(scale * 80); }
+      if (event.key === '0') { event.preventDefault(); setZoom(null); setPan([0, 0]); }
+    };
+    window.addEventListener('keydown', keyboard); return () => window.removeEventListener('keydown', keyboard);
+  }, [scale, setZoom, setPan]);
+  if (!image) return null;
   const currentBitmap = bitmap?.session === image.session_id ? bitmap.image : null;
   const selectedRegion = selection?.doc === doc ? selection.region : null;
   const highlight = hovered?.doc === doc ? hovered.region : selectedRegion;

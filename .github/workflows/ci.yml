@@ -26,7 +26,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install Linux desktop dependencies
         if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev libxdo-dev libssl-dev librsvg2-dev libayatana-appindicator3-dev patchelf
+        run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev libxdo-dev libssl-dev librsvg2-dev libayatana-appindicator3-dev patchelf xvfb
       - uses: pnpm/action-setup@v4
         with:
           package_json_file: app/package.json
@@ -55,6 +55,12 @@ jobs:
         run: pnpm -C app lint && pnpm -C app test && pnpm -C app build
       - name: Build offline desktop application
         run: pnpm -C app tauri build --ci --bundles ${{ matrix.bundle }}
+      - name: Package with the operating system WebView
+        if: runner.os == 'Linux'
+        run: bash scripts/lean-appimage.sh
+      - name: Smoke test the Linux application
+        if: runner.os == 'Linux'
+        run: bash scripts/smoke-appimage.sh
       - name: Measure installer size
         run: node scripts/check-installers.mjs
       - name: Retain installers and measured sizes
@@ -67,6 +73,8 @@ jobs:
             target/release/bundle/**/*.dmg
             target/release/bundle/**/*.AppImage
             target/release/bundle/installer-sizes.json
+            target/release/bundle/appimage/*.txt
+            target/release/bundle/appimage/*.sha256
       - name: Check portable core
         run: cargo check -p av-core --target wasm32-unknown-unknown
       - name: Install license checker
@@ -113,8 +121,8 @@ jobs:
           RUSTFLAGS: -Clink-arg=-Wl,--no-rosegment
           RAYON_NUM_THREADS: 8
         run: |
-          export PERF=$(find /usr/lib/linux-tools -type f -name perf | sort -V | tail -n 1)
-          test -n "$PERF"
+          export PERF=$(find -L /usr/lib/linux-tools -type f -name perf | sort -V | tail -n 1)
+          test -n "$PERF" && test -x "$PERF"
           mkdir -p bench-out/profile
           cargo flamegraph --root -p av-bench --output bench-out/profile/illustration.svg -- profile corpus/baselines/performance/f9/before/illustration-4mp-32.png
       - name: Retain measured CPU profile
