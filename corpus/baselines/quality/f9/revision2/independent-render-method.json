@@ -1,0 +1,26 @@
+{
+  "source": "all_formats_parse_and_preserve_the_entire_corpus outputs",
+  "params": "resolve_defaults Logo plus circular_loops=true; opaque_canvas=true",
+  "cases": [
+    "circle_r50",
+    "ring",
+    "concentric",
+    "logo_original_1",
+    "logo_original_2",
+    "logo_compass",
+    "illustration_fish",
+    "illustration_robot",
+    "illustration_rocket",
+    "photo_chelsea",
+    "photo_coffee",
+    "photo_camera",
+    "photo_brick",
+    "photo_astronaut",
+    "ellipse",
+    "diagonal_touch"
+  ],
+  "poppler": "26.07.0",
+  "ghostscript": "10.01.2",
+  "method": "source-resolution independent AA render comparison, not topology gate",
+  "product_linkage": "external QA programs only; neither renderer distributed"
+}

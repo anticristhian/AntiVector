@@ -23,7 +23,12 @@ chmod +x "$appdir/AppRun" "$appdir/usr/bin/av-desktop"
 ldd "$appdir/usr/bin/av-desktop" | tee "$work/system-dependencies.txt"
 if grep -q 'not found' "$work/system-dependencies.txt"; then exit 1; fi
 
-fetch() { curl --fail --location --retry 3 "$1" --output "$2"; }
+# Retry transient TLS/connection failures as well as HTTP failures. Still fail
+# after a bounded number of attempts; never omit sources, notices or hash checks.
+fetch() {
+    curl --fail --location --retry 3 --retry-all-errors --connect-timeout 15 \
+        --max-time 120 "$1" --output "$2"
+}
 # Official tool/runtime assets. A moving upstream asset must fail the hash check.
 fetch https://github.com/AppImage/appimagetool/releases/download/1.9.1/appimagetool-x86_64.AppImage "$work/appimagetool"
 echo "ed4ce84f0d9caff66f50bcca6ff6f35aae54ce8135408b3fa33abfc3cb384eb0  $work/appimagetool" | sha256sum -c -

@@ -1,0 +1,22 @@
+{
+  "run_url": "https://github.com/anticristhian/AntiVector/actions/runs/40966793851",
+  "head_sha": "b4900d36a25a6fdd307c0340e1fa8d88044ae98f",
+  "job_id": 123773225291,
+  "artifact_id": 12938292957,
+  "artifact_zip_sha256": "cb5ed9b507ff6fbc05803d063807dc41b5dad0de05418e4c76bcd370cfbb38f1",
+  "flamegraph_sha256": "53862a540cb861cd59ddc9892a4f49c000d54a0ee32d3af55ac87b1543f8c0e2",
+  "flamegraph_bytes": 356038,
+  "perf_record_events": 30703,
+  "threads": 8,
+  "workload_repetitions": 5,
+  "opaque_canvas_overlap": true,
+  "circular_loops": true,
+  "input": "corpus/baselines/performance/f9/before/illustration-4mp-32.png",
+  "inclusive_weight_percent": {
+    "assemble": 0.19,
+    "resolve_aa": 4.5,
+    "quantize": 35.92,
+    "preprocess": 9.66
+  },
+  "note": "Inclusive weighted CPU samples from SVG, not elapsed time. Nested frames must not be summed. Not RNF evidence."
+}

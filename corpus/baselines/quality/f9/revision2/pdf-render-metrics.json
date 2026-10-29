@@ -1,0 +1,119 @@
+{
+  "mean_ssim": 0.9931795254551684,
+  "method": "AA export renders, white-composited; not a non-AA topology test",
+  "min_ssim": 0.9735552308529805,
+  "rows": [
+    {
+      "delta_e_mean": 0.09786042967617668,
+      "height": 128,
+      "id": "circle_r50",
+      "ssim": 0.9985772731144745,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.17691100747244332,
+      "height": 128,
+      "id": "concentric",
+      "ssim": 0.9977867739724221,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.0,
+      "height": 128,
+      "id": "diagonal_touch",
+      "ssim": 1.0,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.06292347072845475,
+      "height": 128,
+      "id": "ellipse",
+      "ssim": 0.998972678368954,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.12989842813893754,
+      "height": 128,
+      "id": "illustration_fish",
+      "ssim": 0.997755108273731,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.04118798492646159,
+      "height": 128,
+      "id": "illustration_robot",
+      "ssim": 0.9994062732317063,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.15341768952823695,
+      "height": 128,
+      "id": "illustration_rocket",
+      "ssim": 0.9973107116616015,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.1320450497895076,
+      "height": 128,
+      "id": "logo_compass",
+      "ssim": 0.9982051895895279,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.0939414092193102,
+      "height": 128,
+      "id": "logo_original_1",
+      "ssim": 0.997828936344698,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.09698420219982433,
+      "height": 128,
+      "id": "logo_original_2",
+      "ssim": 0.9977735673878457,
+      "width": 128
+    },
+    {
+      "delta_e_mean": 0.49824960287917264,
+      "height": 384,
+      "id": "photo_astronaut",
+      "ssim": 0.974572139944445,
+      "width": 384
+    },
+    {
+      "delta_e_mean": 0.2561131318489931,
+      "height": 384,
+      "id": "photo_brick",
+      "ssim": 0.9882312928533025,
+      "width": 384
+    },
+    {
+      "delta_e_mean": 0.2443057514170413,
+      "height": 384,
+      "id": "photo_camera",
+      "ssim": 0.9827403759417344,
+      "width": 384
+    },
+    {
+      "delta_e_mean": 0.2867253612539351,
+      "height": 255,
+      "id": "photo_chelsea",
+      "ssim": 0.9899966167506771,
+      "width": 384
+    },
+    {
+      "delta_e_mean": 0.44761856534961614,
+      "height": 256,
+      "id": "photo_coffee",
+      "ssim": 0.9735552308529805,
+      "width": 384
+    },
+    {
+      "delta_e_mean": 0.13235081048373476,
+      "height": 128,
+      "id": "ring",
+      "ssim": 0.9981602389945932,
+      "width": 128
+    }
+  ]
+}

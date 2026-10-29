@@ -1,0 +1,5 @@
+2026-10-29T22:34:41.4069574Z quality gate passed for 34 baseline images (timing gate is local/nightly only)
+2026-10-29T22:35:04.6555924Z quality gate passed for 72 baseline images (timing gate is local/nightly only)
+2026-10-29T22:35:04.7812052Z F5 current corpus: 22/25 equivalent-color logo/illustration wins; 72 images checked for gaps; human blind evaluation remains separate
+2026-10-29T22:35:04.7812988Z F5 quality gate passed
+2026-10-29T22:35:04.8922622Z F4 geometry: mean Hausdorff=0.421196691556, mean corner recall=0.988095238095, nodes+SSIM >= reference on 18/20 (90.00%), gaps=0
