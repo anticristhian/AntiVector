@@ -218,6 +218,7 @@ Cada estágio tem testes unitários com imagens sintéticas geradas no próprio 
 | ADR-011 | Calibração de AA, upscale, denoise e pixel art no corpus F5 | Hipóteses calibradas, alternativas por flags |
 | ADR-012 | Exceção de licença restrita a target-lexicon0.12.16, dependência de build Tauri/Linux | DEFINITIVO, exceção pontual à allowlist F0 |
 | ADR-013 | Exceções BSL-1.0 nas duas dependências da área de transferência Windows | DEFINITIVO, versões auditadas |
+| ADR-014 | Exceção NCSA restrita ao libfuzzer-sys0.4.13 no workspace de fuzz | DEFINITIVO, ferramenta de teste fora do produto |
 
 Novos ADRs: acrescentar linha + seção abaixo com contexto, decisão, evidência, consequências.
 
@@ -393,3 +394,24 @@ auditoria ou autorizar GPL/AGPL. Atualizações exigem nova revisão das exceç�
 Impacto: mantém a integração nativa exigida, sem implementar chamadas Win32
 próprias; nenhuma mudança no motor ou em dados transmitidos. F9 deve incluir
 avisos de terceiros da distribuição, inclusive esses textos quando aplicável.
+
+### ADR-014 — Licença da ferramenta de fuzz (2026-10-29)
+
+Motivo: F9 exige cargo-fuzz local. A auditoria separada rejeitou
+libfuzzer-sys0.4.13 pela expressão `(MIT OR Apache-2.0) AND NCSA` do manifesto.
+Esse pacote só pertence a `fuzz/`, workspace separado, e não integra desktop/CLI.
+
+Evidência: manifesto publicado e log real do cargo-deny; texto
+[NCSA no catálogo SPDX](https://spdx.org/licenses/NCSA.html) permite uso e
+redistribuição com avisos e cláusula de não endosso. Não impõe copyleft.
+Os cabeçalhos C++ atuais também apontam para
+[Apache2 com exceções LLVM](https://llvm.org/LICENSE.txt); não reescrevemos a
+declaração do pacote para contornar a auditoria.
+
+Decisão [DEFINITIVO]: `fuzz/deny.toml` permite NCSA apenas para
+libfuzzer-sys=0.4.13. A allowlist e as exceções do produto em `deny.toml`
+continuam inalteradas. Auditar o workspace de fuzz explicitamente com essa
+configuração; não distribuir o runtime de fuzz nos instaladores.
+
+Impacto: viabiliza o teste exigido com AddressSanitizer sem introduzir GPL/AGPL
+ou nova dependência de produção. Versões futuras requerem nova revisão.

@@ -8,7 +8,38 @@ import { CanvasStage } from '../components/CanvasStage';
 import { useAppStore } from '../state/store';
 import { bridge } from '../ipc/bridge';
 import { opened, frame } from './fixtures';
-beforeEach(() => { useAppStore.setState(useAppStore.getInitialState(), true); });
+import { usePreferences } from '../i18n';
+beforeEach(() => { useAppStore.setState(useAppStore.getInitialState(), true); usePreferences.setState({ language: 'pt-BR', theme: 'light' }); });
+it('switches language and theme without replacing the active document', () => {
+  useAppStore.setState({ image: opened, params: opened.params, doc: frame, completed: frame, phase: 'ready' });
+  render(<AppShell />);
+  fireEvent.change(screen.getByLabelText('Idioma'), { target: { value: 'en' } });
+  expect(screen.getByRole('button', { name: /Save project/ })).toBeVisible();
+  expect(screen.getByRole('slider', { name: 'Detail' })).toBeVisible();
+  expect(document.documentElement.lang).toBe('en');
+  fireEvent.change(screen.getByLabelText('Theme'), { target: { value: 'dark' } });
+  expect(document.documentElement.dataset.theme).toBe('dark');
+  expect(useAppStore.getState().completed).toBe(frame);
+  fireEvent.click(screen.getByRole('button', { name: /^Export/ }));
+  expect(screen.getByRole('dialog', { name: 'Export vector' })).toBeVisible();
+});
+it('contains dialog focus and restores the invoking export control', () => {
+  useAppStore.setState({ image: opened, params: opened.params, doc: frame, completed: frame, phase: 'ready' });
+  render(<AppShell />); const button = screen.getByRole('button', { name: /^Exportar/ }); button.focus(); fireEvent.click(button);
+  expect(screen.getByRole('dialog')).toContainElement(document.activeElement as HTMLElement);
+  const close = screen.getByLabelText('Fechar exportação'); close.focus(); fireEvent.keyDown(close, { key: 'Tab', shiftKey: true });
+  expect(screen.getByRole('button', { name: 'Escolher destino…' })).toHaveFocus();
+  fireEvent.keyDown(document.activeElement!, { key: 'Escape' }); expect(button).toHaveFocus();
+});
+it('edits a region and changes comparison views using keyboard controls', () => {
+  const edit = vi.fn(async () => {}); useAppStore.setState({ image: opened, params: opened.params, doc: frame, completed: frame, phase: 'ready', edit });
+  render(<CanvasStage />);
+  fireEvent.change(screen.getByLabelText('Selecionar região pelo teclado'), { target: { value: '0' } });
+  fireEvent.click(screen.getByRole('button', { name: 'Remover região selecionada' }));
+  expect(edit).toHaveBeenCalledWith({ kind: 'remove_region', region: 0 });
+  fireEvent.keyDown(screen.getByRole('tab', { name: 'Lado a lado' }), { key: 'ArrowRight' });
+  expect(screen.getByRole('tab', { name: 'Slider' })).toHaveFocus(); expect(useAppStore.getState().view).toBe('slider');
+});
 it('offers a labeled opening action and keeps export disabled without a document', () => {
   const picker = vi.fn(async () => {}); useAppStore.setState({ openPicker: picker }); render(<AppShell />);
   fireEvent.click(screen.getByRole('button', { name: /Abrir imagem/ })); expect(picker).toHaveBeenCalledTimes(1);

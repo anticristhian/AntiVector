@@ -4,6 +4,7 @@ import { cleanup } from '@testing-library/react';
 afterEach(() => cleanup());
 class ResizeObserverStub { observe() {} unobserve() {} disconnect() {} }
 vi.stubGlobal('ResizeObserver', ResizeObserverStub);
+vi.stubGlobal('matchMedia', vi.fn(() => ({ matches: false, addEventListener: vi.fn(), removeEventListener: vi.fn() })));
 class PathStub { constructor(public data?: string) {} }
 vi.stubGlobal('Path2D', PathStub);
 vi.stubGlobal('createImageBitmap', vi.fn(async () => ({ width: 128, height: 128, close: vi.fn() })));

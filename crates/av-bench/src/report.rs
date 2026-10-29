@@ -204,6 +204,10 @@ pub fn visual(root: &Path, a: &str, b: &str, label: &str, seed: u64) -> Result<(
     html.push_str("<script>document.querySelectorAll('img').forEach(img=>{const setup=()=>img.style.setProperty('--natural-width',img.naturalWidth+'px');if(img.complete)setup();else img.addEventListener('load',setup);});</script>");
     write!(html,"<script>const template={};function save(){{const result=structuredClone(template);result.answers.forEach(x=>x.choice=document.querySelector('input[name=p'+x.pair+']:checked')?.value??null);result.status=result.answers.every(x=>x.choice)?'completed_by_human':'partial';const link=document.createElement('a');link.href=URL.createObjectURL(new Blob([JSON.stringify(result,null,2)],{{type:'application/json'}}));link.download='{}.json';link.click();URL.revokeObjectURL(link.href);}}</script></html>",serde_json::to_string(&template)?,label)?;
     fs::write(dir.join("index.html"), html)?;
+    fs::write(
+        dir.join("template.json"),
+        serde_json::to_vec_pretty(&template)?,
+    )?;
     fs::write(dir.join("key.json"), serde_json::to_vec_pretty(&key)?)?;
     fs::write(
         root.join("visual").join(format!("{label}.json")),

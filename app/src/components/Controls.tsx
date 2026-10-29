@@ -1,3 +1,4 @@
+import { t } from '../i18n';
 import { useState } from 'react';
 import { useAppStore } from '../state/store';
 import type { Mode } from '../ipc/types';
@@ -21,24 +22,24 @@ export function Controls() {
       colors: 'auto', experimental: { ...params.experimental, force_pixel_art: pixel },
       fit_tolerance_px: (0.3 + 1.2 * params.smoothness) * (selected === 'photo' ? 1.5 : 1) });
   }
-  return <aside className="control-panel"><div className="panel-heading"><h2>Vetorizar</h2><span className="eyebrow">CONTROLES</span></div>
-    <label className="field-label">Modo<select aria-label="Modo" value={choice} onChange={e => changeMode(e.target.value)}>
-      <option value="auto">Automático</option><option value="logo">Logo / Arte</option><option value="illustration">Ilustração</option>
-      <option value="photo">Foto estilizada</option><option value="line_art">Preto e branco / Linha</option><option value="pixelart">Pixel art</option></select></label>
-    <p className="field-hint">Sugestão: {image.detection.colors} cores{image.detection.is_jpeg_like ? ' · ruído JPEG' : ''}</p>
-    <div className="section-label"><h3>Cores</h3><label className="check-label"><input type="checkbox" checked={params.colors === 'auto'} onChange={e => update({ colors: e.target.checked ? 'auto' : { fixed: Math.min(64, Math.max(2, image.detection.colors)) } })} />Auto</label></div>
-    {params.colors !== 'auto' && <Range label="Número de cores" value={params.colors.fixed} min={2} max={64} step={1} onChange={value => update({ colors: { fixed: value } })} />}
-    <div className="parameter-section"><Range label="Detalhe" value={params.detail} onChange={detail => update({ detail, min_region_area: Math.max(2, Math.round((64 - 62 * detail) * Math.sqrt(image.w * image.h / 1e6))) })} />
-      <p className="field-hint">Preserve traços finos e pequenos elementos.</p>
-      <Range label="Suavidade" value={params.smoothness} onChange={smoothness => update({ smoothness, fit_tolerance_px: (0.3 + 1.2 * smoothness) * (params.mode === 'photo' ? 1.5 : 1) })} />
-      <p className="field-hint">Equilibre curvas suaves e fidelidade.</p>
-      <Range label="Cantos" value={params.corner_threshold_deg} min={30} max={170} step={1} onChange={corner_threshold_deg => update({ corner_threshold_deg })} />
+  return <aside className="control-panel"><div className="panel-heading"><h2>{t("Vetorizar")}</h2><span className="eyebrow">{t("CONTROLES")}</span></div>
+    <label className="field-label">{t("Modo")}<select aria-label={t("Modo")} value={choice} onChange={e => changeMode(e.target.value)}>
+      <option value="auto">{t("Automático")}</option><option value="logo">{t("Logo / Arte")}</option><option value="illustration">{t("Ilustração")}</option>
+      <option value="photo">{t("Foto estilizada")}</option><option value="line_art">{t("Preto e branco / Linha")}</option><option value="pixelart">{t("Pixel art")}</option></select></label>
+    <p className="field-hint">{t("Sugestão:")} {image.detection.colors} {t("cores")}{image.detection.is_jpeg_like ? t(" · ruído JPEG") : ''}</p>
+    <div className="section-label"><h3>{t("Cores")}</h3><label className="check-label"><input type="checkbox" checked={params.colors === 'auto'} onChange={e => update({ colors: e.target.checked ? 'auto' : { fixed: Math.min(64, Math.max(2, image.detection.colors)) } })} />Auto</label></div>
+    {params.colors !== 'auto' && <Range label={t("Número de cores")} value={params.colors.fixed} min={2} max={64} step={1} onChange={value => update({ colors: { fixed: value } })} />}
+    <div className="parameter-section"><Range label={t("Detalhe")} value={params.detail} onChange={detail => update({ detail, min_region_area: Math.max(2, Math.round((64 - 62 * detail) * Math.sqrt(image.w * image.h / 1e6))) })} />
+      <p className="field-hint">{t("Preserve traços finos e pequenos elementos.")}</p>
+      <Range label={t("Suavidade")} value={params.smoothness} onChange={smoothness => update({ smoothness, fit_tolerance_px: (0.3 + 1.2 * smoothness) * (params.mode === 'photo' ? 1.5 : 1) })} />
+      <p className="field-hint">{t("Equilibre curvas suaves e fidelidade.")}</p>
+      <Range label={t("Cantos")} value={params.corner_threshold_deg} min={30} max={170} step={1} onChange={corner_threshold_deg => update({ corner_threshold_deg })} />
     </div>
-    <details className="advanced"><summary>Avançado</summary><Range label="Redução de ruído" value={params.denoise} onChange={denoise => update({ denoise })} />
-      <Range label="Tolerância" value={params.fit_tolerance_px} min={0.1} max={3} step={0.05} onChange={fit_tolerance_px => update({ fit_tolerance_px })} />
-      <label className="check-label"><input type="checkbox" checked={params.antialias_resolve} onChange={e => update({ antialias_resolve: e.target.checked })} />Remover cores de anti-aliasing</label>
+    <details className="advanced"><summary>{t("Avançado")}</summary><Range label={t("Redução de ruído")} value={params.denoise} onChange={denoise => update({ denoise })} />
+      <Range label={t("Tolerância")} value={params.fit_tolerance_px} min={0.1} max={3} step={0.05} onChange={fit_tolerance_px => update({ fit_tolerance_px })} />
+      <label className="check-label"><input type="checkbox" checked={params.antialias_resolve} onChange={e => update({ antialias_resolve: e.target.checked })} />{t("Remover cores de anti-aliasing")}</label>
     </details>
-    <button className="primary full-width" onClick={start} disabled={phase === 'loading' || phase === 'exporting' || phase === 'saving'}>Vetorizar</button>
-    <p className="local-note"><span className="status-dot" />Processamento local. Sua imagem fica aqui.</p>
+    <button className="primary full-width" onClick={start} disabled={phase === 'loading' || phase === 'exporting' || phase === 'saving'}>{t("Vetorizar")}</button>
+    <p className="local-note"><span className="status-dot" />{t("Processamento local. Sua imagem fica aqui.")}</p>
   </aside>;
 }

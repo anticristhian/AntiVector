@@ -1,0 +1,475 @@
+{
+  "fixtures": "original deterministic geometric reference scenes, not a worst-case guarantee",
+  "memory_method": "Windows OS PeakWorkingSet64, lifetime high-water mark",
+  "passed": true,
+  "profile": "release",
+  "rows": [
+    {
+      "height": 1000,
+      "limit_ms": 1000.0,
+      "median_ms": 283.5219,
+      "memory_limit_bytes": 240000000,
+      "name": "logo-1mp-8",
+      "passed": true,
+      "peak_working_set_bytes": 67747840,
+      "trials": [
+        {
+          "elapsed_ms": 298.889,
+          "params": {
+            "antialias_resolve": true,
+            "colors": {
+              "fixed": 8
+            },
+            "corner_threshold_deg": 100.0,
+            "denoise": 0.20000000298023224,
+            "detail": 0.5,
+            "experimental": {
+              "corner_recovery_radius": 1.5,
+              "curve_fit": true,
+              "denoise_kind": "bilateral",
+              "force_pixel_art": false,
+              "pixel_art_strategy": "preserve_grid",
+              "quality_v5": true,
+              "quantizer": "kmeans",
+              "upscale_small": true
+            },
+            "fit_tolerance_px": 0.8999999761581421,
+            "min_region_area": 33,
+            "mode": "logo",
+            "palette_lock": [],
+            "seed": 0,
+            "smoothness": 0.5,
+            "transparency_alpha_cut": 128,
+            "version": 1
+          },
+          "peak_working_set_bytes": 67428352,
+          "stages_ms": {
+            "assemble": 0.5926,
+            "detect": 10.7432,
+            "export_svg": 0.1208,
+            "extract_boundaries": 6.8185,
+            "fit_edges": 105.9217,
+            "label": 16.9463,
+            "merge_small": 22.2084,
+            "preprocess": 41.905199999999994,
+            "quantize": 68.2809,
+            "resolve_aa": 23.9757
+          },
+          "svg_bytes": 1830
+        },
+        {
+          "elapsed_ms": 277.59610000000004,
+          "params": {
+            "antialias_resolve": true,
+            "colors": {
+              "fixed": 8
+            },
+            "corner_threshold_deg": 100.0,
+            "denoise": 0.20000000298023224,
+            "detail": 0.5,
+            "experimental": {
+              "corner_recovery_radius": 1.5,
+              "curve_fit": true,
+              "denoise_kind": "bilateral",
+              "force_pixel_art": false,
+              "pixel_art_strategy": "preserve_grid",
+              "quality_v5": true,
+              "quantizer": "kmeans",
+              "upscale_small": true
+            },
+            "fit_tolerance_px": 0.8999999761581421,
+            "min_region_area": 33,
+            "mode": "logo",
+            "palette_lock": [],
+            "seed": 0,
+            "smoothness": 0.5,
+            "transparency_alpha_cut": 128,
+            "version": 1
+          },
+          "peak_working_set_bytes": 67530752,
+          "stages_ms": {
+            "assemble": 0.5804,
+            "detect": 10.6031,
+            "export_svg": 0.102,
+            "extract_boundaries": 6.3254,
+            "fit_edges": 90.8186,
+            "label": 15.4616,
+            "merge_small": 20.9697,
+            "preprocess": 45.0879,
+            "quantize": 65.4547,
+            "resolve_aa": 20.9004
+          },
+          "svg_bytes": 1830
+        },
+        {
+          "elapsed_ms": 282.421,
+          "params": {
+            "antialias_resolve": true,
+            "colors": {
+              "fixed": 8
+            },
+            "corner_threshold_deg": 100.0,
+            "denoise": 0.20000000298023224,
+            "detail": 0.5,
+            "experimental": {
+              "corner_recovery_radius": 1.5,
+              "curve_fit": true,
+              "denoise_kind": "bilateral",
+              "force_pixel_art": false,
+              "pixel_art_strategy": "preserve_grid",
+              "quality_v5": true,
+              "quantizer": "kmeans",
+              "upscale_small": true
+            },
+            "fit_tolerance_px": 0.8999999761581421,
+            "min_region_area": 33,
+            "mode": "logo",
+            "palette_lock": [],
+            "seed": 0,
+            "smoothness": 0.5,
+            "transparency_alpha_cut": 128,
+            "version": 1
+          },
+          "peak_working_set_bytes": 67575808,
+          "stages_ms": {
+            "assemble": 1.0533,
+            "detect": 10.7713,
+            "export_svg": 0.136,
+            "extract_boundaries": 6.516,
+            "fit_edges": 93.8727,
+            "label": 16.5915,
+            "merge_small": 21.1744,
+            "preprocess": 41.7834,
+            "quantize": 65.6337,
+            "resolve_aa": 23.415
+          },
+          "svg_bytes": 1830
+        },
+        {
+          "elapsed_ms": 300.9079,
+          "params": {
+            "antialias_resolve": true,
+            "colors": {
+              "fixed": 8
+            },
+            "corner_threshold_deg": 100.0,
+            "denoise": 0.20000000298023224,
+            "detail": 0.5,
+            "experimental": {
+              "corner_recovery_radius": 1.5,
+              "curve_fit": true,
+              "denoise_kind": "bilateral",
+              "force_pixel_art": false,
+              "pixel_art_strategy": "preserve_grid",
+              "quality_v5": true,
+              "quantizer": "kmeans",
+              "upscale_small": true
+            },
+            "fit_tolerance_px": 0.8999999761581421,
+            "min_region_area": 33,
+            "mode": "logo",
+            "palette_lock": [],
+            "seed": 0,
+            "smoothness": 0.5,
+            "transparency_alpha_cut": 128,
+            "version": 1
+          },
+          "peak_working_set_bytes": 67747840,
+          "stages_ms": {
+            "assemble": 0.6034999999999999,
+            "detect": 11.427,
+            "export_svg": 0.1077,
+            "extract_boundaries": 6.9112,
+            "fit_edges": 97.3504,
+            "label": 16.9285,
+            "merge_small": 21.5974,
+            "preprocess": 49.410500000000006,
+            "quantize": 68.7933,
+            "resolve_aa": 26.4252
+          },
+          "svg_bytes": 1830
+        },
+        {
+          "elapsed_ms": 283.5219,
+          "params": {
+            "antialias_resolve": true,
+            "colors": {
+              "fixed": 8
+            },
+            "corner_threshold_deg": 100.0,
+            "denoise": 0.20000000298023224,
+            "detail": 0.5,
+            "experimental": {
+              "corner_recovery_radius": 1.5,
+              "curve_fit": true,
+              "denoise_kind": "bilateral",
+              "force_pixel_art": false,
+              "pixel_art_strategy": "preserve_grid",
+              "quality_v5": true,
+              "quantizer": "kmeans",
+              "upscale_small": true
+            },
+            "fit_tolerance_px": 0.8999999761581421,
+            "min_region_area": 33,
+            "mode": "logo",
+            "palette_lock": [],
+            "seed": 0,
+            "smoothness": 0.5,
+            "transparency_alpha_cut": 128,
+            "version": 1
+          },
+          "peak_working_set_bytes": 67567616,
+          "stages_ms": {
+            "assemble": 0.5834,
+            "detect": 11.2211,
+            "export_svg": 0.1035,
+            "extract_boundaries": 8.190100000000001,
+            "fit_edges": 91.7062,
+            "label": 15.2345,
+            "merge_small": 22.0853,
+            "preprocess": 43.4295,
+            "quantize": 66.4284,
+            "resolve_aa": 22.9487
+          },
+          "svg_bytes": 1830
+        }
+      ],
+      "width": 1000,
+      "workers": 8
+    },
+    {
+      "height": 2000,
+      "limit_ms": 4000.0,
+      "median_ms": 998.9303,
+      "memory_limit_bytes": 360000000,
+      "name": "illustration-4mp-32",
+      "passed": true,
+      "peak_working_set_bytes": 235687936,
+      "trials": [
+        {
+          "elapsed_ms": 998.1825,
+          "params": {
+            "antialias_resolve": true,
+            "colors": {
+              "fixed": 32
+            },
+            "corner_threshold_deg": 100.0,
+            "denoise": 0.30000001192092896,
+            "detail": 0.5,
+            "experimental": {
+              "corner_recovery_radius": 1.5,
+              "curve_fit": true,
+              "denoise_kind": "bilateral",
+              "force_pixel_art": false,
+              "pixel_art_strategy": "preserve_grid",
+              "quality_v5": true,
+              "quantizer": "kmeans",
+              "upscale_small": true
+            },
+            "fit_tolerance_px": 0.8999999761581421,
+            "min_region_area": 66,
+            "mode": "illustration",
+            "palette_lock": [],
+            "seed": 0,
+            "smoothness": 0.5,
+            "transparency_alpha_cut": 128,
+            "version": 1
+          },
+          "peak_working_set_bytes": 235646976,
+          "stages_ms": {
+            "assemble": 4.2273,
+            "detect": 17.5074,
+            "export_svg": 0.4091,
+            "extract_boundaries": 24.405900000000003,
+            "fit_edges": 193.1945,
+            "label": 60.5581,
+            "merge_small": 83.34419999999999,
+            "preprocess": 232.8721,
+            "quantize": 299.1189,
+            "resolve_aa": 77.5709
+          },
+          "svg_bytes": 7845
+        },
+        {
+          "elapsed_ms": 1015.5626,
+          "params": {
+            "antialias_resolve": true,
+            "colors": {
+              "fixed": 32
+            },
+            "corner_threshold_deg": 100.0,
+            "denoise": 0.30000001192092896,
+            "detail": 0.5,
+            "experimental": {
+              "corner_recovery_radius": 1.5,
+              "curve_fit": true,
+              "denoise_kind": "bilateral",
+              "force_pixel_art": false,
+              "pixel_art_strategy": "preserve_grid",
+              "quality_v5": true,
+              "quantizer": "kmeans",
+              "upscale_small": true
+            },
+            "fit_tolerance_px": 0.8999999761581421,
+            "min_region_area": 66,
+            "mode": "illustration",
+            "palette_lock": [],
+            "seed": 0,
+            "smoothness": 0.5,
+            "transparency_alpha_cut": 128,
+            "version": 1
+          },
+          "peak_working_set_bytes": 235687936,
+          "stages_ms": {
+            "assemble": 1.8829,
+            "detect": 17.4316,
+            "export_svg": 0.2432,
+            "extract_boundaries": 24.4983,
+            "fit_edges": 194.7118,
+            "label": 65.1487,
+            "merge_small": 86.24940000000001,
+            "preprocess": 234.17370000000005,
+            "quantize": 290.7623,
+            "resolve_aa": 95.8726
+          },
+          "svg_bytes": 7845
+        },
+        {
+          "elapsed_ms": 1005.7288,
+          "params": {
+            "antialias_resolve": true,
+            "colors": {
+              "fixed": 32
+            },
+            "corner_threshold_deg": 100.0,
+            "denoise": 0.30000001192092896,
+            "detail": 0.5,
+            "experimental": {
+              "corner_recovery_radius": 1.5,
+              "curve_fit": true,
+              "denoise_kind": "bilateral",
+              "force_pixel_art": false,
+              "pixel_art_strategy": "preserve_grid",
+              "quality_v5": true,
+              "quantizer": "kmeans",
+              "upscale_small": true
+            },
+            "fit_tolerance_px": 0.8999999761581421,
+            "min_region_area": 66,
+            "mode": "illustration",
+            "palette_lock": [],
+            "seed": 0,
+            "smoothness": 0.5,
+            "transparency_alpha_cut": 128,
+            "version": 1
+          },
+          "peak_working_set_bytes": 235638784,
+          "stages_ms": {
+            "assemble": 1.8764,
+            "detect": 17.2772,
+            "export_svg": 0.2331,
+            "extract_boundaries": 24.6528,
+            "fit_edges": 196.737,
+            "label": 61.1824,
+            "merge_small": 84.5437,
+            "preprocess": 244.0203,
+            "quantize": 294.85949999999997,
+            "resolve_aa": 75.7624
+          },
+          "svg_bytes": 7845
+        },
+        {
+          "elapsed_ms": 998.9303,
+          "params": {
+            "antialias_resolve": true,
+            "colors": {
+              "fixed": 32
+            },
+            "corner_threshold_deg": 100.0,
+            "denoise": 0.30000001192092896,
+            "detail": 0.5,
+            "experimental": {
+              "corner_recovery_radius": 1.5,
+              "curve_fit": true,
+              "denoise_kind": "bilateral",
+              "force_pixel_art": false,
+              "pixel_art_strategy": "preserve_grid",
+              "quality_v5": true,
+              "quantizer": "kmeans",
+              "upscale_small": true
+            },
+            "fit_tolerance_px": 0.8999999761581421,
+            "min_region_area": 66,
+            "mode": "illustration",
+            "palette_lock": [],
+            "seed": 0,
+            "smoothness": 0.5,
+            "transparency_alpha_cut": 128,
+            "version": 1
+          },
+          "peak_working_set_bytes": 235610112,
+          "stages_ms": {
+            "assemble": 1.8638,
+            "detect": 17.3173,
+            "export_svg": 0.2304,
+            "extract_boundaries": 24.5429,
+            "fit_edges": 190.9167,
+            "label": 61.2131,
+            "merge_small": 83.3653,
+            "preprocess": 237.91,
+            "quantize": 291.9644,
+            "resolve_aa": 85.0926
+          },
+          "svg_bytes": 7845
+        },
+        {
+          "elapsed_ms": 996.6052,
+          "params": {
+            "antialias_resolve": true,
+            "colors": {
+              "fixed": 32
+            },
+            "corner_threshold_deg": 100.0,
+            "denoise": 0.30000001192092896,
+            "detail": 0.5,
+            "experimental": {
+              "corner_recovery_radius": 1.5,
+              "curve_fit": true,
+              "denoise_kind": "bilateral",
+              "force_pixel_art": false,
+              "pixel_art_strategy": "preserve_grid",
+              "quality_v5": true,
+              "quantizer": "kmeans",
+              "upscale_small": true
+            },
+            "fit_tolerance_px": 0.8999999761581421,
+            "min_region_area": 66,
+            "mode": "illustration",
+            "palette_lock": [],
+            "seed": 0,
+            "smoothness": 0.5,
+            "transparency_alpha_cut": 128,
+            "version": 1
+          },
+          "peak_working_set_bytes": 235655168,
+          "stages_ms": {
+            "assemble": 2.3008,
+            "detect": 19.1297,
+            "export_svg": 0.299,
+            "extract_boundaries": 24.1193,
+            "fit_edges": 190.9733,
+            "label": 60.2327,
+            "merge_small": 83.4767,
+            "preprocess": 243.1603,
+            "quantize": 292.7445,
+            "resolve_aa": 75.809
+          },
+          "svg_bytes": 7845
+        }
+      ],
+      "width": 2000,
+      "workers": 8
+    }
+  ],
+  "scope": "decoded raster through SVG including detection; fresh process per trial"
+}

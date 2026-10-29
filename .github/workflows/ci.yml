@@ -14,7 +14,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        include:
+          - os: ubuntu-latest
+            bundle: appimage
+          - os: windows-latest
+            bundle: msi
+          - os: macos-latest
+            bundle: dmg
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -48,13 +54,28 @@ jobs:
       - name: Validate frontend
         run: pnpm -C app lint && pnpm -C app test && pnpm -C app build
       - name: Build offline desktop application
-        run: pnpm -C app tauri build --no-bundle
+        run: pnpm -C app tauri build --ci --bundles ${{ matrix.bundle }}
+      - name: Measure installer size
+        run: node scripts/check-installers.mjs
+      - name: Retain installers and measured sizes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: installer-${{ matrix.os }}
+          path: |
+            target/release/bundle/**/*.msi
+            target/release/bundle/**/*.dmg
+            target/release/bundle/**/*.AppImage
+            target/release/bundle/installer-sizes.json
       - name: Check portable core
         run: cargo check -p av-core --target wasm32-unknown-unknown
       - name: Install license checker
         run: cargo install cargo-deny --locked
       - name: Check dependency licenses
         run: cargo deny check licenses
+      - name: Audit isolated fuzz dependencies
+        if: runner.os == 'Linux'
+        run: cargo deny --manifest-path fuzz/Cargo.toml --config fuzz/deny.toml check licenses
 
   quality:
     name: Minimal corpus quality regression
@@ -73,3 +94,32 @@ jobs:
         with:
           name: quality-report
           path: bench-out/ci/
+
+  profile:
+    name: CPU flamegraph
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Install sampling tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y linux-tools-generic
+          cargo install flamegraph --version 0.6.14 --locked
+      - name: Profile the original 4MP illustration reference
+        env:
+          CARGO_PROFILE_RELEASE_DEBUG: 1
+          RUSTFLAGS: -Clink-arg=-Wl,--no-rosegment
+          RAYON_NUM_THREADS: 8
+        run: |
+          export PERF=$(find /usr/lib/linux-tools -type f -name perf | sort -V | tail -n 1)
+          test -n "$PERF"
+          mkdir -p bench-out/profile
+          cargo flamegraph --root -p av-bench --output bench-out/profile/illustration.svg -- profile corpus/baselines/performance/f9/before/illustration-4mp-32.png
+      - name: Retain measured CPU profile
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cpu-profile
+          path: bench-out/profile/

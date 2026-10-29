@@ -15,6 +15,8 @@ pub struct Entry {
     pub expected_colors: Option<u16>,
     pub notes: String,
     pub ground_truth: Option<String>,
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub expected_decode_error: bool,
     #[serde(default)]
     pub corners: Vec<[f64; 2]>,
 }
@@ -198,6 +200,7 @@ pub fn generate(root: &Path) -> Result<()> {
                 "128x128; AA={aa}; JPEG q60={jpeg}; GT original paths, no external artwork"
             ),
             ground_truth: Some(gtfile),
+            expected_decode_error: false,
             corners: geometry.corners,
         });
     }
@@ -219,6 +222,7 @@ pub fn generate(root: &Path) -> Result<()> {
             expected_colors: Some(if pixel[3] == 0 { 0 } else { 1 }),
             notes: "Decoder/topology edge case".into(),
             ground_truth: None,
+            expected_decode_error: false,
             corners: vec![],
         });
     }
@@ -333,6 +337,7 @@ pub fn generate(root: &Path) -> Result<()> {
             notes: "24x24 logical pixels, exact 4x repetition, no AA; F5 pixel-art experiment"
                 .into(),
             ground_truth: Some(gtfile),
+            expected_decode_error: false,
             corners: vec![],
         });
     }

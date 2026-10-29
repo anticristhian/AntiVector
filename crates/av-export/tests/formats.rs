@@ -16,6 +16,14 @@ fn all_formats_parse_and_preserve_the_entire_corpus() {
     let mut results = Vec::new();
     for entry in &entries {
         let id = entry["id"].as_str().unwrap();
+        if entry["expected_decode_error"].as_bool() == Some(true) {
+            assert!(
+                image::open(root.join("corpus").join(entry["file"].as_str().unwrap())).is_err(),
+                "corrupt input accepted: {id}"
+            );
+            results.push(serde_json::json!({"id":id,"expected_decode_error":true,"passed":true}));
+            continue;
+        }
         let source = image::open(root.join("corpus").join(entry["file"].as_str().unwrap()))
             .unwrap()
             .to_rgba8();
@@ -114,7 +122,7 @@ fn all_formats_parse_and_preserve_the_entire_corpus() {
         assert_eq!(doc, before, "export mutated document {id}");
         results.push(serde_json::json!({"id":id,"formats":5,"svg_png_identical":true,"pdf_fills":doc.shapes.len(),"dxf_shared_boundaries":used.len()}));
     }
-    assert_eq!(results.len(), 34);
+    assert_eq!(results.len(), entries.len());
     std::fs::write(
         out.join("summary.json"),
         serde_json::to_vec_pretty(&results).unwrap(),

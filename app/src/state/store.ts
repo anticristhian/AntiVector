@@ -1,3 +1,4 @@
+import { t } from '../i18n';
 import { create } from 'zustand';
 import { bridge } from '../ipc/bridge';
 import type { OpenedImage, Params, UiError, VectorFrame, JobMessage, ExportOptions, View, EditOp, History, FidelityEstimate, Tool } from '../ipc/types';
@@ -39,7 +40,7 @@ function handle(message: JobMessage) {
   if (message.kind === 'preview' && message.doc) useAppStore.setState({ doc: message.doc, preview: true });
   if (message.kind === 'done' && message.doc) useAppStore.setState({ doc: message.doc, completed: message.doc, phase: 'ready', preview: false, fraction: 1,
     params: message.params ?? state.params, history: message.history ?? state.history, selectedColor: null, fidelity: null, estimating: false });
-  if (message.kind === 'error') { const error = message.error ?? { code: 'E_INTERNAL', msg: 'Falha desconhecida' };
+  if (message.kind === 'error') { const error = message.error ?? { code: 'E_INTERNAL', msg: t("Falha desconhecida") };
     useAppStore.setState({ phase: error.code === 'E_CANCELLED' ? 'cancelled' : 'error', error: error.code === 'E_CANCELLED' ? null : error, doc: state.completed, preview: false }); }
 }
 function ensureListening() { listening ??= bridge.subscribe(handle); return listening; }
@@ -116,7 +117,7 @@ export const useAppStore = create<State>((set, get) => ({
     const state = get(); if (!state.image || !state.completed || ['loading', 'vectorizing', 'exporting', 'saving'].includes(state.phase)) return;
     try { const path = await bridge.pickProjectPath(state.image.name); if (!path || get().request !== state.request) return;
       set({ phase: 'saving', error: null }); await bridge.saveProject(state.image.session_id, path, state.image.name);
-      if (get().request === state.request) set({ phase: 'ready', exported: path, notice: 'Projeto salvo.' });
+      if (get().request === state.request) set({ phase: 'ready', exported: path, notice: t("Projeto salvo.") });
     } catch (error) { if (get().request === state.request) set({ phase: 'error', error: errorOf(error) }); }
   },
   estimate: async () => {

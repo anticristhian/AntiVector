@@ -1,8 +1,11 @@
 //! Reproducible quality harness; vtracer is confined to this binary.
 
 mod corpus;
+mod full_corpus;
 mod report;
+mod rnf;
 mod runner;
+mod visual_score;
 
 use clap::{Parser, Subcommand};
 use std::path::PathBuf;
@@ -19,6 +22,33 @@ struct Cli {
 }
 #[derive(Subcommand)]
 enum Command {
+    /// Score only a completed human evaluation; never generate votes.
+    ScoreVisual {
+        label: String,
+        answers: PathBuf,
+        #[arg(long)]
+        candidate: String,
+    },
+    /// Portable CPU profiling workload; instrumented times are not RNF evidence.
+    Profile {
+        input: PathBuf,
+        #[arg(long, default_value = "illustration")]
+        config: String,
+        #[arg(long, default_value_t = 32)]
+        colors: u16,
+    },
+    /// Measure RNF01–03 using five fresh processes per reference image.
+    Rnf {
+        #[arg(long, default_value = "rnf")]
+        label: String,
+    },
+    #[command(hide = true)]
+    RnfTrial {
+        input: PathBuf,
+        config: String,
+        colors: u16,
+        output: PathBuf,
+    },
     /// Generate an original 4MP logo fixture for desktop responsiveness checks.
     Fixture4mp { path: PathBuf },
     /// Five real session jobs, measuring progressive preview and full completion.
@@ -56,7 +86,10 @@ enum Command {
         reference: PathBuf,
     },
     /// Generate original fixtures with SVG ground truth and license manifest.
-    Gen,
+    Gen {
+        #[arg(long)]
+        full: bool,
+    },
     /// Measure AntiVector using a preset or complete parameter JSON file.
     Run {
         #[arg(long)]
@@ -111,6 +144,23 @@ fn overlap(stacking: Option<&str>) -> Result<bool> {
 
 fn execute(cli: Cli) -> Result<()> {
     match cli.command {
+        Command::ScoreVisual {
+            label,
+            answers,
+            candidate,
+        } => visual_score::run(&cli.output_root, &label, &answers, &candidate),
+        Command::Profile {
+            input,
+            config,
+            colors,
+        } => rnf::profile(&input, &config, colors),
+        Command::Rnf { label } => rnf::run(&cli.output_root, &label),
+        Command::RnfTrial {
+            input,
+            config,
+            colors,
+            output,
+        } => rnf::trial(&input, &config, colors, &output),
         Command::Fixture4mp { path } => {
             let scene = std::fs::read_to_string(cli.corpus.join("gt/logo_original_1.svg"))?
                 .replacen("width=\"128\"", "width=\"2000\"", 1)
@@ -146,7 +196,13 @@ fn execute(cli: Cli) -> Result<()> {
             &runner::load_report(&candidate)?,
             &runner::load_report(&reference)?,
         ),
-        Command::Gen => corpus::generate(&cli.corpus),
+        Command::Gen { full } => {
+            if full {
+                full_corpus::generate(&cli.corpus)
+            } else {
+                corpus::generate(&cli.corpus)
+            }
+        }
         Command::Run {
             stacking,
             config,

@@ -1,0 +1,44 @@
+{
+  "elapsed_ms": 282.902,
+  "peak_working_set_bytes": 67465216,
+  "stages_ms": {
+    "assemble": 0.48109999999999997,
+    "detect": 10.7379,
+    "export_svg": 0.0795,
+    "extract_boundaries": 6.4184,
+    "fit_edges": 95.0141,
+    "label": 15.508299999999998,
+    "merge_small": 21.0045,
+    "preprocess": 43.1849,
+    "quantize": 66.9293,
+    "resolve_aa": 22.337300000000003
+  },
+  "svg_bytes": 1830,
+  "params": {
+    "experimental": {
+      "quality_v5": true,
+      "denoise_kind": "bilateral",
+      "force_pixel_art": false,
+      "pixel_art_strategy": "preserve_grid",
+      "upscale_small": true,
+      "corner_recovery_radius": 1.5,
+      "curve_fit": true,
+      "quantizer": "kmeans"
+    },
+    "version": 1,
+    "mode": "logo",
+    "colors": {
+      "fixed": 8
+    },
+    "palette_lock": [],
+    "denoise": 0.2,
+    "min_region_area": 33,
+    "antialias_resolve": true,
+    "corner_threshold_deg": 100.0,
+    "smoothness": 0.5,
+    "fit_tolerance_px": 0.9,
+    "detail": 0.5,
+    "transparency_alpha_cut": 128,
+    "seed": 0
+  }
+}

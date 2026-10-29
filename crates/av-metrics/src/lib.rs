@@ -31,6 +31,21 @@ pub fn compare(
     {
         return Err(CoreError::InvalidParams("metric dimensions differ".into()));
     }
+    // Exact equality proves both fidelity metrics; still scan actual full-resolution
+    // coverage. Avoid allocating Gaussian work buffers for a lossless 64MP render.
+    if original == render {
+        return Ok(Fidelity {
+            delta_e_mean: 0.0,
+            delta_e_p95: 0.0,
+            ssim: 1.0,
+            gap_pixels: original
+                .px
+                .iter()
+                .zip(&coverage.px)
+                .filter(|(a, c)| a[3] >= alpha_cut && c[3] == 0)
+                .count(),
+        });
+    }
     let mut errors = Vec::new();
     let mut gaps = 0;
     for ((a, b), c) in original.px.iter().zip(&render.px).zip(&coverage.px) {

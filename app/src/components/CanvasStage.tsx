@@ -1,3 +1,4 @@
+import { t } from '../i18n';
 import { useEffect, useMemo, useRef, useState, type PointerEvent } from 'react';
 import { useAppStore } from '../state/store';
 import type { OpenedImage, VectorFrame, View } from '../ipc/types';
@@ -54,7 +55,7 @@ function PaintCanvas({ image, doc, bitmap, mode, width, height, scale, pan, spli
     } }
     if(import.meta.env.VITE_AV_MEASURE_UI==='1') document.documentElement.dataset.avMaxDrawMs=String(Math.max(Number(document.documentElement.dataset.avMaxDrawMs??0),performance.now()-drawStart));
   }, [image, doc, bitmap, mode, width, height, scale, pan, split, paths, highlight]);
-  return <canvas ref={ref} style={{ width, height }} aria-label={mode === 'original' ? 'Imagem original' : 'Pré-visualização vetorial'} />;
+  return <canvas ref={ref} style={{ width, height }} aria-label={mode === 'original' ? t("Imagem original") : t("Pré-visualização vetorial")} />;
 }
 
 const names: Record<View, string> = { side: 'Lado a lado', slider: 'Slider', vector: 'Vetor', outline: 'Contorno', difference: 'Diferença' };
@@ -68,7 +69,7 @@ export function CanvasStage() {
   const hitPaths = useMemo(() => doc?.shapes.map(shape => ({ ...shape, path: new Path2D(shape.d) })) ?? [], [doc]);
   const hitContext = useRef<CanvasRenderingContext2D | null>(null);
   const space = useRef(false);
-  useEffect(() => { const down = (e: KeyboardEvent) => { if (e.code === 'Space' && !(e.target instanceof HTMLInputElement || e.target instanceof HTMLSelectElement)) { space.current = true; e.preventDefault(); } };
+  useEffect(() => { const down = (e: KeyboardEvent) => { if (e.code === 'Space' && !(e.target instanceof HTMLElement && e.target.closest('input,select,textarea,button,a,summary,[role=tab]'))) { space.current = true; e.preventDefault(); } };
     const up = (e: KeyboardEvent) => { if (e.code === 'Space') space.current = false; }; const blur = () => { space.current = false; };
     window.addEventListener('keydown', down); window.addEventListener('keyup', up); window.addEventListener('blur', blur);
     return () => { window.removeEventListener('keydown', down); window.removeEventListener('keyup', up); window.removeEventListener('blur', blur); }; }, []);
@@ -85,7 +86,7 @@ export function CanvasStage() {
   const scale = zoom === null ? fit : zoom / 100;
   const currentBitmap = bitmap?.session === image.session_id ? bitmap.image : null;
   const selectedRegion = selection?.doc === doc ? selection.region : null;
-  const highlight = hovered?.doc === doc ? hovered.region : tool === 'merge' ? selectedRegion : null;
+  const highlight = hovered?.doc === doc ? hovered.region : selectedRegion;
   const props = { image, doc, bitmap: currentBitmap, width: paneWidth, height: paneHeight, scale, pan, split, highlight };
   const editable = !!doc && !preview && !['vectorizing', 'loading', 'exporting', 'saving'].includes(phase);
   const hit = (e: PointerEvent<HTMLDivElement>) => {
@@ -98,17 +99,30 @@ export function CanvasStage() {
     for (let i = hitPaths.length - 1; i >= 0; i--) if (context.isPointInPath(hitPaths[i].path, x, y, 'evenodd')) return hitPaths[i];
     return null;
   };
-  return <section className="workspace" aria-label="Área de comparação">
-    <div className="view-toolbar"><div className="tabs" role="tablist" aria-label="Vista">
-      {(Object.keys(names) as View[]).map(mode => <button key={mode} role="tab" aria-selected={view === mode} onClick={() => setView(mode)}>{names[mode]}</button>)}
-    </div><div className="zoom-tools"><button aria-label="Diminuir zoom" onClick={() => setZoom(scale * 80)}>−</button>
-      <span>{Math.round(scale * 100)}%</span><button aria-label="Aumentar zoom" onClick={() => setZoom(scale * 125)}>+</button>
-      <button onClick={() => { setZoom(null); setPan([0, 0]); }}>Ajustar</button></div></div>
-    <div className="canvas-tools" role="toolbar" aria-label="Ferramentas de edição">
-      {([['move', 'Mover'], ['erase', 'Borracha'], ['eyedropper', 'Conta-gotas'], ['merge', 'Mesclar regiões']] as const).map(([value, label]) => <button key={value} aria-pressed={tool === value} disabled={value !== 'move' && !editable} onClick={() => { setTool(value); setSelection(null); setHovered(null); }}>{label}</button>)}
-      <span>{tool === 'erase' ? 'Clique: mesclar · Shift: remover' : tool === 'merge' ? selectedRegion === null ? 'Escolha a região de origem' : 'Escolha uma região vizinha' : tool === 'eyedropper' ? 'Selecione uma cor do vetor' : 'Espaço + arraste para mover'}</span>
+  return <section className="workspace" aria-label={t("Área de comparação")}>
+    <div className="view-toolbar"><div className="tabs" role="tablist" aria-label={t("Vista")}>
+      {(Object.keys(names) as View[]).map(mode => <button key={mode} role="tab" aria-selected={view === mode} tabIndex={view === mode ? 0 : -1} aria-controls="comparison-panel" onKeyDown={e => {
+        const views = Object.keys(names) as View[];
+        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
+        e.preventDefault(); const index = e.key === 'Home' ? 0 : e.key === 'End' ? views.length-1 : (views.indexOf(mode) + (e.key === 'ArrowRight' ? 1 : -1) + views.length) % views.length;
+        setView(views[index]); (e.currentTarget.parentElement?.children[index] as HTMLElement).focus();
+      }} onClick={() => setView(mode)}>{t(names[mode])}</button>)}
+    </div><div className="zoom-tools"><button aria-label={t("Diminuir zoom")} onClick={() => setZoom(scale * 80)}>−</button>
+      <span>{Math.round(scale * 100)}%</span><button aria-label={t("Aumentar zoom")} onClick={() => setZoom(scale * 125)}>+</button>
+      <button onClick={() => { setZoom(null); setPan([0, 0]); }}>{t("Ajustar")}</button></div></div>
+    <div className="canvas-tools" role="toolbar" aria-label={t("Ferramentas de edição")}>
+      {([['move', t("Mover")], ['erase', t("Borracha")], ['eyedropper', t("Conta-gotas")], ['merge', t("Mesclar regiões")]] as const).map(([value, label]) => <button key={value} aria-pressed={tool === value} disabled={value !== 'move' && !editable} onClick={() => { setTool(value); setSelection(null); setHovered(null); }}>{label}</button>)}
+      <span>{tool === 'erase' ? t("Clique: mesclar · Shift: remover") : tool === 'merge' ? selectedRegion === null ? t("Escolha a região de origem") : t("Escolha uma região vizinha") : tool === 'eyedropper' ? t("Selecione uma cor do vetor") : t("Espaço + arraste para mover")}</span>
     </div>
-    <div ref={ref} className="canvas-area" data-tool={tool} onPointerDown={e => { if (e.button !== 0 && e.button !== 1) return;
+    <div className="region-keyboard"><label>{t('Região')}<select aria-label={t('Selecionar região pelo teclado')} disabled={!editable} value={selectedRegion ?? ''} onChange={e => setSelection(e.target.value === '' || !doc ? null : { doc, region: Number(e.target.value) })}>
+      <option value="">—</option>{doc?.shapes.filter(shape => shape.region !== null).map(shape => <option key={shape.region} value={shape.region!}>{shape.region! + 1} · {shape.color}</option>)}
+    </select></label><button disabled={!editable || selectedRegion === null} onClick={() => { if (selectedRegion !== null) void edit({ kind: 'merge_region', region: selectedRegion, into: null }); }}>{t('Mesclar região selecionada')}</button>
+      <button disabled={!editable || selectedRegion === null} onClick={() => { if (selectedRegion !== null) void edit({ kind: 'remove_region', region: selectedRegion }); }}>{t('Remover região selecionada')}</button></div>
+    <div ref={ref} id="comparison-panel" role="tabpanel" aria-label={t(names[view])} tabIndex={0} className="canvas-area" data-tool={tool} onKeyDown={e => {
+      if (e.target !== e.currentTarget || !['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)) return;
+      e.preventDefault(); const distance = e.shiftKey ? 10 : 40;
+      setPan([pan[0] + (e.key === 'ArrowLeft' ? -distance : e.key === 'ArrowRight' ? distance : 0), pan[1] + (e.key === 'ArrowUp' ? -distance : e.key === 'ArrowDown' ? distance : 0)]);
+    }} onPointerDown={e => { if (e.button !== 0 && e.button !== 1) return;
       if (e.button === 1 || tool === 'move' || space.current) { e.currentTarget.setPointerCapture(e.pointerId); dragging.current = { x: e.clientX, y: e.clientY, pan }; return; }
       if (!editable || !doc) return; const shape = hit(e); if (shape?.region == null) return;
       if (tool === 'erase') void edit(e.shiftKey ? { kind: 'remove_region', region: shape.region } : { kind: 'merge_region', region: shape.region, into: null });
@@ -120,12 +134,12 @@ export function CanvasStage() {
       onPointerLeave={() => setHovered(null)}
       onPointerUp={() => { dragging.current = null; }} onPointerCancel={() => { dragging.current = null; }}
       onWheel={e => setZoom(scale * 100 * (e.deltaY > 0 ? 0.8 : 1.25))}>
-      {view === 'side' ? <><div className="canvas-pane"><div className="pane-label">Original <span>{image.w} × {image.h}</span></div><PaintCanvas {...props} mode="original" /></div>
-        <div className="canvas-pane"><div className="pane-label">Vetor <span>{preview ? 'Prévia · refinando' : 'Fronteiras compartilhadas'}</span></div><PaintCanvas {...props} mode="vector" /></div></>
-        : <div className="canvas-pane"><div className="pane-label">{names[view]}<span>{preview ? 'Prévia · refinando' : 'Arraste para mover · role para ampliar'}</span></div>
+      {view === 'side' ? <><div className="canvas-pane"><div className="pane-label">{t("Original")} <span>{image.w} × {image.h}</span></div><PaintCanvas {...props} mode="original" /></div>
+        <div className="canvas-pane"><div className="pane-label">{t("Vetor")} <span>{preview ? t("Prévia · refinando") : t("Fronteiras compartilhadas")}</span></div><PaintCanvas {...props} mode="vector" /></div></>
+        : <div className="canvas-pane"><div className="pane-label">{t(names[view])}<span>{preview ? t("Prévia · refinando") : t("Arraste para mover · role para ampliar")}</span></div>
           <PaintCanvas {...props} mode={view} />{view === 'slider' && <div className="slider-divider" style={{ left: `${split}%` }} />}</div>}
     </div>
-    {view === 'slider' && <label className="comparison-range">Original<input aria-label="Comparação entre original e vetor" type="range" min="0" max="100" value={split} onChange={e => setSplit(Number(e.target.value))} />Vetor</label>}
-    {view === 'outline' && doc && doc.stats.nodes > 50_000 && <p className="canvas-note">Muitos nós para exibir marcadores. Mostrando apenas os contornos.</p>}
+    {view === 'slider' && <label className="comparison-range">{t("Original")}<input aria-label={t("Comparação entre original e vetor")} type="range" min="0" max="100" value={split} onChange={e => setSplit(Number(e.target.value))} />{t("Vetor")}</label>}
+    {view === 'outline' && doc && doc.stats.nodes > 50_000 && <p className="canvas-note">{t("Muitos nós para exibir marcadores. Mostrando apenas os contornos.")}</p>}
   </section>;
 }

@@ -1,0 +1,28 @@
+[package]
+name = "av-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+av-core = { path = "../crates/av-core" }
+av-session = { path = "../crates/av-session" }
+av-export = { path = "../crates/av-export" }
+
+[[bin]]
+name = "decode_pipeline"
+path = "fuzz_targets/decode_pipeline.rs"
+test = false
+doc = false
+bench = false
+
+[workspace]
+members = ["."]
+
+[profile.release]
+debug = 1
+

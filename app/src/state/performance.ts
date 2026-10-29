@@ -14,12 +14,13 @@ export function useUiPerformance() {
     const observer = supported ? new PerformanceObserver(list => collect(list.getEntries())) : null;
     observer?.observe({ type: 'longtask' });
     const unsubscribe = useAppStore.subscribe((state, previous) => {
-      if (state.phase === 'loading' && previous.phase !== 'loading' || state.phase === 'vectorizing' && state.request !== previous.request) {
+      if (state.phase === 'loading' && state.request !== previous.request || state.phase === 'vectorizing' && state.request !== previous.request) {
         clearTimeout(timer); const prior=previous.phase==='loading'?sample:null;
         sample = { request: state.request, width: state.image?.w ?? 0, height: state.image?.h ?? 0, start:prior?.start??performance.now(), stop: Infinity, max: prior?.max??0, count: prior?.count??0, outcome: '' };
         document.documentElement.dataset.avMaxDrawMs = '0';
       }
-      if (sample && ['ready', 'cancelled', 'error'].includes(state.phase) && previous.phase === 'vectorizing') {
+      if (sample && ['ready', 'cancelled', 'error'].includes(state.phase) && ['vectorizing', 'loading'].includes(previous.phase)) {
+        sample.width = state.image?.w ?? 0; sample.height = state.image?.h ?? 0;
         sample.stop = performance.now() + 600; sample.outcome = state.phase; clearTimeout(timer);
         timer = setTimeout(() => { if (!sample) return; collect(observer?.takeRecords() ?? []);
           const report = { ...sample, duration_ms: sample.stop - sample.start, longtask_supported: supported,

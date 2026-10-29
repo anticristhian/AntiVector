@@ -44,6 +44,8 @@ pub struct Row {
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct RunReport {
     #[serde(default)]
+    pub input_checks: Vec<serde_json::Value>,
+    #[serde(default)]
     pub overlap: bool,
     pub label: String,
     pub engine: String,
@@ -62,7 +64,7 @@ fn params(config: &str, quantizer: Option<&str>) -> Result<Params> {
     let mut params = if Path::new(config).is_file() {
         Params::from_json(&fs::read_to_string(config)?)?
     } else {
-        Params::preset(config)?
+        Params::preset(if config == "corpus" { "logo" } else { config })?
     };
     if let Some(name) = quantizer {
         params.experimental.quantizer = match name {
@@ -99,7 +101,7 @@ fn timed<T>(
     Ok(output)
 }
 
-fn vectorize(
+pub(crate) fn vectorize(
     image: &RgbaImage,
     p: &Params,
     baseline: bool,
@@ -426,11 +428,32 @@ pub fn run(
         fs::create_dir_all(out.join(dir))?;
     }
     let mut rows = Vec::new();
+    let mut input_checks = Vec::new();
     for entry in corpus::load(root)? {
+        if entry.expected_decode_error {
+            let result = av_session::decode::load(&root.join(&entry.file), 64_000_000);
+            let error = result
+                .err()
+                .ok_or("corrupt corpus input unexpectedly decoded")?;
+            input_checks.push(serde_json::json!({"id":entry.id,"expected":"decode_error","passed":true,"error":error.to_string()}));
+            continue;
+        }
+        let category_params = if config == "corpus" {
+            let preset = match entry.category.as_str() {
+                "illustration" => "illustration",
+                "photo" => "photo",
+                "lineart" => "lineart",
+                "pixelart" => "pixelart",
+                _ => "logo",
+            };
+            self::params(preset, quantizer)?
+        } else {
+            params.clone()
+        };
         let row = measure(
             root,
             &entry,
-            &params,
+            &category_params,
             baseline,
             &out,
             !Path::new(config).is_file(),
@@ -448,6 +471,7 @@ pub fn run(
         rows.push(row);
     }
     let report = RunReport {
+        input_checks,
         overlap,
         label: label.into(),
         engine: if baseline {
