@@ -53,6 +53,9 @@ pub enum PixelArtStrategy {
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ExperimentalParams {
+    /// Opt-in exporter composition experiment; leaves all engine stages unchanged.
+    #[serde(default)]
+    pub opaque_canvas_overlap: bool,
     #[serde(default)]
     pub quality_v5: bool,
     #[serde(default)]
@@ -81,6 +84,7 @@ fn default_corner_radius() -> f64 {
 impl Default for ExperimentalParams {
     fn default() -> Self {
         Self {
+            opaque_canvas_overlap: false,
             quality_v5: true,
             denoise_kind: DenoiseKind::Bilateral,
             force_pixel_art: false,

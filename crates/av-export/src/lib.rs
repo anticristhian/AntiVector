@@ -80,7 +80,7 @@ pub fn statistics(
             colors: 0,
         });
     }
-    let paint = paths::paint(doc, options.overlap)?;
+    let paint = paths::paint(doc, options.overlap, options.opaque_canvas)?;
     let colors: std::collections::BTreeSet<_> = paint.iter().map(|p| p.rgb).collect();
     let count = if options.group_by_color && matches!(format, Format::Svg | Format::Png) {
         colors.len()

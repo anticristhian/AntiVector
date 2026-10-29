@@ -41,15 +41,41 @@ fn harness_end_to_end_and_regression_gate() {
     run(&["run", "--label", "a"]);
     run(&["baseline", "vtracer", "--label", "b"]);
     run(&["compare", "a", "b"]);
-    run(&["visual", "a", "b", "--label", "smoke"]);
-    let answers: serde_json::Value =
-        serde_json::from_slice(&std::fs::read(output.join("visual/smoke.json")).unwrap()).unwrap();
+    let visual_label = format!(
+        "smoke-{}",
+        std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap()
+            .as_nanos()
+    );
+    run(&["visual", "a", "b", "--label", &visual_label]);
+    let answer_path = output.join("visual").join(format!("{visual_label}.json"));
+    let saved_answers = std::fs::read(&answer_path).unwrap();
+    let answers: serde_json::Value = serde_json::from_slice(&saved_answers).unwrap();
     assert_eq!(answers["status"], "pending_human");
     assert!(answers["answers"]
         .as_array()
         .unwrap()
         .iter()
         .all(|a| a["choice"].is_null()));
+    let overwritten = Command::new(env!("CARGO_BIN_EXE_av-bench"))
+        .arg("--corpus")
+        .arg(&corpus)
+        .arg("--output-root")
+        .arg(&output)
+        .args(["visual", "a", "b", "--label", &visual_label])
+        .output()
+        .unwrap();
+    assert!(!overwritten.status.success());
+    assert_eq!(std::fs::read(&answer_path).unwrap(), saved_answers);
+    let vector = std::fs::read_to_string(
+        output
+            .join("visual")
+            .join(&visual_label)
+            .join("assets/0-A.svg"),
+    )
+    .unwrap();
+    resvg::usvg::Tree::from_str(&vector, &Default::default()).unwrap();
     run(&["perf"]);
     assert!(output.join("compare-a-b/report.html").is_file());
     let report: serde_json::Value =

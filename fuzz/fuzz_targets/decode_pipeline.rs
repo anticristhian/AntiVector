@@ -23,7 +23,7 @@ fuzz_target!(|data: &[u8]| {
         let h = 1 + u32::from(payload[1] % 32);
         let px = (0..w*h).map(|i| {
             let index = (i as usize * 4 + 2) % payload.len();
-            std::array::from_fn(|c| payload[(index+c)%payload.len()])
+            std::array::from_fn(|c| if c == 3 && kind & 0x40 != 0 { 255 } else { payload[(index+c)%payload.len()] })
         }).collect();
         RgbaImage { w, h, px }
     };
@@ -39,7 +39,7 @@ fuzz_target!(|data: &[u8]| {
     params.min_region_area = av_core::params::default_min_region_area(params.detail, image.w, image.h);
     let doc = av_core::vectorize(&image, &params, &Control::default()).expect("valid raster/params must vectorize");
     assert_eq!((doc.width, doc.height), (f64::from(image.w), f64::from(image.h)));
-    let options = av_export::svg::SvgOptions::default();
+    let options = av_export::svg::SvgOptions { opaque_canvas: kind & 0x80 != 0, ..Default::default() };
     let svg = av_export::svg::to_string_with_options(&doc, &options).unwrap();
     assert!(!svg.contains("NaN") && !svg.contains("inf"));
     av_export::png::to_bytes(&doc, &options).expect("valid vector must rasterize");

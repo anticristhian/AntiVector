@@ -1,0 +1,12 @@
+   Compiling av-desktop v0.1.0 (C:\Users\csgaz\OneDrive\Documentos\ChatGPT\AntiVector\app\src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 10.00s
+     Running unittests src\lib.rs (target\debug\deps\av_desktop_lib-0bfe75d9348d5ffb.exe)
+
+running 4 tests
+test commands::tests::large_image_errors_include_dimensions_for_the_reduction_choice ... ok
+test commands::tests::desktop_seed_transport_preserves_all_u64_values ... ok
+test commands::tests::decoded_session_and_compact_paths_match_the_svg_writer ... ok
+test commands::tests::opt_in_frame_uses_the_same_paint_paths_and_statistics_as_export ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

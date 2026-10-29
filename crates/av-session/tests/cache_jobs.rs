@@ -34,6 +34,24 @@ fn cache_dependencies_match_the_pure_pipeline_and_recover_from_cancellation() {
         &session.vectorize(&p, &Control::default()).unwrap()
     ));
     assert_eq!(session.counters().unwrap().executions, before);
+    p.experimental.opaque_canvas_overlap = true;
+    assert!(Arc::ptr_eq(
+        &first,
+        &session.vectorize(&p, &Control::default()).unwrap()
+    ));
+    assert_eq!(session.counters().unwrap().executions, before);
+    assert!(
+        session
+            .revision()
+            .unwrap()
+            .unwrap()
+            .params
+            .experimental
+            .opaque_canvas_overlap
+    );
+    p.experimental.opaque_canvas_overlap = false;
+    session.vectorize(&p, &Control::default()).unwrap();
+    assert_eq!(session.counters().unwrap().executions, before);
     p.smoothness = 0.7;
     p.fit_tolerance_px = 1.14;
     session.vectorize(&p, &Control::default()).unwrap();

@@ -220,6 +220,7 @@ Cada estágio tem testes unitários com imagens sintéticas geradas no próprio 
 | ADR-013 | Exceções BSL-1.0 nas duas dependências da área de transferência Windows | DEFINITIVO, versões auditadas |
 | ADR-014 | Exceção NCSA restrita ao libfuzzer-sys0.4.13 no workspace de fuzz | DEFINITIVO, ferramenta de teste fora do produto |
 | ADR-015 | AppImage com WebView do SO e bootstrap independente auditável | DEFINITIVO, tamanho/ldd/smoke/fontes verificados em F9 |
+| ADR-016 | Composição opaca com prova topológica de cobertura do quadro | EXPERIMENTO F9, A/B completo antes de ativar o padrão |
 
 Novos ADRs: acrescentar linha + seção abaixo com contexto, decisão, evidência, consequências.
 
@@ -462,3 +463,42 @@ Impacto: o AppImage requer GTK3/WebKitGTK4.1 e dependências nativas do SO;
 não é autossuficiente em distribuições sem esses pacotes. A baseline testada é
 Ubuntu24.04,sem alegar compatibilidade com versões anteriores ou todo Linux.
 Documentar esses pré-requisitos e conservar os avisos/fontes a cada build.
+
+### ADR-016 — Primeiro paint opaco com cobertura comprovada (2026-10-29)
+
+Contexto: a avaliação humana final marcou25vitórias/19empates/28derrotas,
+61,11% de preferência/empate,abaixo80%. Nas cinco fotos RGB opacas,o renderSVG
+deixou milhares de pixels parcialmente transparentes entre faces adjacentes,
+embora a cobertura semAA fosse exata. O protótipo de fundo opaco melhorou SSIM
+e ΔE nas cinco,mas introduzia quatro nós e não preservava a mesma composição
+em todos os formatos. Não basta melhorar SSIM para declarar preferência humana.
+
+Experimento: `Params.experimental.opaque_canvas_overlap` e
+`SvgOptions.opaque_canvas`,ambos desligados por padrão. Somente no modo
+de sobreposição,se a topologia completa comprovar uma partição opaca de todo
+o quadro,pintar a primeira região sobre o quadro inteiro. As demais regiões
+opacas são pintadas depois e preservam a forma visível dessa primeira região.
+Não adicionar cor,shape,stroke nem alterar as arestas/junções canônicas.
+SVG,PDF,EPS,PNG e paths de prévia usam a mesma rotina;DXF continua nas arestas.
+
+Prova: usos opostos das interfaces internas cancelam;interfaces não canceladas
+devem ser exclusivamente linhas sobre os quatro lados do quadro,que precisam
+estar cobertos exatamente uma vez,sem intervalos ausentes/sobrepostos. Um furo
+transparente deixa interface interna não cancelada;transparência conectada ao
+exterior deixa quadro incompleto. Ambos impedem a expansão. Modo exato e
+agrupamento por cor não a usam. Se o primeiro paint já cobre todo o quadro,
+conservar seus bytes.
+
+Medir com `cargo run -p av-bench --release --example opaque_canvas_ab`,sem
+alterar o rótulo/votos anteriores. O exemplo exige SVG legado byte-idêntico ao
+candidato avaliado e render semAA RGBA idêntico em cada entrada válida. Antes
+de fixar:corpus completo,gates de regressão/fidelidade/nós/geometria,testes de
+transparência/exportação/edição,fuzz e métricas RNF;avaliação humana nova das
+saídas alteradas permanece separada. Limites e votos não são relaxados.
+
+A/B medido:72renders semAA RGBA idênticos,corpos legados byte-idênticos ao
+candidato avaliado;gate geral72 e baseline34 aprovados. Nós+fidelidade passaram
+20/25→22/25,com melhoria de SSIM/ΔE nas cinco fotos. A opção é export-only:
+cache de geometria não é invalidado;projeto/CLI/IPC preservam a escolha explícita.
+Defaultfalse permanece até validação técnica completa e nova avaliação humana
+aprovada. Não transportar votos antigos para saídas ou apresentação alteradas.

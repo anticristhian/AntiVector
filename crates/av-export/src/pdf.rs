@@ -6,7 +6,7 @@ use pdf_writer::{Content, Finish, Pdf, Rect, Ref};
 /// Serialize one vector page. Holes use even-odd filling; no image is embedded.
 pub fn to_bytes(doc: &VectorDoc, options: &SvgOptions) -> Result<Vec<u8>, CoreError> {
     options.validate()?;
-    let paints = crate::paths::paint(doc, options.overlap)?;
+    let paints = crate::paths::paint(doc, options.overlap, options.opaque_canvas)?;
     let mut pdf = Pdf::new();
     let catalog = Ref::new(1);
     let pages = Ref::new(2);

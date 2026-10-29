@@ -34,6 +34,34 @@ integração com os demais formatos. Resultados/detalhes em PROGRESS.
 
 ## Corpus e qualidade
 
+### Candidato de correção após a primeira avaliação
+
+A correção de composição está em `experimental.opaque_canvas_overlap`,false
+por padrão. O harness pode ligá-la explicitamente com `--opaque-canvas`:
+
+```text
+cargo run -p av-bench --release -- run --config corpus --opaque-canvas --label f9-composition-candidate --check-baseline corpus/baselines/quality/f9/metrics.json
+cargo run -p av-bench --release -- compare f9-complete f9-composition-candidate --check
+cargo run -p av-bench --release -- gate-quality bench-out/f9-composition-candidate/metrics.json bench-out/f9-reference/metrics.json
+cargo run -p av-bench --release -- visual f9-composition-candidate f9-reference --label 2026-10-29-revision1 --seed 73
+cargo run -p av-bench --release -- score-visual 2026-10-29-revision1 bench-out/visual/2026-10-29-revision1.json --candidate f9-composition-candidate
+cargo run -p av-bench --release -- rnf --opaque-canvas --label f9-revision1-rnf
+```
+
+Não regenerar rótulos existentes:o gerador recusa qualquer diretório/JSON de
+avaliação já existente. A página nova mostra o Original decodificado e vetores
+A/B com zoom real100/400,rolagem sincronizada e rascunho local quando disponível.
+O JSON exportado continua obrigatório. Comentários dos geradores são removidos
+sem reescrever coordenadas;igualdade do render em resolução de fonte é exigida.
+`node scripts/check-visual-page.mjs` testa apenas a avaliação sintética de3pares
+gerada por cargo test -p av-bench;nunca deve preencher a avaliação humana real.
+
+Na CLI do produto,usar params.json com `experimental.opaque_canvas_overlap:true`.
+Projetos preservam esse campo;na UI,prévia/exportação/SSIM estimado seguem o
+parâmetro da revisão. O exemplo opaque_canvas_ab salva um projeto opt-in de QA
+em bench-out/f9-opaque-canvas-ab/photo_chelsea-optin.avproj. Sem opt-in,o produto
+mantém a composição anterior até os gates,incluindo a revisão humana.
+
 `av-bench gen` conserva o corpus mínimo histórico de34 entradas para testes
 rápidos. O corpus versionado completo contém73 entradas:
 20synthetic,15logo,10lineart,10illustration,5pixelart,5photo e8edge.

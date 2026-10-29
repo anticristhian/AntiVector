@@ -39,7 +39,12 @@ fn all_formats_parse_and_preserve_the_entire_corpus() {
             av_core::params::default_min_region_area(params.detail, image.w, image.h);
         let doc = av_core::vectorize(&image, &params, &Control::default()).unwrap();
         let before = doc.clone();
-        let options = SvgOptions::default();
+        // Validate the opt-in candidate across every source and format; defaults
+        // remain legacy until the separate human gate has passed.
+        let options = SvgOptions {
+            opaque_canvas: true,
+            ..SvgOptions::default()
+        };
         let svg =
             String::from_utf8(av_export::export(&doc, Format::Svg, &options).unwrap()).unwrap();
         assert!(svg.contains(&format!("viewBox=\"0 0 {} {}\"", image.w, image.h)));

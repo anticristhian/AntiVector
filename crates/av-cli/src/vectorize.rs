@@ -45,6 +45,7 @@ pub type Failure = (u8, String);
 impl Settings {
     pub fn options(&self) -> Result<av_export::svg::SvgOptions, Failure> {
         let options = av_export::svg::SvgOptions {
+            opaque_canvas: self.parameters()?.experimental.opaque_canvas_overlap,
             overlap: self
                 .stacking
                 .as_deref()

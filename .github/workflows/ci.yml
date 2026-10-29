@@ -53,6 +53,8 @@ jobs:
         run: cargo test --workspace
       - name: Validate frontend
         run: pnpm -C app lint && pnpm -C app test && pnpm -C app build
+      - name: Validate visual evaluation page offline with synthetic answers
+        run: node scripts/check-visual-page.mjs
       - name: Build offline desktop application
         run: pnpm -C app tauri build --ci --bundles ${{ matrix.bundle }}
       - name: Package with the operating system WebView
@@ -96,12 +98,19 @@ jobs:
           cache-on-failure: true
       - name: Measure the versioned corpus and enforce fidelity/topology limits
         run: cargo run -p av-bench --release -- run --config logo --label ci --check-baseline corpus/baselines/metrics.json
+      - name: Validate opt-in composition on the complete categorized corpus
+        run: |
+          cargo run -p av-bench --release -- run --config corpus --opaque-canvas --label ci-opaque-canvas --check-baseline corpus/baselines/quality/f9/metrics.json
+          cargo run -p av-bench --release -- gate-quality bench-out/ci-opaque-canvas/metrics.json corpus/baselines/quality/f9/vtracer.json
+          cargo run -p av-bench --release -- gate-curves bench-out/ci-opaque-canvas/metrics.json corpus/baselines/quality/f9/vtracer.json
       - name: Retain measured metrics, SVGs, renders and difference maps
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: quality-report
-          path: bench-out/ci/
+          path: |
+            bench-out/ci/
+            bench-out/ci-opaque-canvas/
 
   profile:
     name: CPU flamegraph
@@ -124,7 +133,7 @@ jobs:
           export PERF=$(find -L /usr/lib/linux-tools -type f -name perf | sort -V | tail -n 1)
           test -n "$PERF" && test -x "$PERF"
           mkdir -p bench-out/profile
-          cargo flamegraph --root -p av-bench --output bench-out/profile/illustration.svg -- profile corpus/baselines/performance/f9/before/illustration-4mp-32.png
+          cargo flamegraph --root -p av-bench --output bench-out/profile/illustration.svg -- profile corpus/baselines/performance/f9/before/illustration-4mp-32.png --opaque-canvas
       - name: Retain measured CPU profile
         if: always()
         uses: actions/upload-artifact@v4

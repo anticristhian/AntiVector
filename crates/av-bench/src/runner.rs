@@ -284,6 +284,7 @@ pub(crate) fn vectorize(
         Ok(av_export::svg::to_string_with_options(
             &doc,
             &av_export::svg::SvgOptions {
+                opaque_canvas: p.experimental.opaque_canvas_overlap,
                 overlap,
                 ..Default::default()
             },
@@ -412,17 +413,25 @@ fn measure(
     })
 }
 
+pub struct RunOptions {
+    pub baseline: bool,
+    pub overlap: bool,
+    pub opaque_canvas: bool,
+}
+
 pub fn run(
     root: &Path,
     output_root: &Path,
     label: &str,
     config: &str,
     quantizer: Option<&str>,
-    baseline: bool,
-    overlap: bool,
+    options: RunOptions,
 ) -> Result<RunReport> {
     safe_name(label)?;
-    let params = params(config, quantizer)?;
+    let baseline = options.baseline;
+    let overlap = options.overlap;
+    let mut params = params(config, quantizer)?;
+    params.experimental.opaque_canvas_overlap |= options.opaque_canvas;
     let out = output_root.join(label);
     for dir in ["svgs", "renders", "diffs"] {
         fs::create_dir_all(out.join(dir))?;
@@ -438,7 +447,7 @@ pub fn run(
             input_checks.push(serde_json::json!({"id":entry.id,"expected":"decode_error","passed":true,"error":error.to_string()}));
             continue;
         }
-        let category_params = if config == "corpus" {
+        let mut category_params = if config == "corpus" {
             let preset = match entry.category.as_str() {
                 "illustration" => "illustration",
                 "photo" => "photo",
@@ -450,6 +459,7 @@ pub fn run(
         } else {
             params.clone()
         };
+        category_params.experimental.opaque_canvas_overlap |= options.opaque_canvas;
         let row = measure(
             root,
             &entry,

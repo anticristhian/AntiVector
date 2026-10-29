@@ -155,7 +155,14 @@ pub fn render_check(reference: &Path, rendered: &Path, out: &Path, label: &str) 
 }
 
 /// Generate anonymous pairs plus a separate key and an unanswered JSON template.
-pub fn visual(root: &Path, a: &str, b: &str, label: &str, seed: u64) -> Result<()> {
+pub fn visual(
+    root: &Path,
+    corpus_root: &Path,
+    a: &str,
+    b: &str,
+    label: &str,
+    seed: u64,
+) -> Result<()> {
     for value in [a, b, label] {
         safe_name(value)?;
     }
@@ -179,30 +186,59 @@ pub fn visual(root: &Path, a: &str, b: &str, label: &str, seed: u64) -> Result<(
         rows.swap(i, j);
     }
     let dir = root.join("visual").join(label);
+    if dir.exists() || root.join("visual").join(format!("{label}.json")).exists() {
+        return Err(
+            "evaluation label already exists; preserve its assets, key and human answers".into(),
+        );
+    }
+    let corpus = crate::corpus::load(corpus_root)?;
     fs::create_dir_all(dir.join("assets"))?;
-    let mut html=String::from("<!doctype html><html lang=\"pt-BR\"><meta charset=\"utf-8\"><title>Avaliação cega</title><style>body{font:16px system-ui;margin:24px}.pair{display:flex;gap:20px;flex-wrap:wrap}img{image-rendering:pixelated;max-width:100%}body.zoom img{width:calc(4 * var(--natural-width))}section{border-bottom:1px solid #ccc;padding:20px}figure{margin:0}</style><h1>Avaliação visual cega</h1><p>Escolha A, B ou empate. A ordem dos pares e os lados são embaralhados. Não consulte a chave antes de concluir.</p><button onclick=\"document.body.classList.toggle('zoom')\">100% / 400%</button><button onclick=\"save()\">Salvar respostas JSON</button>");
+    let mut sections = String::new();
     let mut key = Vec::new();
     let mut answers = Vec::new();
     for (i, row) in rows.iter().enumerate() {
         safe_name(&row.id)?;
         let swap = next() & 1 != 0;
         let engines = if swap { [b, a] } else { [a, b] };
+        let entry = corpus
+            .iter()
+            .find(|entry| entry.id == row.id)
+            .ok_or("visual source not in corpus")?;
+        let source = crate::corpus::read(corpus_root, entry)?;
+        crate::corpus::save_png(
+            &dir.join("assets").join(format!("{i}-original.png")),
+            &source,
+        )?;
         for (side, engine) in ["A", "B"].into_iter().zip(engines) {
-            fs::copy(
+            let svg = fs::read_to_string(
                 root.join(engine)
-                    .join("renders")
-                    .join(format!("{}.png", row.id)),
-                dir.join("assets").join(format!("{i}-{side}.png")),
+                    .join("svgs")
+                    .join(format!("{}.svg", row.id)),
+            )?;
+            // Strip generator comments without rewriting a single coordinate.
+            // A generic SVG rewrite can change AA at floating-point thresholds.
+            let normalized = without_xml_comments(&svg)?;
+            if av_metrics::render::svg(&svg, true)? != av_metrics::render::svg(&normalized, true)? {
+                return Err(format!(
+                    "visual SVG normalization changed source-resolution pixels: {}",
+                    row.id
+                )
+                .into());
+            }
+            fs::write(
+                dir.join("assets").join(format!("{i}-{side}.svg")),
+                normalized,
             )?;
         }
-        writeln!(html,"<section><h2>Par {i}</h2><div class=\"pair\"><figure><figcaption>A</figcaption><img alt=\"A\" src=\"assets/{i}-A.png\"></figure><figure><figcaption>B</figcaption><img alt=\"B\" src=\"assets/{i}-B.png\"></figure></div><p><label><input type=\"radio\" name=\"p{i}\" value=\"A\">A</label> <label><input type=\"radio\" name=\"p{i}\" value=\"B\">B</label> <label><input type=\"radio\" name=\"p{i}\" value=\"tie\">Empate</label></p></section>")?;
+        writeln!(sections,"<section><h2>Par {i}</h2><div class=\"pair\" style=\"--natural-width:{}px\"><figure class=\"reference\"><figcaption>Original ({}×{})</figcaption><div class=\"viewport\"><img alt=\"Original do par {i}\" src=\"assets/{i}-original.png\"></div></figure><figure><figcaption>A</figcaption><div class=\"viewport\"><img alt=\"A do par {i}\" src=\"assets/{i}-A.svg\"></div></figure><figure><figcaption>B</figcaption><div class=\"viewport\"><img alt=\"B do par {i}\" src=\"assets/{i}-B.svg\"></div></figure></div><div class=\"choices\" role=\"group\" aria-label=\"Escolha do par {i}\"><label><input type=\"radio\" name=\"p{i}\" value=\"A\">A</label><label><input type=\"radio\" name=\"p{i}\" value=\"B\">B</label><label><input type=\"radio\" name=\"p{i}\" value=\"tie\">Empate</label></div></section>",source.w,source.w,source.h)?;
         key.push(serde_json::json!({"pair":i,"image":row.id,"A":engines[0],"B":engines[1]}));
         answers.push(serde_json::json!({"pair":i,"choice":null}));
     }
     let template =
         serde_json::json!({"label":label,"seed":seed,"status":"pending_human","answers":answers});
-    html.push_str("<script>document.querySelectorAll('img').forEach(img=>{const setup=()=>img.style.setProperty('--natural-width',img.naturalWidth+'px');if(img.complete)setup();else img.addEventListener('load',setup);});</script>");
-    write!(html,"<script>const template={};function save(){{const result=structuredClone(template);result.answers.forEach(x=>x.choice=document.querySelector('input[name=p'+x.pair+']:checked')?.value??null);result.status=result.answers.every(x=>x.choice)?'completed_by_human':'partial';const link=document.createElement('a');link.href=URL.createObjectURL(new Blob([JSON.stringify(result,null,2)],{{type:'application/json'}}));link.download='{}.json';link.click();URL.revokeObjectURL(link.href);}}</script></html>",serde_json::to_string(&template)?,label)?;
+    let html = include_str!("visual_template.html")
+        .replace("__SECTIONS__", &sections)
+        .replace("__TEMPLATE__", &serde_json::to_string(&template)?);
     fs::write(dir.join("index.html"), html)?;
     fs::write(
         dir.join("template.json"),
@@ -218,6 +254,19 @@ pub fn visual(root: &Path, a: &str, b: &str, label: &str, seed: u64) -> Result<(
         dir.join("index.html").display()
     );
     Ok(())
+}
+
+fn without_xml_comments(svg: &str) -> Result<String> {
+    let mut remaining = svg;
+    let mut output = String::with_capacity(svg.len());
+    while let Some(start) = remaining.find("<!--") {
+        output.push_str(&remaining[..start]);
+        let tail = &remaining[start + 4..];
+        let end = tail.find("-->").ok_or("unterminated SVG comment")?;
+        remaining = &tail[end + 3..];
+    }
+    output.push_str(remaining);
+    Ok(output)
 }
 
 /// Evaluate F4-specific measurements separately from the general regression gate.

@@ -6,7 +6,7 @@ use std::fmt::Write;
 /// Serialize EPS, using even-odd holes and a top-left pixel to point transform.
 pub fn to_string(doc: &VectorDoc, options: &SvgOptions) -> Result<String, CoreError> {
     options.validate()?;
-    let paints = crate::paths::paint(doc, options.overlap)?;
+    let paints = crate::paths::paint(doc, options.overlap, options.opaque_canvas)?;
     let w = doc.width * 0.75;
     let h = doc.height * 0.75;
     let mut out=format!("%!PS-Adobe-3.0 EPSF-3.0\n%%Creator: AntiVector\n%%BoundingBox: 0 0 {:.0} {:.0}\n%%HiResBoundingBox: 0 0 {w:.6} {h:.6}\n%%LanguageLevel: 2\n%%Pages: 1\n%%EndComments\n%%Page: 1 1\ngsave\n0 {h:.6} translate\n0.75 -0.75 scale\n",w.ceil(),h.ceil());

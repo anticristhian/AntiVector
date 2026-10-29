@@ -311,7 +311,7 @@ mod tests {
         let doc = session
             .vectorize(&opened.params, &Control::default())
             .unwrap();
-        let display = frame(&doc).unwrap();
+        let display = frame(&doc, false).unwrap();
         let svg = av_export::svg::to_string(&doc).unwrap();
         assert_eq!(display.shapes.len(), 1);
         assert!(svg.contains(&format!("d=\"{}\"", display.shapes[0].d)));
@@ -324,6 +324,46 @@ mod tests {
         assert_eq!(*session.source(), decoded);
         let json = serde_json::to_value(&display).unwrap();
         assert_eq!(json["stats"]["colors"], 1);
+    }
+    #[test]
+    fn opt_in_frame_uses_the_same_paint_paths_and_statistics_as_export() {
+        let image = RgbaImage::new(
+            32,
+            32,
+            (0..32)
+                .flat_map(|y| {
+                    (0..32).map(move |x| {
+                        if x < y {
+                            [24, 72, 120, 255]
+                        } else {
+                            [224, 168, 48, 255]
+                        }
+                    })
+                })
+                .collect(),
+        )
+        .unwrap();
+        let mut params = Params {
+            min_region_area: 0,
+            ..Params::default()
+        };
+        params.experimental.opaque_canvas_overlap = true;
+        let doc = av_core::vectorize(&image, &params, &Control::default()).unwrap();
+        let legacy = frame(&doc, false).unwrap();
+        let candidate = frame(&doc, true).unwrap();
+        assert_ne!(legacy.shapes[0].d, candidate.shapes[0].d);
+        let options = av_export::svg::SvgOptions {
+            opaque_canvas: true,
+            ..Default::default()
+        };
+        let svg = av_export::svg::to_string_with_options(&doc, &options).unwrap();
+        for (shape, original) in candidate.shapes.iter().zip(&doc.shapes) {
+            assert_eq!(shape.region, Some(original.region));
+            assert!(svg.contains(&format!("d=\"{}\"", shape.d)));
+        }
+        let stats = av_export::statistics(&doc, av_export::Format::Svg, &options).unwrap();
+        assert_eq!(candidate.stats.nodes, stats.nodes);
+        assert_eq!(candidate.stats.paths, stats.paths);
     }
     #[test]
     fn large_image_errors_include_dimensions_for_the_reduction_choice() {
@@ -393,8 +433,11 @@ struct Stats {
     colors: usize,
 }
 
-fn frame(doc: &VectorDoc) -> Result<Frame, UiError> {
-    let options = av_export::svg::SvgOptions::default();
+fn frame(doc: &VectorDoc, opaque_canvas: bool) -> Result<Frame, UiError> {
+    let options = av_export::svg::SvgOptions {
+        opaque_canvas,
+        ..Default::default()
+    };
     let paths = av_export::svg::to_paths(doc, &options)?;
     let shapes = paths
         .into_iter()
@@ -432,10 +475,12 @@ pub fn vectorize(
     state: State<'_, Arc<DesktopState>>,
 ) -> Result<u64, UiError> {
     let session = state.session(session_id)?;
+    let params = parse_ui_params(params)?;
+    let opaque_canvas = params.experimental.opaque_canvas_overlap;
     session
         .start(
-            parse_ui_params(params)?,
-            notifications(session.clone(), session_id, request_id, app),
+            params,
+            notifications(session.clone(), session_id, request_id, app, opaque_canvas),
         )
         .map_err(Into::into)
 }
@@ -444,6 +489,7 @@ fn notifications(
     session_id: u64,
     request_id: u64,
     app: AppHandle,
+    opaque_canvas: bool,
 ) -> Arc<dyn Fn(JobEvent) + Send + Sync> {
     Arc::new(move |event| {
         let (name, payload) = match event {
@@ -455,7 +501,7 @@ fn notifications(
                 "progress",
                 serde_json::json!({"job_id":job_id,"stage":stage,"frac":fraction}),
             ),
-            JobEvent::Preview { job_id, doc } => match frame(&doc) {
+            JobEvent::Preview { job_id, doc } => match frame(&doc, opaque_canvas) {
                 Ok(frame) => ("preview", serde_json::json!({"job_id":job_id,"doc":frame})),
                 Err(error) => ("error", serde_json::json!({"job_id":job_id,"error":error})),
             },
@@ -490,7 +536,10 @@ fn document_state(
     revision: &av_session::editor::Revision,
 ) -> Result<DocumentState, UiError> {
     Ok(DocumentState {
-        doc: frame(&revision.doc)?,
+        doc: frame(
+            &revision.doc,
+            revision.params.experimental.opaque_canvas_overlap,
+        )?,
         params: revision.params.clone(),
         history: session.history()?,
     })
@@ -500,7 +549,7 @@ fn completed_state(session: &Session, doc: &VectorDoc) -> Result<DocumentState, 
         .revision()?
         .ok_or_else(|| UiError::new("E_INTERNAL", "Revisão concluída ausente"))?;
     Ok(DocumentState {
-        doc: frame(doc)?,
+        doc: frame(doc, revision.params.experimental.opaque_canvas_overlap)?,
         params: revision.params,
         history: session.history()?,
     })
@@ -525,17 +574,26 @@ pub async fn estimate_fidelity(
     tauri::async_runtime::spawn_blocking(move || {
         let original =
             av_session::jobs::preview_raster(&session.source(), 65_536, &Control::default())?;
-        let svg = av_export::svg::to_string(&doc)?
-            .replacen(
-                &format!("width=\"{}\"", doc.width),
-                &format!("width=\"{}\"", original.w),
-                1,
-            )
-            .replacen(
-                &format!("height=\"{}\"", doc.height),
-                &format!("height=\"{}\"", original.h),
-                1,
-            );
+        let opaque_canvas = session
+            .revision()?
+            .is_some_and(|r| r.params.experimental.opaque_canvas_overlap);
+        let svg = av_export::svg::to_string_with_options(
+            &doc,
+            &av_export::svg::SvgOptions {
+                opaque_canvas,
+                ..Default::default()
+            },
+        )?
+        .replacen(
+            &format!("width=\"{}\"", doc.width),
+            &format!("width=\"{}\"", original.w),
+            1,
+        )
+        .replacen(
+            &format!("height=\"{}\"", doc.height),
+            &format!("height=\"{}\"", original.h),
+            1,
+        );
         let rendered = av_metrics::render::svg(&svg, true)?;
         Ok(FidelityEstimate {
             ssim: av_metrics::ssim::ssim(&original, &rendered)?,
@@ -556,10 +614,13 @@ pub fn edit(
     state: State<'_, Arc<DesktopState>>,
 ) -> Result<u64, UiError> {
     let session = state.session(session_id)?;
+    let opaque_canvas = session
+        .revision()?
+        .is_some_and(|r| r.params.experimental.opaque_canvas_overlap);
     session
         .start_edit(
             op,
-            notifications(session.clone(), session_id, request_id, app),
+            notifications(session.clone(), session_id, request_id, app, opaque_canvas),
         )
         .map_err(Into::into)
 }
@@ -725,13 +786,15 @@ pub async fn export(
                 }
             }
         }
-        let doc = session
-            .latest()?
+        let revision = session
+            .revision()?
             .ok_or_else(|| UiError::new("E_PARAMS", "Nenhum vetor concluído"))?;
+        let doc = revision.doc;
         let bytes = av_export::export(
             &doc,
             av_export::Format::parse(&options.format)?,
             &av_export::svg::SvgOptions {
+                opaque_canvas: revision.params.experimental.opaque_canvas_overlap,
                 precision: options.precision,
                 overlap: options.overlap,
                 group_by_color: options.group_by_color,

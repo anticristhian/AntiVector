@@ -1,0 +1,4 @@
+    Finished `release` profile [optimized] target(s) in 1.01s
+     Running `target\release\av-bench.exe compare f9-complete f9-composition-candidate --check`
+report: bench-out\compare-f9-complete-f9-composition-candidate\report.html
+quality gate passed for 72 baseline images (timing gate is local/nightly only)

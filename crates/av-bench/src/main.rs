@@ -31,6 +31,8 @@ enum Command {
     },
     /// Portable CPU profiling workload; instrumented times are not RNF evidence.
     Profile {
+        #[arg(long)]
+        opaque_canvas: bool,
         input: PathBuf,
         #[arg(long, default_value = "illustration")]
         config: String,
@@ -39,11 +41,15 @@ enum Command {
     },
     /// Measure RNF01–03 using five fresh processes per reference image.
     Rnf {
+        #[arg(long)]
+        opaque_canvas: bool,
         #[arg(long, default_value = "rnf")]
         label: String,
     },
     #[command(hide = true)]
     RnfTrial {
+        #[arg(long)]
+        opaque_canvas: bool,
         input: PathBuf,
         config: String,
         colors: u16,
@@ -92,6 +98,9 @@ enum Command {
     },
     /// Measure AntiVector using a preset or complete parameter JSON file.
     Run {
+        /// Opt in to the opaque-canvas composition experiment; defaults stay unchanged.
+        #[arg(long)]
+        opaque_canvas: bool,
         #[arg(long)]
         stacking: Option<String>,
         #[arg(long, default_value = "logo")]
@@ -150,17 +159,22 @@ fn execute(cli: Cli) -> Result<()> {
             candidate,
         } => visual_score::run(&cli.output_root, &label, &answers, &candidate),
         Command::Profile {
+            opaque_canvas,
             input,
             config,
             colors,
-        } => rnf::profile(&input, &config, colors),
-        Command::Rnf { label } => rnf::run(&cli.output_root, &label),
+        } => rnf::profile(&input, &config, colors, opaque_canvas),
+        Command::Rnf {
+            label,
+            opaque_canvas,
+        } => rnf::run(&cli.output_root, &label, opaque_canvas),
         Command::RnfTrial {
+            opaque_canvas,
             input,
             config,
             colors,
             output,
-        } => rnf::trial(&input, &config, colors, &output),
+        } => rnf::trial(&input, &config, colors, &output, opaque_canvas),
         Command::Fixture4mp { path } => {
             let scene = std::fs::read_to_string(cli.corpus.join("gt/logo_original_1.svg"))?
                 .replacen("width=\"128\"", "width=\"2000\"", 1)
@@ -187,7 +201,7 @@ fn execute(cli: Cli) -> Result<()> {
             &runner::load_report(&reference)?,
         ),
         Command::Visual { a, b, label, seed } => {
-            report::visual(&cli.output_root, &a, &b, &label, seed)
+            report::visual(&cli.output_root, &cli.corpus, &a, &b, &label, seed)
         }
         Command::GateCurves {
             candidate,
@@ -204,6 +218,7 @@ fn execute(cli: Cli) -> Result<()> {
             }
         }
         Command::Run {
+            opaque_canvas,
             stacking,
             config,
             label,
@@ -216,8 +231,11 @@ fn execute(cli: Cli) -> Result<()> {
                 &label,
                 &config,
                 quantizer.as_deref(),
-                false,
-                overlap(stacking.as_deref())?,
+                runner::RunOptions {
+                    baseline: false,
+                    overlap: overlap(stacking.as_deref())?,
+                    opaque_canvas,
+                },
             )?;
             if let Some(path) = check_baseline {
                 report::check(&runner::load_report(&path)?, &result)?;
@@ -239,8 +257,11 @@ fn execute(cli: Cli) -> Result<()> {
                 &label,
                 &config,
                 None,
-                true,
-                overlap(stacking.as_deref())?,
+                runner::RunOptions {
+                    baseline: true,
+                    overlap: overlap(stacking.as_deref())?,
+                    opaque_canvas: false,
+                },
             )?;
             Ok(())
         }

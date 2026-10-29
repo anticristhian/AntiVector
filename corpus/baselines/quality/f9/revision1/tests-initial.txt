@@ -1,0 +1,276 @@
+   Compiling av-core v0.1.0 (C:\Users\csgaz\OneDrive\Documentos\ChatGPT\AntiVector\crates\av-core)
+   Compiling av-export v0.1.0 (C:\Users\csgaz\OneDrive\Documentos\ChatGPT\AntiVector\crates\av-export)
+   Compiling av-metrics v0.1.0 (C:\Users\csgaz\OneDrive\Documentos\ChatGPT\AntiVector\crates\av-metrics)
+   Compiling av-session v0.1.0 (C:\Users\csgaz\OneDrive\Documentos\ChatGPT\AntiVector\crates\av-session)
+   Compiling av-desktop v0.1.0 (C:\Users\csgaz\OneDrive\Documentos\ChatGPT\AntiVector\app\src-tauri)
+   Compiling av-bench v0.1.0 (C:\Users\csgaz\OneDrive\Documentos\ChatGPT\AntiVector\crates\av-bench)
+   Compiling av-cli v0.1.0 (C:\Users\csgaz\OneDrive\Documentos\ChatGPT\AntiVector\crates\av-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 36.11s
+     Running unittests src\main.rs (target\debug\deps\av_bench-08b99f2e052c9188.exe)
+
+running 2 tests
+test report::tests::report_escapes_untrusted_text_and_validates_paths ... ok
+test visual_score::tests::synthetic_gate_inputs_require_complete_unique_matching_human_answers ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\harness.rs (target\debug\deps\harness-dcecd771eee93048.exe)
+
+running 1 test
+test harness_end_to_end_and_regression_gate ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.42s
+
+     Running unittests src\main.rs (target\debug\deps\antivector-d0403ebdf9ccf569.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\export_batch.rs (target\debug\deps\export_batch-063820d85263fed2.exe)
+
+running 3 tests
+test batch_continues_after_corruption_and_rejects_collisions ... ok
+test invalid_export_options_and_io_are_reported_before_writing ... ok
+test five_formats_and_direct_cli_syntax ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.52s
+
+     Running tests\info.rs (target\debug\deps\info-912f6fa7201db9f3.exe)
+
+running 1 test
+test info_reports_dimensions_alpha_and_errors ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.21s
+
+     Running tests\vectorize.rs (target\debug\deps\vectorize-47d6778ea2a3eb2a.exe)
+
+running 1 test
+test polygon_svg_and_stage_dumps ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running unittests src\lib.rs (target\debug\deps\av_core-7fad46cd2ccbce47.exe)
+
+running 10 tests
+test color::oklab::tests::reference_colors ... ok
+test params::tests::defaults_follow_mode_flags_and_area ... ok
+test raster::tests::transparent_and_uniform_are_valid ... ok
+test raster::tests::empty_and_malformed_inputs ... ok
+test raster::tests::limits_without_large_allocation ... ok
+test color::oklab::tests::transfer_function_and_lut ... ok
+test params::tests::rejects_invalid_numeric_domains_and_versions ... ok
+test progress::tests::shared_cancellation_and_progress ... ok
+test params::tests::presets_roundtrip ... ok
+test color::oklab::tests::roundtrip_100k_deterministic_colors ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests\detection.rs (target\debug\deps\detection-1f1b2718c5f45718.exe)
+
+running 1 test
+test detector_retains_minority_accents_and_handles_empty_input ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests\quality.rs (target\debug\deps\quality-f3974a99b433ee7e.exe)
+
+running 8 tests
+test high_contrast_one_pixel_line_survives_noise_merge_at_detail_half ... ok
+test alpha_cleanup_and_bicubic_coordinates ... ok
+test resolves_gray_transition_without_a_halo_region ... ok
+test aa_logo_has_only_ground_truth_regions_after_full_segmentation ... ok
+test multicolor_frame_keeps_original_sampling_and_pixel_art_rare_accents ... ok
+test denoise_variants_are_deterministic_and_keep_alpha_mask ... ok
+test auto_keeps_a_minority_brand_color_and_snaps_exact_majorities ... ok
+test quality_pipeline_restores_original_dimensions ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests\segmentation.rs (target\debug\deps\segmentation-da2fa5af4f369615.exe)
+
+running 3 tests
+test merges_small_regions_and_preserves_transparent_sources ... ok
+test quantization_determinism_locks_and_transparency ... ok
+test experimental_quantizers_keep_locks_and_are_deterministic ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running unittests src\lib.rs (target\debug\deps\av_desktop_lib-3552ee8c9583370b.exe)
+
+running 3 tests
+test commands::tests::large_image_errors_include_dimensions_for_the_reduction_choice ... ok
+test commands::tests::desktop_seed_transport_preserves_all_u64_values ... ok
+test commands::tests::decoded_session_and_compact_paths_match_the_svg_writer ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests src\main.rs (target\debug\deps\av_desktop-790f8f468dde2930.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (target\debug\deps\av_export-7f1fad1cfb448d96.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\curve_coverage.rs (target\debug\deps\curve_coverage-69cbff93dacb76cd.exe)
+
+running 1 test
+test fitted_boundaries_leave_no_background ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.14s
+
+     Running tests\curves.rs (target\debug\deps\curves-5b8c9a536f771848.exe)
+
+running 2 tests
+test circle_square_star_and_fixed_junctions ... ok
+test deterministic_threads_and_monotonic_tolerance ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.23s
+
+     Running tests\edits.rs (target\debug\deps\edits-f08a5b1d2782c8ee.exe)
+
+running 2 tests
+test aliases_transparency_and_invalid_operations_are_safe ... ok
+test random_edit_sequences_keep_zero_gaps ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.12s
+
+     Running tests\formats.rs (target\debug\deps\formats-ba4189c2b08e0afb.exe)
+
+running 4 tests
+test precision_color_grouping_and_invalid_inputs ... ok
+test dxf_subdivision_stays_within_point_one_pixels ... ok
+test deterministic_vector_format_snapshots ... ok
+test all_formats_parse_and_preserve_the_entire_corpus has been running for over 60 seconds
+test all_formats_parse_and_preserve_the_entire_corpus ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 213.25s
+
+     Running tests\opaque_canvas.rs (target\debug\deps\opaque_canvas-3f3d706701d8fb6f.exe)
+
+running 2 tests
+test incomplete_frame_and_transparent_holes_never_receive_an_opaque_backdrop ... ok
+test opaque_shared_diagonal_keeps_geometry_colors_and_ids_without_aa_transparency ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+     Running tests\overlap.rs (target\debug\deps\overlap-027d5f723e092b55.exe)
+
+running 3 tests
+test omits_only_holes_filled_by_later_opaque_shapes ... ok
+test transparent_holes_and_large_earlier_descendants_are_preserved ... ok
+test quality_pipeline_svg_is_identical_with_one_and_four_threads ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.74s
+
+     Running tests\snapshots.rs (target\debug\deps\snapshots-883f9cd89cb4c4fb.exe)
+
+running 3 tests
+test synthetic_polygon_snapshots ... ok
+test synthetic_curve_snapshots ... ok
+test synthetic_quality_snapshots ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.53s
+
+     Running tests\topology.rs (target\debug\deps\topology-8efa2f098b224aa5.exe)
+
+running 2 tests
+test explicit_topology_cases ... ok
+test exact_coverage_random_labels ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.35s
+
+     Running unittests src\lib.rs (target\debug\deps\av_metrics-aa1672887bc9b0d5.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\fidelity.rs (target\debug\deps\fidelity-bbb3cf437b660320.exe)
+
+running 2 tests
+test sharma_2005_all_34_reference_pairs ... ok
+test ssim_identity_degradation_and_gaps ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\geometry.rs (target\debug\deps\geometry-7e4b4d962b67c3a8.exe)
+
+running 1 test
+test anchors_corners_transforms_and_hausdorff ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (target\debug\deps\av_session-b390954f5c5f13a7.exe)
+
+running 4 tests
+test decode::tests::alpha_png_roundtrip ... ok
+test decode::tests::gif_uses_first_frame ... ok
+test decode::tests::sixteen_bit_png_and_tiff_to_eight_bit ... ok
+test decode::tests::supported_formats_and_corruption ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\cache_jobs.rs (target\debug\deps\cache_jobs-124579b9c320fdad.exe)
+
+running 4 tests
+test preview_is_bounded_even_for_long_thin_images ... ok
+test worker_cancels_under_200ms_and_preserves_the_completed_document ... ok
+test a_new_job_supersedes_old_results ... ok
+test cache_dependencies_match_the_pure_pipeline_and_recover_from_cancellation ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.81s
+
+     Running tests\editor.rs (target\debug\deps\editor-22e49768551498f1.exe)
+
+running 4 tests
+test session_edit_events_and_history_publish_together ... ok
+test parameters_locks_replay_and_failed_drafts_are_transactional ... ok
+test region_removal_does_not_expand_when_a_parameter_change_merges_regions ... ok
+test history_restores_exact_svg_over_100_edits_and_branches ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.61s
+
+     Running tests\project.rs (target\debug\deps\project-c3571623b88b745a.exe)
+
+running 2 tests
+test project_roundtrip_reproduces_pixels_params_edits_and_svg ... ok
+test unknown_versions_paths_and_oversized_directories_are_rejected ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+   Doc-tests av_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests av_desktop_lib
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests av_export
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests av_metrics
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests av_session
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

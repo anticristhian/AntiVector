@@ -11,6 +11,9 @@ use std::fmt::Write;
 #[derive(Clone, Copy, Debug)]
 pub struct SvgOptions {
     pub overlap: bool,
+    /// Experimental: extend the first paint to the frame only when the shared
+    /// topology proves a fully opaque partition. Exact mode never uses it.
+    pub opaque_canvas: bool,
     /// Decimal places, 0..=8. Two preserves the validated F5 default bytes.
     pub precision: u8,
     /// Merge paths by RGB. Uses exact holes; overlap and grouping are exclusive.
@@ -21,6 +24,7 @@ impl Default for SvgOptions {
     fn default() -> Self {
         Self {
             overlap: true,
+            opaque_canvas: false,
             precision: 2,
             group_by_color: false,
         }
@@ -127,7 +131,7 @@ pub struct DisplayPath {
 pub fn to_paths(doc: &VectorDoc, options: &SvgOptions) -> Result<Vec<DisplayPath>, CoreError> {
     options.validate()?;
     let number = |v| number(v, options.precision);
-    let mut paints = crate::paths::paint(doc, options.overlap)?;
+    let mut paints = crate::paths::paint(doc, options.overlap, options.opaque_canvas)?;
     if options.group_by_color {
         let mut groups: BTreeMap<[u8; 3], Vec<_>> = BTreeMap::new();
         for paint in paints {

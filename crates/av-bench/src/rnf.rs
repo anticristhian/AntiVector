@@ -33,9 +33,16 @@ fn peak_working_set() -> Result<u64> {
     Err("RNF high-water mark measurement currently requires Windows".into())
 }
 
-pub fn trial(input: &Path, config: &str, colors: u16, output: &Path) -> Result<()> {
+pub fn trial(
+    input: &Path,
+    config: &str,
+    colors: u16,
+    output: &Path,
+    opaque_canvas: bool,
+) -> Result<()> {
     let image = av_session::decode::load(input, 64_000_000)?;
     let mut params = av_core::Params::preset(config)?;
+    params.experimental.opaque_canvas_overlap = opaque_canvas;
     params.colors = av_core::ColorCount::Fixed(colors);
     params.min_region_area =
         av_core::params::default_min_region_area(params.detail, image.w, image.h);
@@ -58,9 +65,10 @@ pub fn trial(input: &Path, config: &str, colors: u16, output: &Path) -> Result<(
     Ok(())
 }
 
-pub fn profile(input: &Path, config: &str, colors: u16) -> Result<()> {
+pub fn profile(input: &Path, config: &str, colors: u16, opaque_canvas: bool) -> Result<()> {
     let image = av_session::decode::load(input, 64_000_000)?;
     let mut params = av_core::Params::preset(config)?;
+    params.experimental.opaque_canvas_overlap = opaque_canvas;
     params.colors = av_core::ColorCount::Fixed(colors);
     params.min_region_area =
         av_core::params::default_min_region_area(params.detail, image.w, image.h);
@@ -100,7 +108,7 @@ fn fixture(size: u32, colors: u16) -> String {
     svg
 }
 
-pub fn run(root: &Path, label: &str) -> Result<()> {
+pub fn run(root: &Path, label: &str, opaque_canvas: bool) -> Result<()> {
     runner::safe_name(label)?;
     let directory = root.join(label);
     fs::create_dir_all(&directory)?;
@@ -119,9 +127,12 @@ pub fn run(root: &Path, label: &str) -> Result<()> {
         let mut trials = Vec::new();
         for index in 0..5 {
             let path = directory.join(format!("{name}-{index}.json"));
-            let status = Command::new(std::env::current_exe()?)
-                .env("RAYON_NUM_THREADS", "8")
-                .arg("rnf-trial")
+            let mut child = Command::new(std::env::current_exe()?);
+            child.env("RAYON_NUM_THREADS", "8").arg("rnf-trial");
+            if opaque_canvas {
+                child.arg("--opaque-canvas");
+            }
+            let status = child
                 .arg(&input)
                 .arg(config)
                 .arg(colors.to_string())
@@ -158,6 +169,7 @@ pub fn run(root: &Path, label: &str) -> Result<()> {
             "profile":"release","scope":"decoded raster through SVG including detection; fresh process per trial",
             "memory_method":"Windows OS PeakWorkingSet64, lifetime high-water mark",
             "fixtures":"original deterministic geometric reference scenes, not a worst-case guarantee",
+            "opaque_canvas_overlap":opaque_canvas,
             "passed":accepted,"rows":rows
         }))?,
     )?;
