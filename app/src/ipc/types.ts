@@ -1,0 +1,22 @@
+export type Mode = 'logo' | 'illustration' | 'photo' | 'line_art';
+export type Params = {
+  version: number; mode: Mode; colors: 'auto' | { fixed: number }; palette_lock: number[][];
+  denoise: number; min_region_area: number; antialias_resolve: boolean;
+  corner_threshold_deg: number; smoothness: number; fit_tolerance_px: number; detail: number;
+  transparency_alpha_cut: number; seed: number;
+  experimental: { quality_v5: boolean; denoise_kind: 'bilateral' | 'mean_shift' | 'guided';
+    force_pixel_art: boolean; pixel_art_strategy: 'preserve_grid' | 'scale_corners';
+    upscale_small: boolean; curve_fit: boolean; corner_recovery_radius: number; quantizer: string };
+};
+export type Detection = { mode: Mode; colors: number; has_alpha: boolean; is_jpeg_like: boolean; is_pixel_art: boolean };
+export type OpenedImage = { session_id: number; w: number; h: number; name: string; detection: Detection;
+  params: Params; thumb_png_b64: string; original_png_b64: string };
+export type VectorFrame = { width: number; height: number;
+  shapes: { region: number | null; color: string; d: string; nodes: { point: [number, number]; corner: boolean }[] }[];
+  palette: { id: number; rgb: number[]; locked: boolean }[];
+  stats: { paths: number; nodes: number; colors: number } };
+export type UiError = { code: string; msg: string; width?: number; height?: number };
+export type JobMessage = { kind: 'progress' | 'preview' | 'done' | 'error'; session_id: number; request_id: number;
+  job_id: number; stage?: string; frac?: number; doc?: VectorFrame; error?: UiError };
+export type ExportOptions = { format: 'svg' | 'pdf' | 'eps' | 'dxf' | 'png'; precision: number; overlap: boolean; group_by_color: boolean };
+export type View = 'side' | 'slider' | 'vector' | 'outline';

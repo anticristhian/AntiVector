@@ -155,6 +155,10 @@ Cada estágio tem testes unitários com imagens sintéticas geradas no próprio 
 | ADR‑007 | Algoritmo de quantização inicial: k‑means++ em OKLab com inicialização determinística (seed) sobre histograma 5‑5‑5 ponderado | DEFINITIVO (experimento F3 registrado abaixo) |
 | ADR‑008 | IA fora do caminho crítico v1 | DEFINITIVO |
 | ADR-009 | Recuperação multiescala de cantos recortados, com raio configurável e junções fixas | HIPÓTESE calibrada em F4; configuração conservadora passou ambos os gates locais |
+| ADR-010 | Sobreposição opaca segura como padrão SVG; geometria interna preservada | DEFINITIVO, substitui o padrão de ADR-006 |
+| ADR-011 | Calibração de AA, upscale, denoise e pixel art no corpus F5 | Hipóteses calibradas, alternativas por flags |
+| ADR-012 | Exceção de licença restrita a target-lexicon0.12.16, dependência de build Tauri/Linux | DEFINITIVO, exceção pontual à allowlist F0 |
+| ADR-013 | Exceções BSL-1.0 nas duas dependências da área de transferência Windows | DEFINITIVO, versões auditadas |
 
 Novos ADRs: acrescentar linha + seção abaixo com contexto, decisão, evidência, consequências.
 
@@ -286,3 +290,47 @@ somente `f5-pixel-final.json` contém o experimento válido.
 Limites: critérios de F5 são avaliados no corpus atual (20 synthetic,5 logos,
 4edge,5pixelart). Não há amostras lineart/illustration/photo suficientes para
 alegar aceite global de v1. Avaliação cega gerada deve ser preenchida pelo usuário.
+
+### ADR-012 — Exceção pontual de build para Tauri/Linux (2026-10-28)
+
+Motivo: a allowlist F0 não inclui a expressão SPDX `Apache-2.0 WITH
+LLVM-exception`. `cargo deny check licenses` rejeitou target-lexicon0.12.16,
+dependência de cfg-expr0.15.8 → system-deps6.2.2, usada pelos build scripts
+GTK/WebKit de Tauri2 no Linux. Remover esse suporte contrariaria ADR-003.
+
+Evidência: Cargo.lock e o grafo impresso pelo cargo-deny identificaram essa única
+rejeição. O arquivo LICENSE do crate contém Apache2 e a exceção LLVM; ela concede
+dispensas adicionais para partes incorporadas na compilação, não impõe GPL ao
+produto. Conferidos o texto [oficial LLVM](https://llvm.org/LICENSE.txt) e a
+[documentação de exceções por pacote](https://embarkstudios.github.io/cargo-deny/checks/licenses/cfg.html#the-exceptions-field).
+
+Decisão [DEFINITIVO]: permitir essa expressão somente para
+`target-lexicon =0.12.16` em `licenses.exceptions`, mantendo a allowlist global
+inalterada. Não desabilitar a análise de build-dependencies. Nenhuma dependência
+GPL/AGPL é autorizada por esta decisão. Versões/pacotes adicionais exigem nova
+revisão explícita; a pinagem vem do lockfile, sem fork de código ou licença.
+
+Impacto: os build scripts de descoberta de bibliotecas nativas passam na
+auditoria; nenhuma geometria, métrica, contrato de dados ou rede do produto muda.
+Tauri continua usando frameworks nativos dos sistemas operacionais. O aviso de
+licença não pode ser suprimido nem substituído por um resultado inventado.
+
+### ADR-013 — Área de transferência Windows e BSL-1.0 (2026-10-29)
+
+Motivo: o requisito de colar imagem usa o plugin oficial Tauri clipboard-manager,
+que depende de arboard3.7.0 → clipboard-win5.4.3 → error-code3.4.0 no Windows.
+Cargo-deny rejeitou os dois últimos por BSL-1.0, ausente na allowlist F0.
+
+Evidência: grafo e versões medidos em Cargo.lock/cargo-deny; manifesto dos dois
+crates declara BSL-1.0. LICENSE de error-code e o
+[texto oficial Boost](https://www.boost.org/LICENSE_1_0.txt) conferidos: licença
+permissiva, permite derivados e distribuição executável, sem obrigação de
+abrir o produto. Distribuições de fonte devem conservar avisos e licença.
+
+Decisão [DEFINITIVO]: exceções restritas a clipboard-win=5.4.3 e
+error-code=3.4.0 em deny.toml; allowlist global permanece igual. Não remover a
+auditoria ou autorizar GPL/AGPL. Atualizações exigem nova revisão das exceções.
+
+Impacto: mantém a integração nativa exigida, sem implementar chamadas Win32
+próprias; nenhuma mudança no motor ou em dados transmitidos. F9 deve incluir
+avisos de terceiros da distribuição, inclusive esses textos quando aplicável.

@@ -521,3 +521,66 @@ pub fn perf(
     println!("saved medians of 5 repetitions for {} images", rows.len());
     Ok(())
 }
+
+pub fn session_perf(input: &Path, root: &Path, label: &str, budget: usize) -> Result<()> {
+    use av_session::{JobEvent, Session};
+    use std::sync::mpsc;
+    safe_name(label)?;
+    let image = av_session::decode::load(input, av_core::raster::DEFAULT_PIXEL_LIMIT)
+        .map_err(|e| e.to_string())?;
+    let params =
+        av_core::params::resolve_defaults(av_core::detect(&image).mode, &av_core::detect(&image));
+    let mut trials = Vec::new();
+    let mut reference_svg = None;
+    for _ in 0..5 {
+        let session = Arc::new(Session::new(image.clone())?);
+        let (tx, rx) = mpsc::channel();
+        let start = Instant::now();
+        let mut preview = None;
+        session.start_with_preview_budget(
+            params.clone(),
+            budget,
+            Arc::new(move |event| {
+                let _ = tx.send(event);
+            }),
+        )?;
+        loop {
+            match rx.recv_timeout(Duration::from_secs(120))? {
+                JobEvent::Preview { doc, .. } => {
+                    preview = Some(start.elapsed().as_secs_f64() * 1000.0);
+                    if doc.width * doc.height > budget as f64 {
+                        return Err("preview exceeds its budget".into());
+                    }
+                }
+                JobEvent::Done { doc, .. } => {
+                    let elapsed = start.elapsed().as_secs_f64() * 1000.0;
+                    let svg = av_export::svg::to_string(&doc)?;
+                    if let Some(previous) = &reference_svg {
+                        if previous != &svg {
+                            return Err("session nondeterminism".into());
+                        }
+                    } else {
+                        reference_svg = Some(svg);
+                    }
+                    trials.push(serde_json::json!({"preview_ms":preview,"full_ms":elapsed}));
+                    break;
+                }
+                JobEvent::Error { error, .. } => return Err(error.into()),
+                _ => {}
+            }
+        }
+    }
+    let median = |key: &str| {
+        let mut values: Vec<_> = trials.iter().filter_map(|r| r[key].as_f64()).collect();
+        values.sort_by(f64::total_cmp);
+        values.get(values.len() / 2).copied()
+    };
+    let report = serde_json::json!({"width":image.w,"height":image.h,"preview_budget":budget,"repetitions":5,"profile":if cfg!(debug_assertions){"debug"}else{"release"},"median_preview_ms":median("preview_ms"),"median_full_ms":median("full_ms"),"trials":trials});
+    fs::create_dir_all(root.join(label))?;
+    fs::write(
+        root.join(label).join("session-perf.json"),
+        serde_json::to_vec_pretty(&report)?,
+    )?;
+    println!("{report}");
+    Ok(())
+}

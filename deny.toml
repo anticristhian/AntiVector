@@ -17,6 +17,23 @@ allow = [
 [licenses.private]
 ignore = true
 
+# ADR-012: build-only target metadata, not a blanket license allowance.
+[[licenses.exceptions]]
+name = "target-lexicon"
+version = "=0.12.16"
+allow = ["Apache-2.0 WITH LLVM-exception"]
+
+# ADR-013: native Windows clipboard dependencies, exact audited versions.
+[[licenses.exceptions]]
+name = "clipboard-win"
+version = "=5.4.3"
+allow = ["BSL-1.0"]
+
+[[licenses.exceptions]]
+name = "error-code"
+version = "=3.4.0"
+allow = ["BSL-1.0"]
+
 [sources]
 unknown-registry = "deny"
 unknown-git = "deny"

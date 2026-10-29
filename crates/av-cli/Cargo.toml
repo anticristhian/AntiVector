@@ -9,6 +9,7 @@ publish.workspace = true
 [dependencies]
 av-core = { path = "../av-core" }
 av-export = { path = "../av-export" }
+av-session = {path="../av-session"}
 clap = { version = "4", features = ["derive"] }
 image = { version = "0.25", default-features = false, features = ["png", "jpeg", "bmp", "gif", "tiff", "webp"] }
 

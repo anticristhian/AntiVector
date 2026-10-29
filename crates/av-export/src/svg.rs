@@ -1,7 +1,7 @@
 //! SVG 1.1 writer with shared paths and safe opaque overlap (ADR-010).
 
 use av_core::{
-    assemble::{Seg, VectorDoc},
+    assemble::{Point, Seg, VectorDoc},
     CoreError,
 };
 use std::collections::{BTreeMap, BTreeSet};
@@ -102,6 +102,31 @@ pub fn to_string_with_options(doc: &VectorDoc, options: &SvgOptions) -> Result<S
     let width = number(doc.width)?;
     let height = number(doc.height)?;
     let mut output = format!("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"{width}\" height=\"{height}\" viewBox=\"0 0 {width} {height}\">\n");
+    for path in to_paths(doc, options)? {
+        writeln!(
+            output,
+            "<path fill=\"#{:02x}{:02x}{:02x}\" fill-rule=\"evenodd\" d=\"{}\"/>",
+            path.color[0], path.color[1], path.color[2], path.data
+        )
+        .unwrap();
+    }
+    output.push_str("</svg>\n");
+    Ok(output)
+}
+
+/// Ready-to-draw geometry for desktop IPC. Region IDs are absent after grouping.
+pub struct DisplayPath {
+    pub region: Option<u32>,
+    pub color: [u8; 3],
+    pub data: String,
+    pub anchors: Vec<(Point, bool)>,
+}
+
+/// Reuse exactly the writer's path strings; the frontend never fits geometry.
+/// Anchor metadata is omitted when the document exceeds the 50k display budget.
+pub fn to_paths(doc: &VectorDoc, options: &SvgOptions) -> Result<Vec<DisplayPath>, CoreError> {
+    options.validate()?;
+    let number = |v| number(v, options.precision);
     let mut paints = crate::paths::paint(doc, options.overlap)?;
     if options.group_by_color {
         let mut groups: BTreeMap<[u8; 3], Vec<_>> = BTreeMap::new();
@@ -113,8 +138,10 @@ pub fn to_string_with_options(doc: &VectorDoc, options: &SvgOptions) -> Result<S
             .map(|(rgb, paths)| crate::paths::Paint { rgb, paths })
             .collect();
     }
-    for paint in paints {
+    let mut output = Vec::with_capacity(paints.len());
+    for (index, paint) in paints.into_iter().enumerate() {
         let mut d = String::new();
+        let mut anchors = Vec::new();
         for geometry in paint.paths {
             write!(
                 d,
@@ -124,6 +151,9 @@ pub fn to_string_with_options(doc: &VectorDoc, options: &SvgOptions) -> Result<S
             )
             .unwrap();
             for seg in geometry.segs {
+                if doc.stats.nodes <= 50_000 {
+                    anchors.push((seg.end(), matches!(seg, Seg::Line(_))));
+                }
                 match seg {
                     Seg::Line(p) => write!(d, "L{} {}", number(p[0])?, number(p[1])?).unwrap(),
                     Seg::Cubic(a, b, p) => write!(
@@ -141,13 +171,16 @@ pub fn to_string_with_options(doc: &VectorDoc, options: &SvgOptions) -> Result<S
             }
             d.push('Z');
         }
-        writeln!(
-            output,
-            "<path fill=\"#{:02x}{:02x}{:02x}\" fill-rule=\"evenodd\" d=\"{}\"/>",
-            paint.rgb[0], paint.rgb[1], paint.rgb[2], d
-        )
-        .unwrap();
+        output.push(DisplayPath {
+            region: if options.group_by_color {
+                None
+            } else {
+                Some(doc.shapes[index].region)
+            },
+            color: paint.rgb,
+            data: d,
+            anchors,
+        });
     }
-    output.push_str("</svg>\n");
     Ok(output)
 }

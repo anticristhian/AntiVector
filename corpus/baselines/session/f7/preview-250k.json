@@ -1,0 +1,31 @@
+{
+  "height": 2000,
+  "median_full_ms": 951.8531999999999,
+  "median_preview_ms": 100.77,
+  "preview_budget": 250000,
+  "profile": "release",
+  "repetitions": 5,
+  "trials": [
+    {
+      "full_ms": 951.8531999999999,
+      "preview_ms": 100.77
+    },
+    {
+      "full_ms": 949.6291,
+      "preview_ms": 99.1353
+    },
+    {
+      "full_ms": 924.8887,
+      "preview_ms": 95.6852
+    },
+    {
+      "full_ms": 1060.0444,
+      "preview_ms": 112.1115
+    },
+    {
+      "full_ms": 1038.7841,
+      "preview_ms": 111.7478
+    }
+  ],
+  "width": 2000
+}

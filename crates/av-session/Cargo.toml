@@ -6,5 +6,13 @@ edition.workspace = true
 rust-version.workspace = true
 publish.workspace = true
 
+[dependencies]
+av-core = {path="../av-core"}
+serde = {version="1",features=["derive"]}
+image = {version="0.25",default-features=false,features=["png","jpeg","bmp","gif","tiff","webp"]}
+
+[dev-dependencies]
+av-export = {path="../av-export"}
+
 [lints]
 workspace = true

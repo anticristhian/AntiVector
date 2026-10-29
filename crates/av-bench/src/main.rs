@@ -19,6 +19,16 @@ struct Cli {
 }
 #[derive(Subcommand)]
 enum Command {
+    /// Generate an original 4MP logo fixture for desktop responsiveness checks.
+    Fixture4mp { path: PathBuf },
+    /// Five real session jobs, measuring progressive preview and full completion.
+    SessionPerf {
+        input: PathBuf,
+        #[arg(long, default_value_t = 250000)]
+        preview_pixels: usize,
+        #[arg(long)]
+        label: String,
+    },
     /// Measure independently rasterized exports against source-resolution PNGs.
     CompareRenders {
         reference: PathBuf,
@@ -101,6 +111,19 @@ fn overlap(stacking: Option<&str>) -> Result<bool> {
 
 fn execute(cli: Cli) -> Result<()> {
     match cli.command {
+        Command::Fixture4mp { path } => {
+            let scene = std::fs::read_to_string(cli.corpus.join("gt/logo_original_1.svg"))?
+                .replacen("width=\"128\"", "width=\"2000\"", 1)
+                .replacen("height=\"128\"", "height=\"2000\"", 1);
+            let raster = av_metrics::render::svg(&scene, true)?;
+            std::fs::write(path, av_session::decode::png_bytes(&raster)?)?;
+            Ok(())
+        }
+        Command::SessionPerf {
+            input,
+            preview_pixels,
+            label,
+        } => runner::session_perf(&input, &cli.output_root, &label, preview_pixels),
         Command::CompareRenders {
             reference,
             rendered,
