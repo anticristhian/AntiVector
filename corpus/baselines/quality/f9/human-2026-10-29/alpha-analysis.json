@@ -1,0 +1,650 @@
+[
+  {
+    "pair": 0,
+    "id": "circle_r50",
+    "category": "synthetic",
+    "outcome": "loss",
+    "ssim_delta": -0.0008980974485358617,
+    "de_delta": 0.05327339319506086,
+    "own_nodes": 9,
+    "ref_nodes": 44,
+    "f9-complete": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    },
+    "f9-reference": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    }
+  },
+  {
+    "pair": 4,
+    "id": "logo_original_4",
+    "category": "logo",
+    "outcome": "loss",
+    "ssim_delta": 0.005053601132435692,
+    "de_delta": -0.06408447856307425,
+    "own_nodes": 26,
+    "ref_nodes": 34,
+    "f9-complete": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    },
+    "f9-reference": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    }
+  },
+  {
+    "pair": 6,
+    "id": "illustration_fish",
+    "category": "illustration",
+    "outcome": "loss",
+    "ssim_delta": 0.008560164585947883,
+    "de_delta": -0.13204641972590714,
+    "own_nodes": 133,
+    "ref_nodes": 148,
+    "f9-complete": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    },
+    "f9-reference": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    }
+  },
+  {
+    "pair": 8,
+    "id": "illustration_rocket",
+    "category": "illustration",
+    "outcome": "loss",
+    "ssim_delta": 0.009389857960937498,
+    "de_delta": -0.17025770452397393,
+    "own_nodes": 56,
+    "ref_nodes": 113,
+    "f9-complete": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    },
+    "f9-reference": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    }
+  },
+  {
+    "pair": 9,
+    "id": "logo_original_3",
+    "category": "logo",
+    "outcome": "loss",
+    "ssim_delta": 0.00490625775689113,
+    "de_delta": -0.04871788468126349,
+    "own_nodes": 26,
+    "ref_nodes": 30,
+    "f9-complete": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    },
+    "f9-reference": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    }
+  },
+  {
+    "pair": 13,
+    "id": "circle_noaa",
+    "category": "synthetic",
+    "outcome": "loss",
+    "ssim_delta": 0.023439465407750437,
+    "de_delta": -0.37291775697996093,
+    "own_nodes": 240,
+    "ref_nodes": 11,
+    "f9-complete": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    },
+    "f9-reference": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    }
+  },
+  {
+    "pair": 17,
+    "id": "ellipse",
+    "category": "synthetic",
+    "outcome": "loss",
+    "ssim_delta": 0.003960867138545043,
+    "de_delta": -0.07846914341648753,
+    "own_nodes": 10,
+    "ref_nodes": 20,
+    "f9-complete": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    },
+    "f9-reference": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    }
+  },
+  {
+    "pair": 18,
+    "id": "concentric",
+    "category": "synthetic",
+    "outcome": "loss",
+    "ssim_delta": 0.003415016596902909,
+    "de_delta": -0.09111859838607916,
+    "own_nodes": 21,
+    "ref_nodes": 91,
+    "f9-complete": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    },
+    "f9-reference": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    }
+  },
+  {
+    "pair": 19,
+    "id": "lineart_signature",
+    "category": "lineart",
+    "outcome": "loss",
+    "ssim_delta": -0.005105767802765726,
+    "de_delta": 0.1333520362994569,
+    "own_nodes": 50,
+    "ref_nodes": 118,
+    "f9-complete": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    },
+    "f9-reference": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    }
+  },
+  {
+    "pair": 24,
+    "id": "logo_original_1",
+    "category": "logo",
+    "outcome": "loss",
+    "ssim_delta": 0.0004817646522788932,
+    "de_delta": -0.010627585237646193,
+    "own_nodes": 19,
+    "ref_nodes": 21,
+    "f9-complete": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    },
+    "f9-reference": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    }
+  },
+  {
+    "pair": 25,
+    "id": "illustration_tree",
+    "category": "illustration",
+    "outcome": "loss",
+    "ssim_delta": 0.003326539029574027,
+    "de_delta": -0.0767309727528982,
+    "own_nodes": 53,
+    "ref_nodes": 88,
+    "f9-complete": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    },
+    "f9-reference": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    }
+  },
+  {
+    "pair": 27,
+    "id": "photo_brick",
+    "category": "photo",
+    "outcome": "loss",
+    "ssim_delta": -0.07836221185608616,
+    "de_delta": 0.26684318378195715,
+    "own_nodes": 14803,
+    "ref_nodes": 10116,
+    "f9-complete": {
+      "pixels": 147456,
+      "transparent": 0,
+      "partial_alpha": 8853,
+      "opaque": 138603,
+      "alpha_deficit": 407912
+    },
+    "f9-reference": {
+      "pixels": 147456,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 147456,
+      "alpha_deficit": 0
+    }
+  },
+  {
+    "pair": 31,
+    "id": "junction_t",
+    "category": "synthetic",
+    "outcome": "loss",
+    "ssim_delta": 0.0,
+    "de_delta": 0.0,
+    "own_nodes": 12,
+    "ref_nodes": 12,
+    "f9-complete": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    },
+    "f9-reference": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    }
+  },
+  {
+    "pair": 32,
+    "id": "photo_chelsea",
+    "category": "photo",
+    "outcome": "loss",
+    "ssim_delta": -0.20262702765724838,
+    "de_delta": 0.8822314809910683,
+    "own_nodes": 20965,
+    "ref_nodes": 14711,
+    "f9-complete": {
+      "pixels": 97920,
+      "transparent": 0,
+      "partial_alpha": 15332,
+      "opaque": 82588,
+      "alpha_deficit": 680611
+    },
+    "f9-reference": {
+      "pixels": 97920,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 97920,
+      "alpha_deficit": 0
+    }
+  },
+  {
+    "pair": 34,
+    "id": "photo_coffee",
+    "category": "photo",
+    "outcome": "loss",
+    "ssim_delta": -0.13059427238352272,
+    "de_delta": 0.46311269896723317,
+    "own_nodes": 11873,
+    "ref_nodes": 7606,
+    "f9-complete": {
+      "pixels": 98304,
+      "transparent": 0,
+      "partial_alpha": 11994,
+      "opaque": 86310,
+      "alpha_deficit": 515451
+    },
+    "f9-reference": {
+      "pixels": 98304,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 98304,
+      "alpha_deficit": 0
+    }
+  },
+  {
+    "pair": 36,
+    "id": "photo_astronaut",
+    "category": "photo",
+    "outcome": "loss",
+    "ssim_delta": -0.06692845849772211,
+    "de_delta": 0.10632391409889941,
+    "own_nodes": 14740,
+    "ref_nodes": 10412,
+    "f9-complete": {
+      "pixels": 147456,
+      "transparent": 0,
+      "partial_alpha": 15182,
+      "opaque": 132274,
+      "alpha_deficit": 668268
+    },
+    "f9-reference": {
+      "pixels": 147456,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 147456,
+      "alpha_deficit": 0
+    }
+  },
+  {
+    "pair": 40,
+    "id": "ring",
+    "category": "synthetic",
+    "outcome": "loss",
+    "ssim_delta": -0.0021185869670776736,
+    "de_delta": 0.08632898876907502,
+    "own_nodes": 14,
+    "ref_nodes": 56,
+    "f9-complete": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    },
+    "f9-reference": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    }
+  },
+  {
+    "pair": 49,
+    "id": "jpeg_q60",
+    "category": "synthetic",
+    "outcome": "loss",
+    "ssim_delta": 0.0024404854412909405,
+    "de_delta": -0.0030825367219370348,
+    "own_nodes": 10,
+    "ref_nodes": 28,
+    "f9-complete": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    },
+    "f9-reference": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    }
+  },
+  {
+    "pair": 50,
+    "id": "rounded_rectangle",
+    "category": "synthetic",
+    "outcome": "loss",
+    "ssim_delta": 0.003672632771862583,
+    "de_delta": -0.11592550283782065,
+    "own_nodes": 17,
+    "ref_nodes": 42,
+    "f9-complete": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    },
+    "f9-reference": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    }
+  },
+  {
+    "pair": 54,
+    "id": "illustration_robot",
+    "category": "illustration",
+    "outcome": "loss",
+    "ssim_delta": -0.0026178178522036077,
+    "de_delta": -0.0108303316054148,
+    "own_nodes": 56,
+    "ref_nodes": 83,
+    "f9-complete": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    },
+    "f9-reference": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    }
+  },
+  {
+    "pair": 56,
+    "id": "logo_compass",
+    "category": "logo",
+    "outcome": "loss",
+    "ssim_delta": 0.0024449334550238344,
+    "de_delta": -0.05102192466041655,
+    "own_nodes": 123,
+    "ref_nodes": 124,
+    "f9-complete": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    },
+    "f9-reference": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    }
+  },
+  {
+    "pair": 59,
+    "id": "logo_original_5",
+    "category": "logo",
+    "outcome": "loss",
+    "ssim_delta": 0.005123878668877313,
+    "de_delta": -0.04712070994220044,
+    "own_nodes": 23,
+    "ref_nodes": 32,
+    "f9-complete": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    },
+    "f9-reference": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    }
+  },
+  {
+    "pair": 60,
+    "id": "logo_waves",
+    "category": "logo",
+    "outcome": "loss",
+    "ssim_delta": -0.005458329270626061,
+    "de_delta": 0.03931136090826848,
+    "own_nodes": 64,
+    "ref_nodes": 178,
+    "f9-complete": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    },
+    "f9-reference": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    }
+  },
+  {
+    "pair": 63,
+    "id": "lineart_cloud",
+    "category": "lineart",
+    "outcome": "loss",
+    "ssim_delta": -0.0010577531123229234,
+    "de_delta": 0.01409771358170564,
+    "own_nodes": 163,
+    "ref_nodes": 168,
+    "f9-complete": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    },
+    "f9-reference": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    }
+  },
+  {
+    "pair": 65,
+    "id": "photo_camera",
+    "category": "photo",
+    "outcome": "loss",
+    "ssim_delta": -0.10766451592680981,
+    "de_delta": 0.34876446088654234,
+    "own_nodes": 18777,
+    "ref_nodes": 11701,
+    "f9-complete": {
+      "pixels": 147456,
+      "transparent": 0,
+      "partial_alpha": 14475,
+      "opaque": 132981,
+      "alpha_deficit": 641177
+    },
+    "f9-reference": {
+      "pixels": 147456,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 147456,
+      "alpha_deficit": 0
+    }
+  },
+  {
+    "pair": 68,
+    "id": "illustration_sailboat",
+    "category": "illustration",
+    "outcome": "loss",
+    "ssim_delta": 0.04757668743324128,
+    "de_delta": -0.6533662609474331,
+    "own_nodes": 84,
+    "ref_nodes": 63,
+    "f9-complete": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 285,
+      "opaque": 16099,
+      "alpha_deficit": 12324
+    },
+    "f9-reference": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    }
+  },
+  {
+    "pair": 71,
+    "id": "logo_original_2",
+    "category": "logo",
+    "outcome": "loss",
+    "ssim_delta": 0.000516377156719483,
+    "de_delta": -0.010627585237646193,
+    "own_nodes": 19,
+    "ref_nodes": 21,
+    "f9-complete": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    },
+    "f9-reference": {
+      "pixels": 16384,
+      "transparent": 0,
+      "partial_alpha": 0,
+      "opaque": 16384,
+      "alpha_deficit": 0
+    }
+  }
+]

@@ -1,0 +1,295 @@
+{
+  "answers": [
+    {
+      "choice": "B",
+      "pair": 0
+    },
+    {
+      "choice": "tie",
+      "pair": 1
+    },
+    {
+      "choice": "B",
+      "pair": 2
+    },
+    {
+      "choice": "tie",
+      "pair": 3
+    },
+    {
+      "choice": "A",
+      "pair": 4
+    },
+    {
+      "choice": "tie",
+      "pair": 5
+    },
+    {
+      "choice": "B",
+      "pair": 6
+    },
+    {
+      "choice": "tie",
+      "pair": 7
+    },
+    {
+      "choice": "B",
+      "pair": 8
+    },
+    {
+      "choice": "B",
+      "pair": 9
+    },
+    {
+      "choice": "tie",
+      "pair": 10
+    },
+    {
+      "choice": "tie",
+      "pair": 11
+    },
+    {
+      "choice": "B",
+      "pair": 12
+    },
+    {
+      "choice": "A",
+      "pair": 13
+    },
+    {
+      "choice": "B",
+      "pair": 14
+    },
+    {
+      "choice": "B",
+      "pair": 15
+    },
+    {
+      "choice": "A",
+      "pair": 16
+    },
+    {
+      "choice": "A",
+      "pair": 17
+    },
+    {
+      "choice": "A",
+      "pair": 18
+    },
+    {
+      "choice": "B",
+      "pair": 19
+    },
+    {
+      "choice": "tie",
+      "pair": 20
+    },
+    {
+      "choice": "B",
+      "pair": 21
+    },
+    {
+      "choice": "B",
+      "pair": 22
+    },
+    {
+      "choice": "B",
+      "pair": 23
+    },
+    {
+      "choice": "A",
+      "pair": 24
+    },
+    {
+      "choice": "A",
+      "pair": 25
+    },
+    {
+      "choice": "A",
+      "pair": 26
+    },
+    {
+      "choice": "B",
+      "pair": 27
+    },
+    {
+      "choice": "tie",
+      "pair": 28
+    },
+    {
+      "choice": "tie",
+      "pair": 29
+    },
+    {
+      "choice": "A",
+      "pair": 30
+    },
+    {
+      "choice": "A",
+      "pair": 31
+    },
+    {
+      "choice": "B",
+      "pair": 32
+    },
+    {
+      "choice": "B",
+      "pair": 33
+    },
+    {
+      "choice": "A",
+      "pair": 34
+    },
+    {
+      "choice": "A",
+      "pair": 35
+    },
+    {
+      "choice": "A",
+      "pair": 36
+    },
+    {
+      "choice": "B",
+      "pair": 37
+    },
+    {
+      "choice": "B",
+      "pair": 38
+    },
+    {
+      "choice": "B",
+      "pair": 39
+    },
+    {
+      "choice": "B",
+      "pair": 40
+    },
+    {
+      "choice": "tie",
+      "pair": 41
+    },
+    {
+      "choice": "tie",
+      "pair": 42
+    },
+    {
+      "choice": "A",
+      "pair": 43
+    },
+    {
+      "choice": "tie",
+      "pair": 44
+    },
+    {
+      "choice": "tie",
+      "pair": 45
+    },
+    {
+      "choice": "B",
+      "pair": 46
+    },
+    {
+      "choice": "A",
+      "pair": 47
+    },
+    {
+      "choice": "tie",
+      "pair": 48
+    },
+    {
+      "choice": "B",
+      "pair": 49
+    },
+    {
+      "choice": "A",
+      "pair": 50
+    },
+    {
+      "choice": "A",
+      "pair": 51
+    },
+    {
+      "choice": "tie",
+      "pair": 52
+    },
+    {
+      "choice": "tie",
+      "pair": 53
+    },
+    {
+      "choice": "B",
+      "pair": 54
+    },
+    {
+      "choice": "A",
+      "pair": 55
+    },
+    {
+      "choice": "A",
+      "pair": 56
+    },
+    {
+      "choice": "A",
+      "pair": 57
+    },
+    {
+      "choice": "tie",
+      "pair": 58
+    },
+    {
+      "choice": "A",
+      "pair": 59
+    },
+    {
+      "choice": "B",
+      "pair": 60
+    },
+    {
+      "choice": "A",
+      "pair": 61
+    },
+    {
+      "choice": "tie",
+      "pair": 62
+    },
+    {
+      "choice": "B",
+      "pair": 63
+    },
+    {
+      "choice": "tie",
+      "pair": 64
+    },
+    {
+      "choice": "B",
+      "pair": 65
+    },
+    {
+      "choice": "A",
+      "pair": 66
+    },
+    {
+      "choice": "A",
+      "pair": 67
+    },
+    {
+      "choice": "A",
+      "pair": 68
+    },
+    {
+      "choice": "B",
+      "pair": 69
+    },
+    {
+      "choice": "B",
+      "pair": 70
+    },
+    {
+      "choice": "B",
+      "pair": 71
+    }
+  ],
+  "label": "2026-10-29-final",
+  "seed": 42,
+  "status": "completed_by_human"
+}

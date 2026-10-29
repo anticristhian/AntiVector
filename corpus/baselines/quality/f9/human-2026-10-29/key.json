@@ -1,0 +1,434 @@
+[
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "circle_r50",
+    "pair": 0
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "pixel_robot",
+    "pair": 1
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "logo_leaf",
+    "pair": 2
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "text_path",
+    "pair": 3
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "logo_original_4",
+    "pair": 4
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "pixel_sword",
+    "pair": 5
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "illustration_fish",
+    "pair": 6
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "line_2px",
+    "pair": 7
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "illustration_rocket",
+    "pair": 8
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "logo_original_3",
+    "pair": 9
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "square_rot30",
+    "pair": 10
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "edge_1xn",
+    "pair": 11
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "edge_1x1",
+    "pair": 12
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "circle_noaa",
+    "pair": 13
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "logo_orbit",
+    "pair": 14
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "illustration_envelope",
+    "pair": 15
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "multicolor_logo",
+    "pair": 16
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "ellipse",
+    "pair": 17
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "concentric",
+    "pair": 18
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "lineart_signature",
+    "pair": 19
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "edge_png16",
+    "pair": 20
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "logo_mountain",
+    "pair": 21
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "bezier_leaf",
+    "pair": 22
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "logo_ribbon",
+    "pair": 23
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "logo_original_1",
+    "pair": 24
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "illustration_tree",
+    "pair": 25
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "lineart_bicycle",
+    "pair": 26
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "photo_brick",
+    "pair": 27
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "pixel_flower",
+    "pair": 28
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "edge_animated",
+    "pair": 29
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "star5",
+    "pair": 30
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "junction_t",
+    "pair": 31
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "photo_chelsea",
+    "pair": 32
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "logo_hexagon",
+    "pair": 33
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "photo_coffee",
+    "pair": 34
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "junction_y",
+    "pair": 35
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "photo_astronaut",
+    "pair": 36
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "lineart_book",
+    "pair": 37
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "illustration_camera",
+    "pair": 38
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "triangles",
+    "pair": 39
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "ring",
+    "pair": 40
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "line_1px",
+    "pair": 41
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "nested_squares",
+    "pair": 42
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "lineart_music",
+    "pair": 43
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "diagonal_touch",
+    "pair": 44
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "checker",
+    "pair": 45
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "illustration_cup",
+    "pair": 46
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "pixel_avatar",
+    "pair": 47
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "edge_uniform",
+    "pair": 48
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "jpeg_q60",
+    "pair": 49
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "rounded_rectangle",
+    "pair": 50
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "lineart_circuit",
+    "pair": 51
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "logo_interlock",
+    "pair": 52
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "pixel_checker",
+    "pair": 53
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "illustration_robot",
+    "pair": 54
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "logo_diamond",
+    "pair": 55
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "logo_compass",
+    "pair": 56
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "illustration_plant",
+    "pair": 57
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "edge_64mp",
+    "pair": 58
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "logo_original_5",
+    "pair": 59
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "logo_waves",
+    "pair": 60
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "lineart_maze",
+    "pair": 61
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "logo_bridge",
+    "pair": 62
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "lineart_cloud",
+    "pair": 63
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "edge_transparent",
+    "pair": 64
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "photo_camera",
+    "pair": 65
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "lineart_house",
+    "pair": 66
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "illustration_landscape",
+    "pair": 67
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "illustration_sailboat",
+    "pair": 68
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "lineart_flower",
+    "pair": 69
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-complete",
+    "image": "lineart_portrait",
+    "pair": 70
+  },
+  {
+    "A": "f9-complete",
+    "B": "f9-reference",
+    "image": "logo_original_2",
+    "pair": 71
+  }
+]

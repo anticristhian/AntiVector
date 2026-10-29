@@ -15,10 +15,22 @@ um release como aprovado a partir de um build ou de uma avaliação parcial.
 | Fuzz |90.151 execuções/3.601s,sem crash/panic |`corpus/baselines/robustness/f9/fuzz.txt` |
 | PerfilCPU |23.038 eventos perf;quantização32,28% do peso amostrado |`corpus/baselines/performance/f9/profile-ci.json` e SVG |
 | Instaladores |MSI5.099.520bytes,DMG4.764.463bytes,AppImage11.282.936bytes;smokeLinux aprovado;matriz final verde |Relatórios `installer-*-final.json` em `corpus/baselines/performance/f9/`;`corpus/baselines/quality/f9/ci.json` |
-| Preferência humana≥80% |Pendente;usuário está preenchendo os72pares |Avaliação local abaixo |
+| Preferência humana≥80% |REPROVADO:25vitórias/19empates/28derrotas,44/72=61,11% |`corpus/baselines/quality/f9/human-2026-10-29/score.json` |
 
 Esses resultados têm os limites de método descritos nas seções seguintes.
 Não substituem gates pendentes nem garantem pior caso em qualquer entrada.
+
+A primeira avaliação humana terminou abaixo do limiar. F9 continua aberta para
+melhoria de qualidade; não falta preencher essa avaliação. As respostas e a
+chave originais são preservadas, sem regenerar o rótulo. Uma alteração de saída
+não herda os votos antigos como se tivesse sido avaliada.
+
+Diagnóstico reproduzível de composição AA (sem mudar o produto):
+`cargo run -p av-bench --release --example opaque_matte_probe`.
+O experimento usa os SVGs de `bench-out/f9-complete`, mede seis casos e salva em
+`bench-out/f9-opaque-matte-probe`; a cobertura vem do SVG original, sem o fundo
+experimental. Melhorar essas métricas não aprova a preferência humana nem a
+integração com os demais formatos. Resultados/detalhes em PROGRESS.
 
 ## Corpus e qualidade
 

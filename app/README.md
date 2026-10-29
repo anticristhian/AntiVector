@@ -45,5 +45,6 @@ foco e Escape os fecha. No painel de imagem, setas movem a vista e +/−/0
 controlam o zoom.
 
 Estado das fases e evidências reais em ../docs/PROGRESS.md. Os gates técnicos da
-F9 e instaladores passaram; falta a avaliação visual humana. Instruções de
+F9 e instaladores passaram; a avaliação humana ficou abaixo da meta e a fase
+permanece aberta para melhoria de qualidade. Instruções de
 reprodução e limites das medições em ../docs/09_RELEASE_VALIDATION.md.

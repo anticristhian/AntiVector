@@ -1,0 +1,722 @@
+[
+  {
+    "pair": 0,
+    "id": "circle_r50",
+    "category": "synthetic",
+    "outcome": "loss",
+    "ssim_delta": -0.0008980974485358617,
+    "de_delta": 0.05327339319506086,
+    "own_nodes": 9,
+    "ref_nodes": 44
+  },
+  {
+    "pair": 1,
+    "id": "pixel_robot",
+    "category": "pixelart",
+    "outcome": "tie",
+    "ssim_delta": 0.0,
+    "de_delta": 0.0,
+    "own_nodes": 36,
+    "ref_nodes": 48
+  },
+  {
+    "pair": 2,
+    "id": "logo_leaf",
+    "category": "logo",
+    "outcome": "win",
+    "ssim_delta": 0.0054417914719665506,
+    "de_delta": -0.1316541609736473,
+    "own_nodes": 29,
+    "ref_nodes": 80
+  },
+  {
+    "pair": 3,
+    "id": "text_path",
+    "category": "synthetic",
+    "outcome": "tie",
+    "ssim_delta": 0.007379263772994249,
+    "de_delta": -0.22861577866027125,
+    "own_nodes": 29,
+    "ref_nodes": 70
+  },
+  {
+    "pair": 4,
+    "id": "logo_original_4",
+    "category": "logo",
+    "outcome": "loss",
+    "ssim_delta": 0.005053601132435692,
+    "de_delta": -0.06408447856307425,
+    "own_nodes": 26,
+    "ref_nodes": 34
+  },
+  {
+    "pair": 5,
+    "id": "pixel_sword",
+    "category": "pixelart",
+    "outcome": "tie",
+    "ssim_delta": 0.0,
+    "de_delta": 0.0,
+    "own_nodes": 192,
+    "ref_nodes": 120
+  },
+  {
+    "pair": 6,
+    "id": "illustration_fish",
+    "category": "illustration",
+    "outcome": "loss",
+    "ssim_delta": 0.008560164585947883,
+    "de_delta": -0.13204641972590714,
+    "own_nodes": 133,
+    "ref_nodes": 148
+  },
+  {
+    "pair": 7,
+    "id": "line_2px",
+    "category": "synthetic",
+    "outcome": "tie",
+    "ssim_delta": 0.0,
+    "de_delta": 0.0,
+    "own_nodes": 8,
+    "ref_nodes": 8
+  },
+  {
+    "pair": 8,
+    "id": "illustration_rocket",
+    "category": "illustration",
+    "outcome": "loss",
+    "ssim_delta": 0.009389857960937498,
+    "de_delta": -0.17025770452397393,
+    "own_nodes": 56,
+    "ref_nodes": 113
+  },
+  {
+    "pair": 9,
+    "id": "logo_original_3",
+    "category": "logo",
+    "outcome": "loss",
+    "ssim_delta": 0.00490625775689113,
+    "de_delta": -0.04871788468126349,
+    "own_nodes": 26,
+    "ref_nodes": 30
+  },
+  {
+    "pair": 10,
+    "id": "square_rot30",
+    "category": "synthetic",
+    "outcome": "tie",
+    "ssim_delta": 0.0044551675123480905,
+    "de_delta": -0.12386674592687431,
+    "own_nodes": 8,
+    "ref_nodes": 36
+  },
+  {
+    "pair": 11,
+    "id": "edge_1xn",
+    "category": "edge",
+    "outcome": "tie",
+    "ssim_delta": 0.0,
+    "de_delta": 0.0,
+    "own_nodes": 4,
+    "ref_nodes": 4
+  },
+  {
+    "pair": 12,
+    "id": "edge_1x1",
+    "category": "edge",
+    "outcome": "loss",
+    "ssim_delta": 0.5931306758653885,
+    "de_delta": -45.81052438809032,
+    "own_nodes": 4,
+    "ref_nodes": 0
+  },
+  {
+    "pair": 13,
+    "id": "circle_noaa",
+    "category": "synthetic",
+    "outcome": "loss",
+    "ssim_delta": 0.023439465407750437,
+    "de_delta": -0.37291775697996093,
+    "own_nodes": 240,
+    "ref_nodes": 11
+  },
+  {
+    "pair": 14,
+    "id": "logo_orbit",
+    "category": "logo",
+    "outcome": "win",
+    "ssim_delta": 0.000477064276429906,
+    "de_delta": -0.05570846421036957,
+    "own_nodes": 70,
+    "ref_nodes": 197
+  },
+  {
+    "pair": 15,
+    "id": "illustration_envelope",
+    "category": "illustration",
+    "outcome": "win",
+    "ssim_delta": 0.010634683890842656,
+    "de_delta": -0.18853870623397645,
+    "own_nodes": 124,
+    "ref_nodes": 177
+  },
+  {
+    "pair": 16,
+    "id": "multicolor_logo",
+    "category": "synthetic",
+    "outcome": "win",
+    "ssim_delta": 0.0054170406705472685,
+    "de_delta": -0.04980496900794737,
+    "own_nodes": 42,
+    "ref_nodes": 76
+  },
+  {
+    "pair": 17,
+    "id": "ellipse",
+    "category": "synthetic",
+    "outcome": "loss",
+    "ssim_delta": 0.003960867138545043,
+    "de_delta": -0.07846914341648753,
+    "own_nodes": 10,
+    "ref_nodes": 20
+  },
+  {
+    "pair": 18,
+    "id": "concentric",
+    "category": "synthetic",
+    "outcome": "loss",
+    "ssim_delta": 0.003415016596902909,
+    "de_delta": -0.09111859838607916,
+    "own_nodes": 21,
+    "ref_nodes": 91
+  },
+  {
+    "pair": 19,
+    "id": "lineart_signature",
+    "category": "lineart",
+    "outcome": "loss",
+    "ssim_delta": -0.005105767802765726,
+    "de_delta": 0.1333520362994569,
+    "own_nodes": 50,
+    "ref_nodes": 118
+  },
+  {
+    "pair": 20,
+    "id": "edge_png16",
+    "category": "edge",
+    "outcome": "tie",
+    "ssim_delta": 0.0,
+    "de_delta": 0.0,
+    "own_nodes": 8,
+    "ref_nodes": 8
+  },
+  {
+    "pair": 21,
+    "id": "logo_mountain",
+    "category": "logo",
+    "outcome": "win",
+    "ssim_delta": 0.008085066788314221,
+    "de_delta": -0.09854068194972879,
+    "own_nodes": 75,
+    "ref_nodes": 87
+  },
+  {
+    "pair": 22,
+    "id": "bezier_leaf",
+    "category": "synthetic",
+    "outcome": "win",
+    "ssim_delta": -0.004613988675855163,
+    "de_delta": 0.07592299678693631,
+    "own_nodes": 12,
+    "ref_nodes": 27
+  },
+  {
+    "pair": 23,
+    "id": "logo_ribbon",
+    "category": "logo",
+    "outcome": "win",
+    "ssim_delta": 0.014959160910743563,
+    "de_delta": -0.2827288603441206,
+    "own_nodes": 17,
+    "ref_nodes": 73
+  },
+  {
+    "pair": 24,
+    "id": "logo_original_1",
+    "category": "logo",
+    "outcome": "loss",
+    "ssim_delta": 0.0004817646522788932,
+    "de_delta": -0.010627585237646193,
+    "own_nodes": 19,
+    "ref_nodes": 21
+  },
+  {
+    "pair": 25,
+    "id": "illustration_tree",
+    "category": "illustration",
+    "outcome": "loss",
+    "ssim_delta": 0.003326539029574027,
+    "de_delta": -0.0767309727528982,
+    "own_nodes": 53,
+    "ref_nodes": 88
+  },
+  {
+    "pair": 26,
+    "id": "lineart_bicycle",
+    "category": "lineart",
+    "outcome": "win",
+    "ssim_delta": 0.032117881829589745,
+    "de_delta": -0.9403421302424775,
+    "own_nodes": 82,
+    "ref_nodes": 112
+  },
+  {
+    "pair": 27,
+    "id": "photo_brick",
+    "category": "photo",
+    "outcome": "loss",
+    "ssim_delta": -0.07836221185608616,
+    "de_delta": 0.26684318378195715,
+    "own_nodes": 14803,
+    "ref_nodes": 10116
+  },
+  {
+    "pair": 28,
+    "id": "pixel_flower",
+    "category": "pixelart",
+    "outcome": "tie",
+    "ssim_delta": 0.0,
+    "de_delta": 0.0,
+    "own_nodes": 70,
+    "ref_nodes": 72
+  },
+  {
+    "pair": 29,
+    "id": "edge_animated",
+    "category": "edge",
+    "outcome": "tie",
+    "ssim_delta": 0.0,
+    "de_delta": 0.0,
+    "own_nodes": 4,
+    "ref_nodes": 4
+  },
+  {
+    "pair": 30,
+    "id": "star5",
+    "category": "synthetic",
+    "outcome": "win",
+    "ssim_delta": 0.006483235150383071,
+    "de_delta": -0.18855396444584688,
+    "own_nodes": 14,
+    "ref_nodes": 97
+  },
+  {
+    "pair": 31,
+    "id": "junction_t",
+    "category": "synthetic",
+    "outcome": "loss",
+    "ssim_delta": 0.0,
+    "de_delta": 0.0,
+    "own_nodes": 12,
+    "ref_nodes": 12
+  },
+  {
+    "pair": 32,
+    "id": "photo_chelsea",
+    "category": "photo",
+    "outcome": "loss",
+    "ssim_delta": -0.20262702765724838,
+    "de_delta": 0.8822314809910683,
+    "own_nodes": 20965,
+    "ref_nodes": 14711
+  },
+  {
+    "pair": 33,
+    "id": "logo_hexagon",
+    "category": "logo",
+    "outcome": "win",
+    "ssim_delta": 0.01703715329297617,
+    "de_delta": -0.44906049701709216,
+    "own_nodes": 22,
+    "ref_nodes": 114
+  },
+  {
+    "pair": 34,
+    "id": "photo_coffee",
+    "category": "photo",
+    "outcome": "loss",
+    "ssim_delta": -0.13059427238352272,
+    "de_delta": 0.46311269896723317,
+    "own_nodes": 11873,
+    "ref_nodes": 7606
+  },
+  {
+    "pair": 35,
+    "id": "junction_y",
+    "category": "synthetic",
+    "outcome": "win",
+    "ssim_delta": 0.03924904944702279,
+    "de_delta": -0.766986014506566,
+    "own_nodes": 13,
+    "ref_nodes": 29
+  },
+  {
+    "pair": 36,
+    "id": "photo_astronaut",
+    "category": "photo",
+    "outcome": "loss",
+    "ssim_delta": -0.06692845849772211,
+    "de_delta": 0.10632391409889941,
+    "own_nodes": 14740,
+    "ref_nodes": 10412
+  },
+  {
+    "pair": 37,
+    "id": "lineart_book",
+    "category": "lineart",
+    "outcome": "win",
+    "ssim_delta": 0.0038720007015844438,
+    "de_delta": -0.18634205595200126,
+    "own_nodes": 374,
+    "ref_nodes": 373
+  },
+  {
+    "pair": 38,
+    "id": "illustration_camera",
+    "category": "illustration",
+    "outcome": "win",
+    "ssim_delta": 0.014669085561443418,
+    "de_delta": -0.211138686253035,
+    "own_nodes": 48,
+    "ref_nodes": 135
+  },
+  {
+    "pair": 39,
+    "id": "triangles",
+    "category": "synthetic",
+    "outcome": "win",
+    "ssim_delta": 0.009833836694188025,
+    "de_delta": -0.28189203648492767,
+    "own_nodes": 15,
+    "ref_nodes": 57
+  },
+  {
+    "pair": 40,
+    "id": "ring",
+    "category": "synthetic",
+    "outcome": "loss",
+    "ssim_delta": -0.0021185869670776736,
+    "de_delta": 0.08632898876907502,
+    "own_nodes": 14,
+    "ref_nodes": 56
+  },
+  {
+    "pair": 41,
+    "id": "line_1px",
+    "category": "synthetic",
+    "outcome": "tie",
+    "ssim_delta": 0.0,
+    "de_delta": 0.0,
+    "own_nodes": 8,
+    "ref_nodes": 8
+  },
+  {
+    "pair": 42,
+    "id": "nested_squares",
+    "category": "synthetic",
+    "outcome": "tie",
+    "ssim_delta": 0.0,
+    "de_delta": 0.0,
+    "own_nodes": 20,
+    "ref_nodes": 20
+  },
+  {
+    "pair": 43,
+    "id": "lineart_music",
+    "category": "lineart",
+    "outcome": "win",
+    "ssim_delta": 0.0029437995722146892,
+    "de_delta": -0.07070492771527426,
+    "own_nodes": 144,
+    "ref_nodes": 188
+  },
+  {
+    "pair": 44,
+    "id": "diagonal_touch",
+    "category": "synthetic",
+    "outcome": "tie",
+    "ssim_delta": 0.0,
+    "de_delta": 0.0,
+    "own_nodes": 12,
+    "ref_nodes": 12
+  },
+  {
+    "pair": 45,
+    "id": "checker",
+    "category": "synthetic",
+    "outcome": "tie",
+    "ssim_delta": 0.0,
+    "de_delta": 0.0,
+    "own_nodes": 12,
+    "ref_nodes": 12
+  },
+  {
+    "pair": 46,
+    "id": "illustration_cup",
+    "category": "illustration",
+    "outcome": "win",
+    "ssim_delta": 0.023977065069075487,
+    "de_delta": -0.3014529057467049,
+    "own_nodes": 65,
+    "ref_nodes": 64
+  },
+  {
+    "pair": 47,
+    "id": "pixel_avatar",
+    "category": "pixelart",
+    "outcome": "win",
+    "ssim_delta": 0.0,
+    "de_delta": 0.0,
+    "own_nodes": 24,
+    "ref_nodes": 28
+  },
+  {
+    "pair": 48,
+    "id": "edge_uniform",
+    "category": "edge",
+    "outcome": "tie",
+    "ssim_delta": 0.0,
+    "de_delta": 0.0,
+    "own_nodes": 4,
+    "ref_nodes": 4
+  },
+  {
+    "pair": 49,
+    "id": "jpeg_q60",
+    "category": "synthetic",
+    "outcome": "loss",
+    "ssim_delta": 0.0024404854412909405,
+    "de_delta": -0.0030825367219370348,
+    "own_nodes": 10,
+    "ref_nodes": 28
+  },
+  {
+    "pair": 50,
+    "id": "rounded_rectangle",
+    "category": "synthetic",
+    "outcome": "loss",
+    "ssim_delta": 0.003672632771862583,
+    "de_delta": -0.11592550283782065,
+    "own_nodes": 17,
+    "ref_nodes": 42
+  },
+  {
+    "pair": 51,
+    "id": "lineart_circuit",
+    "category": "lineart",
+    "outcome": "win",
+    "ssim_delta": 0.0011241070288569022,
+    "de_delta": -0.027470515165856302,
+    "own_nodes": 514,
+    "ref_nodes": 502
+  },
+  {
+    "pair": 52,
+    "id": "logo_interlock",
+    "category": "logo",
+    "outcome": "tie",
+    "ssim_delta": 0.0,
+    "de_delta": 0.0,
+    "own_nodes": 54,
+    "ref_nodes": 62
+  },
+  {
+    "pair": 53,
+    "id": "pixel_checker",
+    "category": "pixelart",
+    "outcome": "tie",
+    "ssim_delta": 0.0,
+    "de_delta": 0.0,
+    "own_nodes": 256,
+    "ref_nodes": 132
+  },
+  {
+    "pair": 54,
+    "id": "illustration_robot",
+    "category": "illustration",
+    "outcome": "loss",
+    "ssim_delta": -0.0026178178522036077,
+    "de_delta": -0.0108303316054148,
+    "own_nodes": 56,
+    "ref_nodes": 83
+  },
+  {
+    "pair": 55,
+    "id": "logo_diamond",
+    "category": "logo",
+    "outcome": "win",
+    "ssim_delta": 0.02109768220097563,
+    "de_delta": -0.4607871399129212,
+    "own_nodes": 20,
+    "ref_nodes": 126
+  },
+  {
+    "pair": 56,
+    "id": "logo_compass",
+    "category": "logo",
+    "outcome": "loss",
+    "ssim_delta": 0.0024449334550238344,
+    "de_delta": -0.05102192466041655,
+    "own_nodes": 123,
+    "ref_nodes": 124
+  },
+  {
+    "pair": 57,
+    "id": "illustration_plant",
+    "category": "illustration",
+    "outcome": "win",
+    "ssim_delta": 0.006604389892513218,
+    "de_delta": -0.12414197738974264,
+    "own_nodes": 54,
+    "ref_nodes": 119
+  },
+  {
+    "pair": 58,
+    "id": "edge_64mp",
+    "category": "edge",
+    "outcome": "tie",
+    "ssim_delta": 0.0034110770839934634,
+    "de_delta": -25.372752428993028,
+    "own_nodes": 4,
+    "ref_nodes": 4
+  },
+  {
+    "pair": 59,
+    "id": "logo_original_5",
+    "category": "logo",
+    "outcome": "loss",
+    "ssim_delta": 0.005123878668877313,
+    "de_delta": -0.04712070994220044,
+    "own_nodes": 23,
+    "ref_nodes": 32
+  },
+  {
+    "pair": 60,
+    "id": "logo_waves",
+    "category": "logo",
+    "outcome": "loss",
+    "ssim_delta": -0.005458329270626061,
+    "de_delta": 0.03931136090826848,
+    "own_nodes": 64,
+    "ref_nodes": 178
+  },
+  {
+    "pair": 61,
+    "id": "lineart_maze",
+    "category": "lineart",
+    "outcome": "win",
+    "ssim_delta": -0.00027492186225430704,
+    "de_delta": 0.0012466215793482949,
+    "own_nodes": 433,
+    "ref_nodes": 417
+  },
+  {
+    "pair": 62,
+    "id": "logo_bridge",
+    "category": "logo",
+    "outcome": "tie",
+    "ssim_delta": 0.01924312055788957,
+    "de_delta": -0.2772028435869882,
+    "own_nodes": 88,
+    "ref_nodes": 132
+  },
+  {
+    "pair": 63,
+    "id": "lineart_cloud",
+    "category": "lineart",
+    "outcome": "loss",
+    "ssim_delta": -0.0010577531123229234,
+    "de_delta": 0.01409771358170564,
+    "own_nodes": 163,
+    "ref_nodes": 168
+  },
+  {
+    "pair": 64,
+    "id": "edge_transparent",
+    "category": "edge",
+    "outcome": "tie",
+    "ssim_delta": 0.0,
+    "de_delta": 0.0,
+    "own_nodes": 0,
+    "ref_nodes": 0
+  },
+  {
+    "pair": 65,
+    "id": "photo_camera",
+    "category": "photo",
+    "outcome": "loss",
+    "ssim_delta": -0.10766451592680981,
+    "de_delta": 0.34876446088654234,
+    "own_nodes": 18777,
+    "ref_nodes": 11701
+  },
+  {
+    "pair": 66,
+    "id": "lineart_house",
+    "category": "lineart",
+    "outcome": "win",
+    "ssim_delta": 0.016347150924709064,
+    "de_delta": -0.25451135528842994,
+    "own_nodes": 255,
+    "ref_nodes": 447
+  },
+  {
+    "pair": 67,
+    "id": "illustration_landscape",
+    "category": "illustration",
+    "outcome": "win",
+    "ssim_delta": 0.019329285764529525,
+    "de_delta": -0.34054700609625144,
+    "own_nodes": 50,
+    "ref_nodes": 37
+  },
+  {
+    "pair": 68,
+    "id": "illustration_sailboat",
+    "category": "illustration",
+    "outcome": "loss",
+    "ssim_delta": 0.04757668743324128,
+    "de_delta": -0.6533662609474331,
+    "own_nodes": 84,
+    "ref_nodes": 63
+  },
+  {
+    "pair": 69,
+    "id": "lineart_flower",
+    "category": "lineart",
+    "outcome": "win",
+    "ssim_delta": 0.005685663217408599,
+    "de_delta": -0.10193333465970134,
+    "own_nodes": 198,
+    "ref_nodes": 204
+  },
+  {
+    "pair": 70,
+    "id": "lineart_portrait",
+    "category": "lineart",
+    "outcome": "win",
+    "ssim_delta": -0.0011186635901405673,
+    "de_delta": 0.061970732201902856,
+    "own_nodes": 156,
+    "ref_nodes": 192
+  },
+  {
+    "pair": 71,
+    "id": "logo_original_2",
+    "category": "logo",
+    "outcome": "loss",
+    "ssim_delta": 0.000516377156719483,
+    "de_delta": -0.010627585237646193,
+    "own_nodes": 19,
+    "ref_nodes": 21
+  }
+]

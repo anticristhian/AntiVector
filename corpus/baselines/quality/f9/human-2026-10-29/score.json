@@ -1,0 +1,13 @@
+{
+  "candidate": "f9-complete",
+  "label": "2026-10-29-final",
+  "losses": 28,
+  "pairs": 72,
+  "passed": false,
+  "preferred_or_tied_fraction": 0.6111111111111112,
+  "required_fraction": 0.8,
+  "seed": 42,
+  "status": "completed_by_human",
+  "ties": 19,
+  "wins": 25
+}

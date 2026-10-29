@@ -1,0 +1,146 @@
+[
+  {
+    "additional_anchors": 4,
+    "before": {
+      "delta_e_mean": 2.2117426790752215,
+      "delta_e_p95": 9.8380332815969,
+      "gap_pixels": 0,
+      "ssim": 0.6940524319652019
+    },
+    "coverage_source": "unmodified candidate, not experimental matte",
+    "experimental": {
+      "delta_e_mean": 2.0158920287176163,
+      "delta_e_p95": 8.984268792280767,
+      "gap_pixels": 0,
+      "ssim": 0.7455128641694784
+    },
+    "id": "photo_camera",
+    "matte_rgb": [
+      27,
+      27,
+      27
+    ],
+    "nonopaque_after": 0,
+    "nonopaque_before": 14475
+  },
+  {
+    "additional_anchors": 4,
+    "before": {
+      "delta_e_mean": 4.513950393401813,
+      "delta_e_p95": 13.61103555122661,
+      "gap_pixels": 0,
+      "ssim": 0.5741058067104542
+    },
+    "coverage_source": "unmodified candidate, not experimental matte",
+    "experimental": {
+      "delta_e_mean": 4.262331624815987,
+      "delta_e_p95": 11.701376501391278,
+      "gap_pixels": 0,
+      "ssim": 0.6682423197058713
+    },
+    "id": "photo_coffee",
+    "matte_rgb": [
+      28,
+      5,
+      2
+    ],
+    "nonopaque_after": 0,
+    "nonopaque_before": 11994
+  },
+  {
+    "additional_anchors": 4,
+    "before": {
+      "delta_e_mean": 4.9137679134843335,
+      "delta_e_p95": 13.150280213321475,
+      "gap_pixels": 0,
+      "ssim": 0.5696861931620426
+    },
+    "coverage_source": "unmodified candidate, not experimental matte",
+    "experimental": {
+      "delta_e_mean": 4.048599653882316,
+      "delta_e_p95": 9.376069803856527,
+      "gap_pixels": 0,
+      "ssim": 0.7734468427313649
+    },
+    "id": "photo_chelsea",
+    "matte_rgb": [
+      163,
+      125,
+      98
+    ],
+    "nonopaque_after": 0,
+    "nonopaque_before": 15332
+  },
+  {
+    "additional_anchors": 4,
+    "before": {
+      "delta_e_mean": 2.1408116223490095,
+      "delta_e_p95": 10.733199775577912,
+      "gap_pixels": 0,
+      "ssim": 0.8264352406518856
+    },
+    "coverage_source": "unmodified candidate, not experimental matte",
+    "experimental": {
+      "delta_e_mean": 1.6439393936060462,
+      "delta_e_p95": 7.662292989893672,
+      "gap_pixels": 0,
+      "ssim": 0.9279711544265942
+    },
+    "id": "photo_brick",
+    "matte_rgb": [
+      99,
+      99,
+      99
+    ],
+    "nonopaque_after": 0,
+    "nonopaque_before": 8853
+  },
+  {
+    "additional_anchors": 4,
+    "before": {
+      "delta_e_mean": 5.164338262911239,
+      "delta_e_p95": 15.516175441001984,
+      "gap_pixels": 0,
+      "ssim": 0.7334420268500077
+    },
+    "coverage_source": "unmodified candidate, not experimental matte",
+    "experimental": {
+      "delta_e_mean": 5.02085660518471,
+      "delta_e_p95": 14.357800625613876,
+      "gap_pixels": 0,
+      "ssim": 0.7598612469443561
+    },
+    "id": "photo_astronaut",
+    "matte_rgb": [
+      0,
+      0,
+      0
+    ],
+    "nonopaque_after": 0,
+    "nonopaque_before": 15182
+  },
+  {
+    "additional_anchors": 4,
+    "before": {
+      "delta_e_mean": 0.41735425222135664,
+      "delta_e_p95": 1.9627792202399337,
+      "gap_pixels": 0,
+      "ssim": 0.983926261998507
+    },
+    "coverage_source": "unmodified candidate, not experimental matte",
+    "experimental": {
+      "delta_e_mean": 0.41673368903322006,
+      "delta_e_p95": 1.9627792202399337,
+      "gap_pixels": 0,
+      "ssim": 0.9839246001770723
+    },
+    "id": "illustration_sailboat",
+    "matte_rgb": [
+      255,
+      255,
+      255
+    ],
+    "nonopaque_after": 0,
+    "nonopaque_before": 285
+  }
+]
