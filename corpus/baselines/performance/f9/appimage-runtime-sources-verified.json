@@ -1,0 +1,47 @@
+[
+  {
+    "name": "LICENSE-mimalloc.txt",
+    "sha256": "19c99805e7a44a34b297a75d1edea9985e300066dfc024d5c99d4236d4573b5d",
+    "matches_ci": true
+  },
+  {
+    "name": "LICENSE-musl.txt",
+    "sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
+    "matches_ci": true
+  },
+  {
+    "name": "LICENSE-runtime.txt",
+    "sha256": "aa154fc9070614bbe7921f89db11efd1dba7a1f3a41685958110e2230f9c0ca1",
+    "matches_ci": true
+  },
+  {
+    "name": "LICENSE-zlib.txt",
+    "sha256": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243",
+    "matches_ci": true
+  },
+  {
+    "name": "LICENSE-zstd.txt",
+    "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
+    "matches_ci": true
+  },
+  {
+    "name": "README.txt",
+    "sha256": "3fb6adccb5199335ec104557c6db51a6922454a4d9044998e515de62dcd03dc0",
+    "matches_ci": true
+  },
+  {
+    "name": "fuse-3.15.0.tar.xz",
+    "sha256": "70589cfd5e1cff7ccd6ac91c86c01be340b227285c5e200baa284e401eea2ca0",
+    "matches_ci": true
+  },
+  {
+    "name": "squashfuse-0.5.2.tar.gz",
+    "sha256": "db0238c5981dabbd80ee09ae15387f390091668ca060a7bc38047912491443d3",
+    "matches_ci": true
+  },
+  {
+    "name": "type2-runtime-source.tar.gz",
+    "sha256": "e27ea3c837e9c660e1a9a2993b673ae93bbb53077330efba8654031e302d4e8e",
+    "matches_ci": true
+  }
+]

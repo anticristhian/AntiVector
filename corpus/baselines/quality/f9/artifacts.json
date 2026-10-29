@@ -1,0 +1,101 @@
+{
+  "run_url": "https://github.com/anticristhian/AntiVector/actions/runs/40914808980",
+  "head_sha": "276a1f5521a350b4c8f7a39fdc80b183ae563bf6",
+  "artifacts": [
+    {
+      "id": 12917190781,
+      "name": "installer-macos-latest",
+      "size_in_bytes": 4724212,
+      "url": "https://api.github.com/repos/anticristhian/AntiVector/actions/artifacts/12917190781",
+      "archive_download_url": "https://api.github.com/repos/anticristhian/AntiVector/actions/artifacts/12917190781/zip",
+      "expired": false,
+      "created_at": "2026-10-29T17:03:22Z",
+      "expires_at": "2027-01-27T16:46:11Z",
+      "updated_at": "2026-10-29T17:03:22Z",
+      "digest": "sha256:c9c3c74c27a9c2c7dbf7bab383207186ad488e9f1bf23cb75d94105ab22d3061",
+      "workflow_run": {
+        "id": 40914808980,
+        "repository_id": 1437876400,
+        "head_repository_id": 1437876400,
+        "head_branch": "main",
+        "head_sha": "276a1f5521a350b4c8f7a39fdc80b183ae563bf6"
+      }
+    },
+    {
+      "id": 12916391512,
+      "name": "installer-ubuntu-latest",
+      "size_in_bytes": 10823367,
+      "url": "https://api.github.com/repos/anticristhian/AntiVector/actions/artifacts/12916391512",
+      "archive_download_url": "https://api.github.com/repos/anticristhian/AntiVector/actions/artifacts/12916391512/zip",
+      "expired": false,
+      "created_at": "2026-10-29T16:57:47Z",
+      "expires_at": "2027-01-27T16:46:11Z",
+      "updated_at": "2026-10-29T16:57:47Z",
+      "digest": "sha256:cd2cc8309ab6aef6e522ec0b0f52f08b388623ff8733d9ba74072158450c7b89",
+      "workflow_run": {
+        "id": 40914808980,
+        "repository_id": 1437876400,
+        "head_repository_id": 1437876400,
+        "head_branch": "main",
+        "head_sha": "276a1f5521a350b4c8f7a39fdc80b183ae563bf6"
+      }
+    },
+    {
+      "id": 12916082733,
+      "name": "installer-windows-latest",
+      "size_in_bytes": 4858418,
+      "url": "https://api.github.com/repos/anticristhian/AntiVector/actions/artifacts/12916082733",
+      "archive_download_url": "https://api.github.com/repos/anticristhian/AntiVector/actions/artifacts/12916082733/zip",
+      "expired": false,
+      "created_at": "2026-10-29T16:58:57Z",
+      "expires_at": "2027-01-27T16:46:11Z",
+      "updated_at": "2026-10-29T16:58:57Z",
+      "digest": "sha256:1ee9cfce50b76d7820d5105c403adfaba506f72623abc0892fd9a88ff8e04c07",
+      "workflow_run": {
+        "id": 40914808980,
+        "repository_id": 1437876400,
+        "head_repository_id": 1437876400,
+        "head_branch": "main",
+        "head_sha": "276a1f5521a350b4c8f7a39fdc80b183ae563bf6"
+      }
+    },
+    {
+      "id": 12915801317,
+      "name": "cpu-profile",
+      "size_in_bytes": 56286,
+      "url": "https://api.github.com/repos/anticristhian/AntiVector/actions/artifacts/12915801317",
+      "archive_download_url": "https://api.github.com/repos/anticristhian/AntiVector/actions/artifacts/12915801317/zip",
+      "expired": false,
+      "created_at": "2026-10-29T16:48:18Z",
+      "expires_at": "2027-01-27T16:46:11Z",
+      "updated_at": "2026-10-29T16:48:18Z",
+      "digest": "sha256:a0fb3d3bd278dbd07517afece730fef5666db4b8a910f9174a49b44a7afba3c3",
+      "workflow_run": {
+        "id": 40914808980,
+        "repository_id": 1437876400,
+        "head_repository_id": 1437876400,
+        "head_branch": "main",
+        "head_sha": "276a1f5521a350b4c8f7a39fdc80b183ae563bf6"
+      }
+    },
+    {
+      "id": 12915711348,
+      "name": "quality-report",
+      "size_in_bytes": 2388614,
+      "url": "https://api.github.com/repos/anticristhian/AntiVector/actions/artifacts/12915711348",
+      "archive_download_url": "https://api.github.com/repos/anticristhian/AntiVector/actions/artifacts/12915711348/zip",
+      "expired": false,
+      "created_at": "2026-10-29T16:47:29Z",
+      "expires_at": "2027-01-27T16:46:11Z",
+      "updated_at": "2026-10-29T16:47:29Z",
+      "digest": "sha256:3584dcca299e537631d7f791c2704358b6282784d193d318c53a77233c45847a",
+      "workflow_run": {
+        "id": 40914808980,
+        "repository_id": 1437876400,
+        "head_repository_id": 1437876400,
+        "head_branch": "main",
+        "head_sha": "276a1f5521a350b4c8f7a39fdc80b183ae563bf6"
+      }
+    }
+  ]
+}

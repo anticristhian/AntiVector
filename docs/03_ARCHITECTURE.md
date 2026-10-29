@@ -219,7 +219,7 @@ Cada estágio tem testes unitários com imagens sintéticas geradas no próprio 
 | ADR-012 | Exceção de licença restrita a target-lexicon0.12.16, dependência de build Tauri/Linux | DEFINITIVO, exceção pontual à allowlist F0 |
 | ADR-013 | Exceções BSL-1.0 nas duas dependências da área de transferência Windows | DEFINITIVO, versões auditadas |
 | ADR-014 | Exceção NCSA restrita ao libfuzzer-sys0.4.13 no workspace de fuzz | DEFINITIVO, ferramenta de teste fora do produto |
-| ADR-015 | AppImage com WebView do SO e bootstrap independente auditável | EXPERIMENTO F9, exige tamanho e smoke reais antes de aceite |
+| ADR-015 | AppImage com WebView do SO e bootstrap independente auditável | DEFINITIVO, tamanho/ldd/smoke/fontes verificados em F9 |
 
 Novos ADRs: acrescentar linha + seção abaixo com contexto, decisão, evidência, consequências.
 
@@ -424,7 +424,7 @@ reprovando RNF09. Inspeção independente SquashFS mostrou WebKit95.204.697bytes
 JavaScriptCore32.556.737 e ICUdata30.800.033, além de GTK e outras bibliotecas.
 Esse conjunto inclui o WebView nativo que ADR-003 prevê como componente do SO.
 
-Experimento: preservar o executável Tauri,ícones e recursos próprios em um novo
+Decisão [DEFINITIVO]: preservar o executável Tauri,ícones e recursos próprios em um novo
 AppDir e usar GTK3/WebKitGTK4.1 do SO,sem copiar esses frameworks. Baseline de
 execução:Ubuntu24.04. AppRun é um script próprio que só executa av-desktop;
 o formato continua AppImage. Manter o pacote grande como referência,sem
@@ -446,6 +446,19 @@ Evidência primária:
 [appimagetool e runtime substituível](https://github.com/AppImage/appimagetool).
 Assets de build têm hash obrigatório; mudanças upstream falham a verificação.
 
-Aceite ainda pendente: novo contêiner≤25MB,ldd sem dependências ausentes,
-inicialização real do WebView sob Xvfb,avisos/fontes preservados e resultados
-registrados. Não declarar o experimento aprovado pelo simples repack.
+Evidência de aceite do experimento: AppImage do SHA0273918 mede11.282.936bytes,
+SHA256c9929d623078bc935fe10cc5eaccd68abcdfef336c59e8fb6575deb1a4385c91.
+ldd não encontrou dependências ausentes no Ubuntu24.04. DiagnósticoCI40914808956,
+job123592079161,passou com o mesmo artefato:sinal PageLoadEvent::Finished real
+sob Xvfb→D-Bus,serviços de acessibilidade e portalGTK ativados. Não foi
+desabilitada proteção do WebView nem usado privilégio adicional no aplicativo.
+Inspeção independente SquashFS confirmou avisos e fontes;os nove arquivos do
+runtime foram extraídos e seus SHA256 conferidos contra o manifesto do CI.
+Notices do produto também foram extraídos e são iguais aos do DMG.
+Evidências em corpus/baselines/performance/f9/. A aprovação desta decisão de
+empacotamento não aceita a F9 nem substitui sua matriz e avaliação humana.
+
+Impacto: o AppImage requer GTK3/WebKitGTK4.1 e dependências nativas do SO;
+não é autossuficiente em distribuições sem esses pacotes. A baseline testada é
+Ubuntu24.04,sem alegar compatibilidade com versões anteriores ou todo Linux.
+Documentar esses pré-requisitos e conservar os avisos/fontes a cada build.

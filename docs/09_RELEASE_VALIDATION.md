@@ -14,7 +14,7 @@ um release como aprovado a partir de um build ou de uma avaliação parcial.
 | UI |Abertura4MP:zero longtasks≥50ms,drawmáximo0,5ms;frontendproduction/Rustdebug |`corpus/baselines/session/f9/ui-final.jsonl` |
 | Fuzz |90.151 execuções/3.601s,sem crash/panic |`corpus/baselines/robustness/f9/fuzz.txt` |
 | PerfilCPU |23.038 eventos perf;quantização32,28% do peso amostrado |`corpus/baselines/performance/f9/profile-ci.json` e SVG |
-| Instaladores |MSI5.099.520bytes e DMG4.764.465bytes no SHA c32ef5c;AppImage corrigido e nova matriz ainda pendentes |Relatórios `installer-*-attempt2.json` em `corpus/baselines/performance/f9/` |
+| Instaladores |MSI5.099.520bytes,DMG4.764.463bytes,AppImage11.282.936bytes;smokeLinux aprovado;matriz final verde |Relatórios `installer-*-final.json` em `corpus/baselines/performance/f9/`;`corpus/baselines/quality/f9/ci.json` |
 | Preferência humana≥80% |Pendente;usuário está preenchendo os72pares |Avaliação local abaixo |
 
 Esses resultados têm os limites de método descritos nas seções seguintes.
@@ -96,6 +96,22 @@ o instalador não baixar runtime. A aplicação usa o WebView do SO; informar o
 pré-requisito na distribuição. Não há runtime de fuzz/Ghostscript/vtracer no
 produto. Assinatura de instaladores não está configurada; artefatos de CI não
 são uma publicação assinada.
+
+Linux: ADR-015 conserva GTK3/WebKitGTK4.1 no SO. A baseline testada é Ubuntu24.04;
+instalar `libwebkit2gtk-4.1-0`, `libgtk-3-0t64`, `libxdo3` e
+`libayatana-appindicator3-1`. Em uma sessão desktop normal, marcar o AppImage
+como executável e abrir. Para executar sem depender de montagem FUSE:
+`APPIMAGE_EXTRACT_AND_RUN=1 ./AntiVector_0.1.0_amd64-system-webview.AppImage`.
+Esse modo usa extração temporária local, sem rede. Não há garantia para todas
+as distribuições Linux ou versões anteriores à baseline.
+
+`scripts/lean-appimage.sh` preserva o AppImage grande fora do diretório de
+distribuição, cria o contêiner menor e inclui fontes/avisos do bootstrap separado.
+`scripts/smoke-appimage.sh` exige evento real de página carregada sob Xvfb/D-Bus;
+o timeout30s/exit124 encerra a janela deliberadamente e não substitui o marcador.
+O workflow diagnóstico reutiliza um artefato identificado por run-id, para
+investigar o ambiente sem reconstruir o produto. Ele não substitui o build e
+as verificações da matriz principal. Log/marcador/tamanho são artefatos do CI.
 
 `node scripts/third-party-notices.mjs` reconstrói os avisos de dependências
 Cargo do desktop e JavaScript de produção, com hashes dos textos e URLs dos

@@ -44,6 +44,6 @@ Home/End. As ações de região têm controles por teclado; os diálogos contêm
 foco e Escape os fecha. No painel de imagem, setas movem a vista e +/−/0
 controlam o zoom.
 
-Estado das fases e evidências reais em ../docs/PROGRESS.md. A F9 ainda aguarda
-os gates finais de instaladores e avaliação visual humana. Instruções de
+Estado das fases e evidências reais em ../docs/PROGRESS.md. Os gates técnicos da
+F9 e instaladores passaram; falta a avaliação visual humana. Instruções de
 reprodução e limites das medições em ../docs/09_RELEASE_VALIDATION.md.

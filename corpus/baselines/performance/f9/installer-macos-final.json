@@ -1,0 +1,11 @@
+{
+  "limit_bytes": 25000000,
+  "platform": "darwin",
+  "files": [
+    {
+      "file": "target/release/bundle/dmg/AntiVector_0.1.0_aarch64.dmg",
+      "bytes": 4764463,
+      "sha256": "ad9d26dbef8b36d7e48d7a0141a82d92f3820fa81e32f76e0269218c62b52a04"
+    }
+  ]
+}
