@@ -1,0 +1,14 @@
+{
+  "run_id": 40999409607,
+  "source_commit": "160e369d7951ee1aea85a29c14d341d38f249029",
+  "job_id": 123880040662,
+  "perf_record_events": 23970,
+  "flamegraph_file": "illustration-flamegraph.svg",
+  "flamegraph_sha256": "ef8ca84f159e7402fcc7a02eaa08a4be0465ff50863df4ad093f757f46769a33",
+  "flamegraph_bytes": 413250,
+  "workers": 8,
+  "repetitions": 5,
+  "opaque_canvas_overlap": true,
+  "circular_loops": true,
+  "note": "Sampled CPU profile, not RNF elapsed-time evidence. Existing paired RNF metrics remain in performance/f9/revision2."
+}

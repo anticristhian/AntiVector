@@ -1,0 +1,68 @@
+{
+  "run_url": "https://github.com/anticristhian/AntiVector/actions/runs/40999409607",
+  "source_commit": "160e369d7951ee1aea85a29c14d341d38f249029",
+  "artifacts": [
+    {
+      "id": 12953510663,
+      "name": "installer-windows-latest",
+      "zip_sha256_expected": "5795bc876302b970fdeddb569d3651b185b2425a46a8b8d43824cfa817325322",
+      "zip_sha256_measured": "5795bc876302b970fdeddb569d3651b185b2425a46a8b8d43824cfa817325322",
+      "verified": true,
+      "installer": {
+        "limit_bytes": 25000000,
+        "platform": "win32",
+        "files": [
+          {
+            "file": "target/release/bundle/msi/AntiVector_0.1.0_x64_en-US.msi",
+            "bytes": 5107712,
+            "sha256": "4d0894a5ea92bbe4bda34472f4754efdd4c7a373759fce4d03cce0011f1f1b1a"
+          }
+        ]
+      }
+    },
+    {
+      "id": 12953311773,
+      "name": "installer-ubuntu-latest",
+      "zip_sha256_expected": "360816ee89bbe38d0218744840a7e3a7b366dd31c2a1ded7796c9c28a89c6939",
+      "zip_sha256_measured": "360816ee89bbe38d0218744840a7e3a7b366dd31c2a1ded7796c9c28a89c6939",
+      "verified": true,
+      "installer": {
+        "limit_bytes": 25000000,
+        "platform": "linux",
+        "files": [
+          {
+            "file": "target/release/bundle/appimage/AntiVector_0.1.0_amd64-system-webview.AppImage",
+            "bytes": 11291128,
+            "sha256": "55a05f57f6ec8f8e9acd22e9cf83973526bdbcf9772631c7d2e00b8d096d5af5"
+          }
+        ]
+      }
+    },
+    {
+      "id": 12952568408,
+      "name": "installer-macos-latest",
+      "zip_sha256_expected": "a9936b81dcbf118163559e0bdd7e21d17f776a73073915bf41c5c7470662798d",
+      "zip_sha256_measured": "a9936b81dcbf118163559e0bdd7e21d17f776a73073915bf41c5c7470662798d",
+      "verified": true,
+      "installer": {
+        "limit_bytes": 25000000,
+        "platform": "darwin",
+        "files": [
+          {
+            "file": "target/release/bundle/dmg/AntiVector_0.1.0_aarch64.dmg",
+            "bytes": 4773196,
+            "sha256": "1f64e3da1271b668256e74d0ee5fdca92a47d823e4db41b3a3396a974c856322"
+          }
+        ]
+      }
+    },
+    {
+      "id": 12952183968,
+      "name": "cpu-profile",
+      "zip_sha256_expected": "976b6416a4397e56de94ac8826a514887a6e80f64b66aadea82a02d47b4d4eff",
+      "zip_sha256_measured": "976b6416a4397e56de94ac8826a514887a6e80f64b66aadea82a02d47b4d4eff",
+      "verified": true,
+      "installer": null
+    }
+  ]
+}

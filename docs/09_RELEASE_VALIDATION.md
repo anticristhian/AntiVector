@@ -1,7 +1,8 @@
 # F9 — Reprodução e gates de release
 
-F9 permanece em andamento até todos os critérios de06/01 passarem. Não publicar
-um release como aprovado a partir de um build ou de uma avaliação parcial.
+F9 concluída em2026-10-30:critérios de06/01 e verificações obrigatórias aprovados.
+Fonte final160e369,CI40999409607 success nos5jobs. Artefatos de CI não constituem
+publicação de release/tag ou assinatura dos instaladores.
 
 ## Primeiro candidato — resultados preservados (2026-10-29)
 
@@ -64,12 +65,12 @@ anterior; o estado deste candidato é:
 |---|---|
 | Regressão |34 históricas e72 completas aprovadas,zero gaps |
 | Qualidade/geometria |22/25 logos/ilustrações e18/20 synthetic;limites preservados |
-| Verificações |75 testes Rust em cada SO;17 Vitest;fmt/clippy/lint/build/WASM/licenças aprovados |
-| CI |Success nos5jobs do run40968541146,SHAbe26f37;ci.json em revision2 |
-| Instaladores |MSI5.107.712bytes,DMG4.772.847bytes,AppImage11.291.128bytes;hashes ZIP/arquivo conferidos e smokeLinux aprovado |
+| Verificações |76 testes Rust e19Vitest em cada SO;fmt/clippy/lint/build/WASM/licenças aprovados |
+| CI |Success nos5jobs do run40999409607,SHA160e369;adoption/ci-final.json |
+| Instaladores |MSI5.107.712bytes,DMG4.773.196bytes,AppImage11.291.128bytes;hashes ZIP/arquivo conferidos e smokeLinux aprovado;performance/f9/adoption/ |
 | Fuzz combinado |ASAN75.053execuções/3.601s,exit0,sem crash/panic;robustness/f9/revision2 |
 | RNF01–03 combinado |Logo371,8948ms/67.887.104bytes;ilustração1.397,4143ms/235.745.280bytes;5processos novos,8workers,aprovado |
-| QA nativa da correção |Após retirar blur e corrigir tarefas sobrepostas:duas aberturas frias4MP com0longtasks≥50ms,drawmáximo0,5/0,6ms. Falhas60/242ms preservadas;novo CI pendente |
+| QA nativa da correção |Após retirar blur e corrigir tarefas sobrepostas:duas aberturas frias4MP com0longtasks≥50ms,drawmáximo0,5/0,6ms. Falhas60/242ms preservadas;CI final aprovado |
 | Preferência humana≥80% |APROVADO:43vitórias/16empates/13derrotas,59/72=81,944444%;score/proveniência preservados |
 
 ADR-018 adota `experimental.opaque_canvas_overlap` e
@@ -78,7 +79,7 @@ composição SVG;false explícito mantém o controle anterior. Campos ausentes e
 objetos experimental antigos desserializam false,preservando projetos.
 Novo run sem flags produziu72SVGs byte-idênticos aos avaliados;prova em
 quality/f9/adoption/default-identity.json. Não preencher votos pelo implementador.
-CI desta promoção ainda precisa concluir;runbe26f37 descreve o candidato anterior.
+CI desta promoção concluído:run40999409607/160e369. Runbe26f37 permanece histórico.
 
 Controle na mesma sessão,com ambos flags desligados:logo353,3196ms e
 ilustração1.532,2126ms. Variações do candidato+5,2573%/−8,7976%,abaixo do
