@@ -1,0 +1,24 @@
+{
+  "run_id": 40968541146,
+  "head_sha": "be26f37f42d5f45a2f5e44da21daa3f95b5117a2",
+  "jobs": [
+    {
+      "job_id": 123779139832,
+      "name": "Rust (macos-latest)",
+      "rust_tests": 75,
+      "failed_rust_summaries": 0
+    },
+    {
+      "job_id": 123779139960,
+      "name": "Rust (windows-latest)",
+      "rust_tests": 75,
+      "failed_rust_summaries": 0
+    },
+    {
+      "job_id": 123779140003,
+      "name": "Rust (ubuntu-latest)",
+      "rust_tests": 75,
+      "failed_rust_summaries": 0
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "scope": "Fresh processes; decoded raster through SVG including detection; after fuzz and local builds ended",
+  "logo_change_percent": 5.257336417226788,
+  "candidate": "f9-revision2-rnf",
+  "note": "Same-session flag comparison; both changes below the 15 percent performance regression limit; not a worst-case or cross-machine guarantee",
+  "source_commit": "be26f37f42d5f45a2f5e44da21daa3f95b5117a2",
+  "illustration_change_percent": -8.797623776230544,
+  "trials_per_workload": 5,
+  "inputs": [
+    {
+      "sha256": "342ad635c2ecdb969b6211bdcf5ab11000984288c2a496fe51b81f33b3b66440",
+      "name": "logo-1mp-8",
+      "versioned_input": "corpus/baselines/performance/f9/before/logo-1mp-8.png"
+    },
+    {
+      "sha256": "ce2781d70f606722d8f262880708a950c05559f0908504ee674869f620bf78f8",
+      "name": "illustration-4mp-32",
+      "versioned_input": "corpus/baselines/performance/f9/before/illustration-4mp-32.png"
+    }
+  ],
+  "control": "f9-revision2-rnf-control",
+  "workers": 8
+}

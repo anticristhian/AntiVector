@@ -1,0 +1,60 @@
+{
+  "run_url": "https://github.com/anticristhian/AntiVector/actions/runs/40968541146",
+  "head_sha": "be26f37f42d5f45a2f5e44da21daa3f95b5117a2",
+  "artifacts": [
+    {
+      "id": 12940365558,
+      "name": "installer-ubuntu-latest",
+      "artifact_zip_sha256_expected": "fb80f762fa3793c102ae79f78698bcec0c1d700aedb841c8ca86e8f894681136",
+      "artifact_zip_sha256_measured": "fb80f762fa3793c102ae79f78698bcec0c1d700aedb841c8ca86e8f894681136",
+      "verified": true,
+      "installer": {
+        "limit_bytes": 25000000,
+        "platform": "linux",
+        "files": [
+          {
+            "file": "target/release/bundle/appimage/AntiVector_0.1.0_amd64-system-webview.AppImage",
+            "bytes": 11291128,
+            "sha256": "2d1a807120b84902b325edce322db8d7b50ccb748bd54abee68dae602d1ed614"
+          }
+        ]
+      }
+    },
+    {
+      "id": 12939687312,
+      "name": "installer-windows-latest",
+      "artifact_zip_sha256_expected": "54253edc5255a444dfbc024069950a686f36abbf908957b2b18520b3d6b40415",
+      "artifact_zip_sha256_measured": "54253edc5255a444dfbc024069950a686f36abbf908957b2b18520b3d6b40415",
+      "verified": true,
+      "installer": {
+        "limit_bytes": 25000000,
+        "platform": "win32",
+        "files": [
+          {
+            "file": "target/release/bundle/msi/AntiVector_0.1.0_x64_en-US.msi",
+            "bytes": 5107712,
+            "sha256": "8dba72a100360524c03b37af313026d554168c9c013dae12f6fecaf8d2d820e0"
+          }
+        ]
+      }
+    },
+    {
+      "id": 12939358470,
+      "name": "installer-macos-latest",
+      "artifact_zip_sha256_expected": "95055c65303614abb5b9c5f0e80840f7cb832e8a92aef01a2828ddf376a75bd1",
+      "artifact_zip_sha256_measured": "95055c65303614abb5b9c5f0e80840f7cb832e8a92aef01a2828ddf376a75bd1",
+      "verified": true,
+      "installer": {
+        "limit_bytes": 25000000,
+        "platform": "darwin",
+        "files": [
+          {
+            "file": "target/release/bundle/dmg/AntiVector_0.1.0_aarch64.dmg",
+            "bytes": 4772847,
+            "sha256": "599610bacb85a20ecb3dae22ef5bb1dfb703d9ab06f9d9fe5337cfb9f0a5a248"
+          }
+        ]
+      }
+    }
+  ]
+}

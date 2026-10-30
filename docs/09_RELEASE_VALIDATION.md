@@ -3,7 +3,7 @@
 F9 permanece em andamento até todos os critérios de06/01 passarem. Não publicar
 um release como aprovado a partir de um build ou de uma avaliação parcial.
 
-## Estado medido (2026-10-29)
+## Primeiro candidato — resultados preservados (2026-10-29)
 
 | Gate | Resultado registrado | Evidência |
 |---|---|---|
@@ -55,8 +55,31 @@ A página revision2 já existe, com 72 pares pendentes; não regenerar. Seu scor
 humano ainda não foi medido. Resultados numéricos do candidato:22/25 (88%) no
 gate de logos/ilustrações;Hausdorff médio0,421196691556px,corner recall
 0,988095238095,18/20 synthetic (90%),zero gaps. Evidências em
-`corpus/baselines/quality/f9/revision2/`. RNF, fuzz de1h e CI desta revisão
-precisam de evidências próprias; a tabela inicial descreve o produto anterior.
+`corpus/baselines/quality/f9/revision2/`. A tabela inicial descreve o produto
+anterior; o estado deste candidato é:
+
+| Gate do candidato corrigido | Estado medido |
+|---|---|
+| Regressão |34 históricas e72 completas aprovadas,zero gaps |
+| Qualidade/geometria |22/25 logos/ilustrações e18/20 synthetic;limites preservados |
+| Verificações |75 testes Rust em cada SO;17 Vitest;fmt/clippy/lint/build/WASM/licenças aprovados |
+| CI |Success nos5jobs do run40968541146,SHAbe26f37;ci.json em revision2 |
+| Instaladores |MSI5.107.712bytes,DMG4.772.847bytes,AppImage11.291.128bytes;hashes ZIP/arquivo conferidos e smokeLinux aprovado |
+| Fuzz combinado |ASAN75.053execuções/3.601s,exit0,sem crash/panic;robustness/f9/revision2 |
+| RNF01–03 combinado |Logo371,8948ms/67.887.104bytes;ilustração1.397,4143ms/235.745.280bytes;5processos novos,8workers,aprovado |
+| QA nativa da correção |Interrompida pelo usuário comEsc;teste de IPC/paths aprovado,sem nova medição UI4MP |
+| Preferência humana≥80% |Avaliação revision2 adiada pelo usuário;72pares pendentes |
+
+No produto,ligar explicitamente `experimental.opaque_canvas_overlap` e
+`experimental.circular_loops` em params.json;projetos preservam ambos. Padrões
+continuam false até os gates e nova decisão documentada. Não preencher votos
+pelo implementador nem reutilizar votos do produto anterior para esta saída.
+
+Controle na mesma sessão,com ambos flags desligados:logo353,3196ms e
+ilustração1.532,2126ms. Variações do candidato+5,2573%/−8,7976%,abaixo do
+limite de regressão15%;ambos passam as metas RNF. Dados completos,parâmetros e
+hashes das entradas em performance/f9/revision2/rnf-*.json. Essas medições
+excluem decodificação e UI e não garantem pior caso para qualquer entrada.
 
 O experimento de composição isolada abaixo continua preservado como histórico.
 

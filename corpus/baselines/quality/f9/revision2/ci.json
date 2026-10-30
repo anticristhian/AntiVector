@@ -1,0 +1,556 @@
+{
+  "run_url": "https://github.com/anticristhian/AntiVector/actions/runs/40968541146",
+  "run_id": 40968541146,
+  "head_sha": "be26f37f42d5f45a2f5e44da21daa3f95b5117a2",
+  "status": "completed",
+  "conclusion": "success",
+  "started_at": "2026-10-29T22:47:44Z",
+  "updated_at": "2026-10-29T23:02:28Z",
+  "jobs": [
+    {
+      "id": 123779139677,
+      "name": "Minimal corpus quality regression",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run dtolnay/rust-toolchain@stable",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run Swatinem/rust-cache@v2",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Measure the versioned corpus and enforce fidelity/topology limits",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Validate opt-in composition on the complete categorized corpus",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain measured metrics, SVGs, renders and difference maps",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run Swatinem/rust-cache@v2",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 123779139832,
+      "name": "Rust (macos-latest)",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install Linux desktop dependencies",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install frontend dependencies",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install Rust and validation components",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run Swatinem/rust-cache@v2",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check formatting",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check warnings",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run tests",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Validate frontend",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Validate visual evaluation page offline with synthetic answers",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build offline desktop application",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Package with the operating system WebView",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Smoke test the Linux application",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Measure installer size",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain installers and measured sizes",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check portable core",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install license checker",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check dependency licenses",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Audit isolated fuzz dependencies",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Post Run Swatinem/rust-cache@v2",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 123779139935,
+      "name": "CPU flamegraph",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run dtolnay/rust-toolchain@stable",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run Swatinem/rust-cache@v2",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install sampling tools",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Profile the original 4MP illustration reference",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain measured CPU profile",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run Swatinem/rust-cache@v2",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 123779139960,
+      "name": "Rust (windows-latest)",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install Linux desktop dependencies",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install frontend dependencies",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install Rust and validation components",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run Swatinem/rust-cache@v2",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check formatting",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check warnings",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run tests",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Validate frontend",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Validate visual evaluation page offline with synthetic answers",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build offline desktop application",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Package with the operating system WebView",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Smoke test the Linux application",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Measure installer size",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain installers and measured sizes",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check portable core",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install license checker",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check dependency licenses",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Audit isolated fuzz dependencies",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Post Run Swatinem/rust-cache@v2",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 123779140003,
+      "name": "Rust (ubuntu-latest)",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install Linux desktop dependencies",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install frontend dependencies",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install Rust and validation components",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run Swatinem/rust-cache@v2",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check formatting",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check warnings",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run tests",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Validate frontend",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Validate visual evaluation page offline with synthetic answers",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build offline desktop application",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Package with the operating system WebView",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Smoke test the Linux application",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Measure installer size",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain installers and measured sizes",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check portable core",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install license checker",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check dependency licenses",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Audit isolated fuzz dependencies",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run Swatinem/rust-cache@v2",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
+}

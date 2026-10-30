@@ -1,0 +1,22 @@
+{
+  "rss_limit_mib": 2048,
+  "source_equivalent_to_commit": "b4900d36a25a6fdd307c0340e1fa8d88044ae98f",
+  "reported_rss_mib": 928,
+  "note": "Pipeline/export/fuzz source unchanged after this binary was built; subsequent edits were tests/docs/packaging. No crash or panic observed.",
+  "runs": 75053,
+  "seconds": 3601,
+  "features": 64085,
+  "log_sha256": "465400189520d9d6ef61ba21eeb2d6065b5f3f0da590400556268a1cb1486fa5",
+  "coverage": 15172,
+  "final_corpus_files": 2539,
+  "circular_loops": "kind bit 0x20",
+  "seed": 2114683189,
+  "sanitizer": "address",
+  "opaque_canvas_overlap": "kind bit 0x80",
+  "head_at_completion": "be26f37f42d5f45a2f5e44da21daa3f95b5117a2",
+  "exit_code": 0,
+  "final_corpus_kib": 1626,
+  "max_len": 65536,
+  "initial_seed_files": 6,
+  "max_total_time_seconds": 3600
+}
