@@ -1,0 +1,19 @@
+{
+  "css_change": "Only backdrop-filter:blur(3px) removed; dimmed overlay retained; comparison normalizes Git line endings only",
+  "counter": "Includes tasks overlapping beginning of loading",
+  "rows": [
+    {
+      "file": "ui-no-blur-first.jsonl",
+      "longtasks": 0,
+      "max_draw_ms": 0.5,
+      "duration_ms_debug": 13112.30000001192
+    },
+    {
+      "file": "ui-no-blur-second.jsonl",
+      "longtasks": 0,
+      "max_draw_ms": 0.5999999940395355,
+      "duration_ms_debug": 13092.40000000596
+    }
+  ],
+  "limits": "Scenario measured, not exclusive causal attribution or worst-case guarantee; prior negative samples retained"
+}

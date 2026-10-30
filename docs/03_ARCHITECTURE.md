@@ -575,6 +575,13 @@ mudança:abertura4MP e nova vetorização tiveram zero longtasks≥50ms e desenh
 máximo0,4ms,frontendproduction/Rustdebug. Não atribuir causalidade comprovada ao
 primeiro60ms nem usar o tempo debug como RNF release.
 
+Atualização:coletor agora inclui tarefas sobrepostas ao início da janela,com
+teste específico19Vitest. Nova amostra revelou242ms de layout/render e foi
+preservada. Retirado apenas backdrop-filter:blur(3px) do modal de tela inteira;
+duas aberturas frias4MP no mesmo método registraram0longtasks≥50ms,drawmáximo
+0,5/0,6ms. Valida o cenário corrigido,sem atribuir causalidade exclusiva ou pior
+caso universal. Não muda o algoritmo/SVG avaliado;CI final deve cobrir a UI.
+
 Impacto: apenas defaults e preparação de imagem da UI;regras geométricas,
 limites de resíduos,guardas de transparência,modo exato,arestas compartilhadas
 e formato de projeto permanecem. A exceção de posição abrange somente costura

@@ -69,7 +69,7 @@ anterior; o estado deste candidato é:
 | Instaladores |MSI5.107.712bytes,DMG4.772.847bytes,AppImage11.291.128bytes;hashes ZIP/arquivo conferidos e smokeLinux aprovado |
 | Fuzz combinado |ASAN75.053execuções/3.601s,exit0,sem crash/panic;robustness/f9/revision2 |
 | RNF01–03 combinado |Logo371,8948ms/67.887.104bytes;ilustração1.397,4143ms/235.745.280bytes;5processos novos,8workers,aprovado |
-| QA nativa da correção |Após worker de bitmap:abertura/revetorização4MP com0longtasks≥50ms,drawmáximo0,4ms;primeira ocorrência60ms preservada |
+| QA nativa da correção |Após retirar blur e corrigir tarefas sobrepostas:duas aberturas frias4MP com0longtasks≥50ms,drawmáximo0,5/0,6ms. Falhas60/242ms preservadas;novo CI pendente |
 | Preferência humana≥80% |APROVADO:43vitórias/16empates/13derrotas,59/72=81,944444%;score/proveniência preservados |
 
 ADR-018 adota `experimental.opaque_canvas_overlap` e

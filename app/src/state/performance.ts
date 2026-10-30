@@ -10,11 +10,11 @@ export function useUiPerformance() {
     let sample: Sample | null = null; let timer: ReturnType<typeof setTimeout> | undefined;
     const supported = typeof PerformanceObserver !== 'undefined' && PerformanceObserver.supportedEntryTypes.includes('longtask');
     const collect = (entries: PerformanceEntry[]) => { if (!sample) return;
-      for (const entry of entries) if (entry.startTime >= sample.start && entry.startTime <= sample.stop) { sample.max = Math.max(sample.max, entry.duration); sample.count++; sample.longtasks.push(entry.toJSON()); } };
+      for (const entry of entries) if (entry.startTime + entry.duration >= sample.start && entry.startTime <= sample.stop) { sample.max = Math.max(sample.max, entry.duration); sample.count++; sample.longtasks.push(entry.toJSON()); } };
     const observer = supported ? new PerformanceObserver(list => collect(list.getEntries())) : null;
     observer?.observe({ type: 'longtask' });
     const collectFrames = (entries: PerformanceEntry[]) => { if (!sample) return;
-      for (const entry of entries) if (entry.startTime >= sample.start && entry.startTime <= sample.stop) sample.longframes.push(entry.toJSON()); };
+      for (const entry of entries) if (entry.startTime + entry.duration >= sample.start && entry.startTime <= sample.stop) sample.longframes.push(entry.toJSON()); };
     const frames = PerformanceObserver.supportedEntryTypes.includes('long-animation-frame') ? new PerformanceObserver(list => collectFrames(list.getEntries())) : null;
     frames?.observe({ type: 'long-animation-frame' });
     const unsubscribe = useAppStore.subscribe((state, previous) => {
