@@ -1,0 +1,25 @@
+{
+  "method": "Only snapshot YAML metadata and final newlines excluded; SVG content exactly compared to the human-evaluated candidate",
+  "rows": [
+    {
+      "id": "circle_r50",
+      "matches_human_evaluated_svg": true
+    },
+    {
+      "id": "ring",
+      "matches_human_evaluated_svg": true
+    },
+    {
+      "id": "concentric",
+      "matches_human_evaluated_svg": true
+    },
+    {
+      "id": "junction_t",
+      "matches_human_evaluated_svg": true
+    },
+    {
+      "id": "junction_y",
+      "matches_human_evaluated_svg": true
+    }
+  ]
+}

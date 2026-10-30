@@ -1,4 +1,4 @@
-//! Polygon references plus the conservatively validated F4 curve configuration.
+//! Historical polygon/F4 controls and the currently validated quality defaults.
 
 #[test]
 fn synthetic_polygon_snapshots() {
@@ -44,6 +44,9 @@ fn snapshots(curves: bool, quality: bool) {
         };
         params.experimental.curve_fit = curves;
         params.experimental.quality_v5 = quality;
+        if !quality {
+            params.experimental.circular_loops = false;
+        }
         params.experimental.corner_recovery_radius = 1.5;
         let doc = av_core::vectorize(&raster, &params, &Default::default()).unwrap();
         let svg = av_export::svg::to_string_with_options(
