@@ -1,0 +1,295 @@
+{
+  "answers": [
+    {
+      "choice": "B",
+      "pair": 0
+    },
+    {
+      "choice": "A",
+      "pair": 1
+    },
+    {
+      "choice": "A",
+      "pair": 2
+    },
+    {
+      "choice": "A",
+      "pair": 3
+    },
+    {
+      "choice": "B",
+      "pair": 4
+    },
+    {
+      "choice": "B",
+      "pair": 5
+    },
+    {
+      "choice": "B",
+      "pair": 6
+    },
+    {
+      "choice": "tie",
+      "pair": 7
+    },
+    {
+      "choice": "B",
+      "pair": 8
+    },
+    {
+      "choice": "B",
+      "pair": 9
+    },
+    {
+      "choice": "B",
+      "pair": 10
+    },
+    {
+      "choice": "B",
+      "pair": 11
+    },
+    {
+      "choice": "B",
+      "pair": 12
+    },
+    {
+      "choice": "A",
+      "pair": 13
+    },
+    {
+      "choice": "tie",
+      "pair": 14
+    },
+    {
+      "choice": "A",
+      "pair": 15
+    },
+    {
+      "choice": "tie",
+      "pair": 16
+    },
+    {
+      "choice": "A",
+      "pair": 17
+    },
+    {
+      "choice": "tie",
+      "pair": 18
+    },
+    {
+      "choice": "B",
+      "pair": 19
+    },
+    {
+      "choice": "A",
+      "pair": 20
+    },
+    {
+      "choice": "tie",
+      "pair": 21
+    },
+    {
+      "choice": "A",
+      "pair": 22
+    },
+    {
+      "choice": "A",
+      "pair": 23
+    },
+    {
+      "choice": "B",
+      "pair": 24
+    },
+    {
+      "choice": "B",
+      "pair": 25
+    },
+    {
+      "choice": "A",
+      "pair": 26
+    },
+    {
+      "choice": "B",
+      "pair": 27
+    },
+    {
+      "choice": "B",
+      "pair": 28
+    },
+    {
+      "choice": "B",
+      "pair": 29
+    },
+    {
+      "choice": "B",
+      "pair": 30
+    },
+    {
+      "choice": "tie",
+      "pair": 31
+    },
+    {
+      "choice": "A",
+      "pair": 32
+    },
+    {
+      "choice": "B",
+      "pair": 33
+    },
+    {
+      "choice": "A",
+      "pair": 34
+    },
+    {
+      "choice": "B",
+      "pair": 35
+    },
+    {
+      "choice": "B",
+      "pair": 36
+    },
+    {
+      "choice": "A",
+      "pair": 37
+    },
+    {
+      "choice": "A",
+      "pair": 38
+    },
+    {
+      "choice": "B",
+      "pair": 39
+    },
+    {
+      "choice": "tie",
+      "pair": 40
+    },
+    {
+      "choice": "A",
+      "pair": 41
+    },
+    {
+      "choice": "B",
+      "pair": 42
+    },
+    {
+      "choice": "B",
+      "pair": 43
+    },
+    {
+      "choice": "B",
+      "pair": 44
+    },
+    {
+      "choice": "A",
+      "pair": 45
+    },
+    {
+      "choice": "A",
+      "pair": 46
+    },
+    {
+      "choice": "A",
+      "pair": 47
+    },
+    {
+      "choice": "B",
+      "pair": 48
+    },
+    {
+      "choice": "tie",
+      "pair": 49
+    },
+    {
+      "choice": "B",
+      "pair": 50
+    },
+    {
+      "choice": "A",
+      "pair": 51
+    },
+    {
+      "choice": "tie",
+      "pair": 52
+    },
+    {
+      "choice": "A",
+      "pair": 53
+    },
+    {
+      "choice": "A",
+      "pair": 54
+    },
+    {
+      "choice": "tie",
+      "pair": 55
+    },
+    {
+      "choice": "A",
+      "pair": 56
+    },
+    {
+      "choice": "A",
+      "pair": 57
+    },
+    {
+      "choice": "B",
+      "pair": 58
+    },
+    {
+      "choice": "tie",
+      "pair": 59
+    },
+    {
+      "choice": "tie",
+      "pair": 60
+    },
+    {
+      "choice": "tie",
+      "pair": 61
+    },
+    {
+      "choice": "B",
+      "pair": 62
+    },
+    {
+      "choice": "A",
+      "pair": 63
+    },
+    {
+      "choice": "tie",
+      "pair": 64
+    },
+    {
+      "choice": "B",
+      "pair": 65
+    },
+    {
+      "choice": "A",
+      "pair": 66
+    },
+    {
+      "choice": "tie",
+      "pair": 67
+    },
+    {
+      "choice": "B",
+      "pair": 68
+    },
+    {
+      "choice": "tie",
+      "pair": 69
+    },
+    {
+      "choice": "A",
+      "pair": 70
+    },
+    {
+      "choice": "B",
+      "pair": 71
+    }
+  ],
+  "label": "2026-10-29-revision2",
+  "seed": 107,
+  "status": "completed_by_human"
+}

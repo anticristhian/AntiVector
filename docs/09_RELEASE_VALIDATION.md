@@ -51,8 +51,10 @@ cargo run -p av-bench --release -- score-visual 2026-10-29-revision2 bench-out/v
 cargo run -p av-bench --release -- rnf --opaque-canvas --circular-loops --label f9-revision2-rnf
 ```
 
-A página revision2 já existe, com 72 pares pendentes; não regenerar. Seu score
-humano ainda não foi medido. Resultados numéricos do candidato:22/25 (88%) no
+A página revision2 já existe e foi avaliada; não regenerar. Score humano:
+43vitórias/16empates/13derrotas,59/72=81,944444%,aprovado. Par7 transcrito
+como empate por escolha explícita do usuário;original parcial e proveniência
+preservados em quality/f9/human-2026-10-29-revision2/. Resultados numéricos:22/25 (88%) no
 gate de logos/ilustrações;Hausdorff médio0,421196691556px,corner recall
 0,988095238095,18/20 synthetic (90%),zero gaps. Evidências em
 `corpus/baselines/quality/f9/revision2/`. A tabela inicial descreve o produto
@@ -67,13 +69,16 @@ anterior; o estado deste candidato é:
 | Instaladores |MSI5.107.712bytes,DMG4.772.847bytes,AppImage11.291.128bytes;hashes ZIP/arquivo conferidos e smokeLinux aprovado |
 | Fuzz combinado |ASAN75.053execuções/3.601s,exit0,sem crash/panic;robustness/f9/revision2 |
 | RNF01–03 combinado |Logo371,8948ms/67.887.104bytes;ilustração1.397,4143ms/235.745.280bytes;5processos novos,8workers,aprovado |
-| QA nativa da correção |Interrompida pelo usuário comEsc;teste de IPC/paths aprovado,sem nova medição UI4MP |
-| Preferência humana≥80% |Avaliação revision2 adiada pelo usuário;72pares pendentes |
+| QA nativa da correção |Após worker de bitmap:abertura/revetorização4MP com0longtasks≥50ms,drawmáximo0,4ms;primeira ocorrência60ms preservada |
+| Preferência humana≥80% |APROVADO:43vitórias/16empates/13derrotas,59/72=81,944444%;score/proveniência preservados |
 
-No produto,ligar explicitamente `experimental.opaque_canvas_overlap` e
-`experimental.circular_loops` em params.json;projetos preservam ambos. Padrões
-continuam false até os gates e nova decisão documentada. Não preencher votos
-pelo implementador nem reutilizar votos do produto anterior para esta saída.
+ADR-018 adota `experimental.opaque_canvas_overlap` e
+`experimental.circular_loops` como true nas novas configurações,presets e
+composição SVG;false explícito mantém o controle anterior. Campos ausentes em
+objetos experimental antigos desserializam false,preservando projetos.
+Novo run sem flags produziu72SVGs byte-idênticos aos avaliados;prova em
+quality/f9/adoption/default-identity.json. Não preencher votos pelo implementador.
+CI desta promoção ainda precisa concluir;runbe26f37 descreve o candidato anterior.
 
 Controle na mesma sessão,com ambos flags desligados:logo353,3196ms e
 ilustração1.532,2126ms. Variações do candidato+5,2573%/−8,7976%,abaixo do

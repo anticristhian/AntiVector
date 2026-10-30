@@ -40,7 +40,10 @@ fn fixture(name: &str) -> (RgbaImage, RegionMap, BoundaryGraph, Palette, Params)
 #[test]
 fn circle_square_star_and_fixed_junctions() {
     for (name, count) in [("square_rot30", 4), ("star5", 10), ("circle_r50", 8)] {
-        let (_, map, graph, palette, params) = fixture(name);
+        let (_, map, graph, palette, mut params) = fixture(name);
+        // Retain the legacy seam contract; the adopted circular exception and
+        // exact real junctions are tested separately in circular_loops.rs.
+        params.experimental.circular_loops = false;
         let edges =
             av_core::stages::fit_edges(&graph, &params, false, &Control::default()).unwrap();
         let lengths: Vec<_> = graph

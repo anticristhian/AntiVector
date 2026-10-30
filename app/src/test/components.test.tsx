@@ -1,5 +1,5 @@
 import { beforeEach, expect, it, vi } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import AppShell from '../AppShell';
 import { Controls } from '../components/Controls';
 import { ExportDialog } from '../components/ExportDialog';
@@ -10,6 +10,20 @@ import { bridge } from '../ipc/bridge';
 import { opened, frame } from './fixtures';
 import { usePreferences } from '../i18n';
 beforeEach(() => { useAppStore.setState(useAppStore.getInitialState(), true); usePreferences.setState({ language: 'pt-BR', theme: 'light' }); });
+it('uses the worker bitmap and closes resources, including a late result after unmount', () => {
+  useAppStore.setState({ image: opened, params: opened.params, doc: frame, completed: frame, phase: 'ready' });
+  const view = render(<CanvasStage />);
+  type BitmapWorker = { onmessage: (event: { data: ImageBitmap }) => void; postMessage: ReturnType<typeof vi.fn>; terminate: ReturnType<typeof vi.fn> };
+  const workers = (Worker as unknown as { instances: BitmapWorker[] }).instances;
+  const worker = workers[workers.length - 1];
+  expect(worker.postMessage).toHaveBeenCalledWith(opened.original_png_b64);
+  const bitmap = { close: vi.fn() } as unknown as ImageBitmap;
+  act(() => worker.onmessage({ data: bitmap }));
+  expect(document.querySelector('canvas')!.getContext('2d')!.drawImage).toHaveBeenCalledWith(bitmap, 0, 0, opened.w, opened.h);
+  view.unmount(); expect(worker.terminate).toHaveBeenCalledOnce(); expect(bitmap.close).toHaveBeenCalledOnce();
+  const late = { close: vi.fn() } as unknown as ImageBitmap;
+  act(() => worker.onmessage({ data: late })); expect(late.close).toHaveBeenCalledOnce();
+});
 it('switches language and theme without replacing the active document', () => {
   useAppStore.setState({ image: opened, params: opened.params, doc: frame, completed: frame, phase: 'ready' });
   render(<AppShell />);

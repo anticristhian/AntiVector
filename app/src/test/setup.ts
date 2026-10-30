@@ -8,6 +8,14 @@ vi.stubGlobal('matchMedia', vi.fn(() => ({ matches: false, addEventListener: vi.
 class PathStub { constructor(public data?: string) {} }
 vi.stubGlobal('Path2D', PathStub);
 vi.stubGlobal('createImageBitmap', vi.fn(async () => ({ width: 128, height: 128, close: vi.fn() })));
+class WorkerStub {
+  static instances: WorkerStub[] = [];
+  onmessage: ((event: { data: ImageBitmap }) => void) | null = null;
+  onerror: (() => void) | null = null;
+  postMessage = vi.fn(); terminate = vi.fn();
+  constructor() { WorkerStub.instances.push(this); }
+}
+vi.stubGlobal('Worker', WorkerStub);
 Object.defineProperty(HTMLImageElement.prototype, 'decode', { value: vi.fn(async () => {}) });
 vi.stubGlobal('PointerEvent', MouseEvent);
 const context = { setTransform: vi.fn(), clearRect: vi.fn(), save: vi.fn(), restore: vi.fn(), translate: vi.fn(), scale: vi.fn(), drawImage: vi.fn(), beginPath: vi.fn(), rect: vi.fn(), clip: vi.fn(), stroke: vi.fn(), fill: vi.fn(), fillRect: vi.fn(), arc: vi.fn(), isPointInPath: vi.fn(() => false), fillStyle: '', strokeStyle: '', lineWidth: 1, imageSmoothingEnabled: true };

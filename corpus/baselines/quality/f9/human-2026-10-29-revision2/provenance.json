@@ -1,0 +1,14 @@
+{
+  "label": "2026-10-29-revision2",
+  "seed": 107,
+  "original_partial_sha256": "5a4594355c536346ff3e9f9e462a6e78f61c64a1c7da1565f2c22b70b4a79644",
+  "completed_answers_sha256": "ee6379801d411b3359219d384b5f84288d632284a1c434963ab8106ce7c8e71c",
+  "transcription": {
+    "pair": 7,
+    "previous_choice": null,
+    "choice": "tie",
+    "authority": "Explicit human message: Deu empate, pode seguir assim",
+    "other_choices_changed": false
+  },
+  "note": "Original partial file preserved byte-for-byte. Final JSON reserialized after transcribing the human's missing choice; no vote selected by the implementer."
+}

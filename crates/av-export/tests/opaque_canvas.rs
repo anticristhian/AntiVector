@@ -50,7 +50,10 @@ fn diagonal() -> VectorDoc {
 fn opaque_shared_diagonal_keeps_geometry_colors_and_ids_without_aa_transparency() {
     let doc = diagonal();
     let saved = doc.clone();
-    let before_options = SvgOptions::default();
+    let before_options = SvgOptions {
+        opaque_canvas: false,
+        ..SvgOptions::default()
+    };
     let options = SvgOptions {
         opaque_canvas: true,
         ..before_options

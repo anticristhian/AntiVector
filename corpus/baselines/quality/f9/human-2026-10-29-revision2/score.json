@@ -1,0 +1,13 @@
+{
+  "candidate": "f9-circles-candidate",
+  "label": "2026-10-29-revision2",
+  "losses": 13,
+  "pairs": 72,
+  "passed": true,
+  "preferred_or_tied_fraction": 0.8194444444444444,
+  "required_fraction": 0.8,
+  "seed": 107,
+  "status": "completed_by_human",
+  "ties": 16,
+  "wins": 43
+}

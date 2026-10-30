@@ -34,14 +34,14 @@ fn cache_dependencies_match_the_pure_pipeline_and_recover_from_cancellation() {
         &session.vectorize(&p, &Control::default()).unwrap()
     ));
     assert_eq!(session.counters().unwrap().executions, before);
-    p.experimental.opaque_canvas_overlap = true;
+    p.experimental.opaque_canvas_overlap = false;
     assert!(Arc::ptr_eq(
         &first,
         &session.vectorize(&p, &Control::default()).unwrap()
     ));
     assert_eq!(session.counters().unwrap().executions, before);
     assert!(
-        session
+        !session
             .revision()
             .unwrap()
             .unwrap()
@@ -49,7 +49,7 @@ fn cache_dependencies_match_the_pure_pipeline_and_recover_from_cancellation() {
             .experimental
             .opaque_canvas_overlap
     );
-    p.experimental.opaque_canvas_overlap = false;
+    p.experimental.opaque_canvas_overlap = true;
     session.vectorize(&p, &Control::default()).unwrap();
     assert_eq!(session.counters().unwrap().executions, before);
     p.smoothness = 0.7;
@@ -158,6 +158,7 @@ fn circular_option_invalidates_only_fitting_and_undo_restores_the_exact_document
         min_region_area: 4,
         ..Params::default()
     };
+    p.experimental.circular_loops = false;
     let before = session.vectorize(&p, &Control::default()).unwrap();
     let counters = session.counters().unwrap().executions;
     p.experimental.circular_loops = true;

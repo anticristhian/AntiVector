@@ -1,0 +1,29 @@
+$ eslint . --max-warnings 0 && tsc --noEmit
+$ node scripts/run-tests.mjs
+
+ RUN  v4.1.12 C:/Users/csgaz/OneDrive/Documentos/ChatGPT/AntiVector/app
+
+
+ Test Files  2 passed (2)
+      Tests  18 passed (18)
+   Start at  23:52:16
+   Duration  7.12s (transform 359ms, setup 1.68s, import 423ms, tests 499ms, environment 3.77s)
+
+$ tauri "build" "--debug" "--no-bundle" "--ci"
+        Info Looking up installed tauri packages to check mismatched versions...
+     Running beforeBuildCommand `pnpm build`
+$ tsc && vite build
+vite v8.3.5 building client environment for production...
+transforming...
+✓ 35 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/assets/bitmap.worker-CHCqPelN.js    0.23 kB
+dist/index.html                          0.48 kB │ gzip:  0.31 kB
+dist/assets/index-BdHNJA_u.css          16.38 kB │ gzip:  4.52 kB
+dist/assets/index-C2CZAFSk.js          199.65 kB │ gzip: 62.73 kB
+
+✓ built in 163ms
+   Compiling av-desktop v0.1.0 (C:\Users\csgaz\OneDrive\Documentos\ChatGPT\AntiVector\app\src-tauri)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 14.17s
+       Built application at: C:\Users\csgaz\OneDrive\Documentos\ChatGPT\AntiVector\target\debug\av-desktop.exe

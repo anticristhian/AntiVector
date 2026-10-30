@@ -49,14 +49,14 @@ pub enum PixelArtStrategy {
     ScaleCorners,
 }
 
-/// Explicit opt-ins for experiments; defaults preserve the documented algorithm.
+/// Versioned algorithm switches; validated defaults are documented by ADR.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ExperimentalParams {
     /// Fit circular isolated loops, allowing only their artificial seam to move.
     #[serde(default)]
     pub circular_loops: bool,
-    /// Opt-in exporter composition experiment; leaves all engine stages unchanged.
+    /// Proven opaque-canvas composition; leaves all engine stages unchanged.
     #[serde(default)]
     pub opaque_canvas_overlap: bool,
     #[serde(default)]
@@ -87,8 +87,8 @@ fn default_corner_radius() -> f64 {
 impl Default for ExperimentalParams {
     fn default() -> Self {
         Self {
-            circular_loops: false,
-            opaque_canvas_overlap: false,
+            circular_loops: true,
+            opaque_canvas_overlap: true,
             quality_v5: true,
             denoise_kind: DenoiseKind::Bilateral,
             force_pixel_art: false,
@@ -347,6 +347,26 @@ mod tests {
         assert_eq!(
             resolve_defaults(Mode::Illustration, &detection).min_region_area,
             2
+        );
+    }
+
+    #[test]
+    fn validated_defaults_preserve_explicit_and_legacy_project_switches() {
+        for name in ["logo", "illustration", "photo", "lineart", "pixelart"] {
+            let p = Params::preset(name).unwrap();
+            assert!(p.experimental.circular_loops, "{name}");
+            assert!(p.experimental.opaque_canvas_overlap, "{name}");
+        }
+        let mut legacy = serde_json::to_value(Params::default()).unwrap();
+        let switches = legacy["experimental"].as_object_mut().unwrap();
+        switches.remove("circular_loops");
+        switches.remove("opaque_canvas_overlap");
+        let restored = Params::from_json(&legacy.to_string()).unwrap();
+        assert!(!restored.experimental.circular_loops);
+        assert!(!restored.experimental.opaque_canvas_overlap);
+        assert_eq!(
+            Params::from_json(&serde_json::to_string(&restored).unwrap()).unwrap(),
+            restored
         );
     }
 }

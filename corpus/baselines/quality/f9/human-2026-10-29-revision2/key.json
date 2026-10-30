@@ -1,0 +1,434 @@
+[
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "illustration_camera",
+    "pair": 0
+  },
+  {
+    "A": "f9-circles-candidate",
+    "B": "f9-reference",
+    "image": "logo_bridge",
+    "pair": 1
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "photo_astronaut",
+    "pair": 2
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "logo_original_4",
+    "pair": 3
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "illustration_landscape",
+    "pair": 4
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "illustration_fish",
+    "pair": 5
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "lineart_house",
+    "pair": 6
+  },
+  {
+    "A": "f9-circles-candidate",
+    "B": "f9-reference",
+    "image": "logo_interlock",
+    "pair": 7
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "illustration_tree",
+    "pair": 8
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "nested_squares",
+    "pair": 9
+  },
+  {
+    "A": "f9-circles-candidate",
+    "B": "f9-reference",
+    "image": "circle_noaa",
+    "pair": 10
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "multicolor_logo",
+    "pair": 11
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "ring",
+    "pair": 12
+  },
+  {
+    "A": "f9-circles-candidate",
+    "B": "f9-reference",
+    "image": "logo_compass",
+    "pair": 13
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "line_2px",
+    "pair": 14
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "photo_camera",
+    "pair": 15
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "junction_t",
+    "pair": 16
+  },
+  {
+    "A": "f9-circles-candidate",
+    "B": "f9-reference",
+    "image": "star5",
+    "pair": 17
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "line_1px",
+    "pair": 18
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "logo_leaf",
+    "pair": 19
+  },
+  {
+    "A": "f9-circles-candidate",
+    "B": "f9-reference",
+    "image": "logo_waves",
+    "pair": 20
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "edge_uniform",
+    "pair": 21
+  },
+  {
+    "A": "f9-circles-candidate",
+    "B": "f9-reference",
+    "image": "logo_original_1",
+    "pair": 22
+  },
+  {
+    "A": "f9-circles-candidate",
+    "B": "f9-reference",
+    "image": "lineart_circuit",
+    "pair": 23
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "illustration_sailboat",
+    "pair": 24
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "jpeg_q60",
+    "pair": 25
+  },
+  {
+    "A": "f9-circles-candidate",
+    "B": "f9-reference",
+    "image": "square_rot30",
+    "pair": 26
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "logo_original_3",
+    "pair": 27
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "circle_r50",
+    "pair": 28
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "logo_original_2",
+    "pair": 29
+  },
+  {
+    "A": "f9-circles-candidate",
+    "B": "f9-reference",
+    "image": "illustration_cup",
+    "pair": 30
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "edge_1xn",
+    "pair": 31
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "logo_mountain",
+    "pair": 32
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "concentric",
+    "pair": 33
+  },
+  {
+    "A": "f9-circles-candidate",
+    "B": "f9-reference",
+    "image": "text_path",
+    "pair": 34
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "logo_orbit",
+    "pair": 35
+  },
+  {
+    "A": "f9-circles-candidate",
+    "B": "f9-reference",
+    "image": "photo_brick",
+    "pair": 36
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "lineart_flower",
+    "pair": 37
+  },
+  {
+    "A": "f9-circles-candidate",
+    "B": "f9-reference",
+    "image": "logo_original_5",
+    "pair": 38
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "illustration_rocket",
+    "pair": 39
+  },
+  {
+    "A": "f9-circles-candidate",
+    "B": "f9-reference",
+    "image": "pixel_flower",
+    "pair": 40
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "ellipse",
+    "pair": 41
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "edge_1x1",
+    "pair": 42
+  },
+  {
+    "A": "f9-circles-candidate",
+    "B": "f9-reference",
+    "image": "photo_coffee",
+    "pair": 43
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "lineart_signature",
+    "pair": 44
+  },
+  {
+    "A": "f9-circles-candidate",
+    "B": "f9-reference",
+    "image": "photo_chelsea",
+    "pair": 45
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "rounded_rectangle",
+    "pair": 46
+  },
+  {
+    "A": "f9-circles-candidate",
+    "B": "f9-reference",
+    "image": "lineart_bicycle",
+    "pair": 47
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "lineart_portrait",
+    "pair": 48
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "checker",
+    "pair": 49
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "edge_64mp",
+    "pair": 50
+  },
+  {
+    "A": "f9-circles-candidate",
+    "B": "f9-reference",
+    "image": "logo_hexagon",
+    "pair": 51
+  },
+  {
+    "A": "f9-circles-candidate",
+    "B": "f9-reference",
+    "image": "pixel_avatar",
+    "pair": 52
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "bezier_leaf",
+    "pair": 53
+  },
+  {
+    "A": "f9-circles-candidate",
+    "B": "f9-reference",
+    "image": "triangles",
+    "pair": 54
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "diagonal_touch",
+    "pair": 55
+  },
+  {
+    "A": "f9-circles-candidate",
+    "B": "f9-reference",
+    "image": "junction_y",
+    "pair": 56
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "lineart_maze",
+    "pair": 57
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "logo_ribbon",
+    "pair": 58
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "pixel_checker",
+    "pair": 59
+  },
+  {
+    "A": "f9-circles-candidate",
+    "B": "f9-reference",
+    "image": "edge_transparent",
+    "pair": 60
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "edge_animated",
+    "pair": 61
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "lineart_book",
+    "pair": 62
+  },
+  {
+    "A": "f9-circles-candidate",
+    "B": "f9-reference",
+    "image": "illustration_robot",
+    "pair": 63
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "pixel_robot",
+    "pair": 64
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "illustration_plant",
+    "pair": 65
+  },
+  {
+    "A": "f9-circles-candidate",
+    "B": "f9-reference",
+    "image": "lineart_music",
+    "pair": 66
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "edge_png16",
+    "pair": 67
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "lineart_cloud",
+    "pair": 68
+  },
+  {
+    "A": "f9-circles-candidate",
+    "B": "f9-reference",
+    "image": "pixel_sword",
+    "pair": 69
+  },
+  {
+    "A": "f9-circles-candidate",
+    "B": "f9-reference",
+    "image": "illustration_envelope",
+    "pair": 70
+  },
+  {
+    "A": "f9-reference",
+    "B": "f9-circles-candidate",
+    "image": "logo_diamond",
+    "pair": 71
+  }
+]

@@ -11,10 +11,10 @@ use std::fmt::Write;
 #[derive(Clone, Copy, Debug)]
 pub struct SvgOptions {
     pub overlap: bool,
-    /// Experimental: extend the first paint to the frame only when the shared
+    /// Extend the first paint to the frame only when the shared
     /// topology proves a fully opaque partition. Exact mode never uses it.
     pub opaque_canvas: bool,
-    /// Decimal places, 0..=8. Two preserves the validated F5 default bytes.
+    /// Decimal places, 0..=8. Two is the corpus-validated default.
     pub precision: u8,
     /// Merge paths by RGB. Uses exact holes; overlap and grouping are exclusive.
     pub group_by_color: bool,
@@ -24,7 +24,7 @@ impl Default for SvgOptions {
     fn default() -> Self {
         Self {
             overlap: true,
-            opaque_canvas: false,
+            opaque_canvas: true,
             precision: 2,
             group_by_color: false,
         }

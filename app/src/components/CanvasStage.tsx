@@ -75,10 +75,14 @@ export function CanvasStage() {
     return () => { window.removeEventListener('keydown', down); window.removeEventListener('keyup', up); window.removeEventListener('blur', blur); }; }, []);
   const dragging = useRef<{ x: number; y: number; pan: [number, number] } | null>(null);
   useEffect(() => { if (!image) return; let disposed = false; let resource: ImageBitmap | undefined;
-    const source = new Image(); source.src = `data:image/png;base64,${image.original_png_b64}`;
-    void source.decode().then(() => createImageBitmap(source)).then(value => {
-      resource = value; if (disposed) value.close(); else setBitmap({ session: image.session_id, image: value });
-    }).catch(() => { if (!disposed) setBitmap(null); }); return () => { disposed = true; resource?.close(); }; }, [image]);
+    const worker = new Worker(new URL('../state/bitmap.worker.ts', import.meta.url), { type: 'module' });
+    worker.onmessage = (event: MessageEvent<ImageBitmap | { error: true }>) => {
+      if ('error' in event.data) { if (!disposed) setBitmap(null); return; }
+      resource = event.data; if (disposed) resource.close(); else setBitmap({ session: image.session_id, image: resource });
+    };
+    worker.onerror = () => { if (!disposed) setBitmap(null); };
+    worker.postMessage(image.original_png_b64);
+    return () => { disposed = true; worker.terminate(); resource?.close(); }; }, [image]);
   const paneWidth = view === 'side' ? (size.width - 16) / 2 : size.width;
   const paneHeight = Math.max(120, size.height - 50);
   const fit = image ? Math.min((paneWidth - 40) / image.w, (paneHeight - 40) / image.h) : 1;

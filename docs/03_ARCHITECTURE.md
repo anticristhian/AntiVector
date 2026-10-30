@@ -222,6 +222,7 @@ Cada estágio tem testes unitários com imagens sintéticas geradas no próprio 
 | ADR-015 | AppImage com WebView do SO e bootstrap independente auditável | DEFINITIVO, tamanho/ldd/smoke/fontes verificados em F9 |
 | ADR-016 | Composição opaca com prova topológica de cobertura do quadro | EXPERIMENTO F9, A/B completo antes de ativar o padrão |
 | ADR-017 | Ajuste circular de laços isolados, sem mover junções reais | EXPERIMENTO F9, opt-in e sujeito aos gates completos |
+| ADR-018 | Adotar composição opaca e laços circulares validados como padrões | DEFINITIVO, sucede o status experimental de ADR-016/017 |
 
 Novos ADRs: acrescentar linha + seção abaixo com contexto, decisão, evidência, consequências.
 
@@ -542,3 +543,42 @@ transparência,gates completos de regressão/geometria/nós,determinismo,fuzz e 
 Comparar todo o corpus e controles vencedores,não só os casos perdedores. Nova
 avaliação cega continua obrigatória. Só dados positivos permitem considerar
 mudança futura de padrão;nenhum critério de aceite é alterado.
+
+### ADR-018 — Adoção dos padrões validados na segunda avaliação (2026-10-29)
+
+Contexto: o produto anterior obteve44/72 preferências/empates (61,11%). A
+composição AA e as emendas circulares foram corrigidas atrás dos flags de
+ADR-016/017 e avaliadas sem substituir os votos anteriores.
+
+Decisão [DEFINITIVO]: novos Params/presets passam a habilitar
+`experimental.opaque_canvas_overlap` e `experimental.circular_loops`;
+SvgOptions habilita opaque_canvas por padrão. Mantêm-se os nomes dos campos
+para compatibilidade. false explícito continua disponível. Ao desserializar
+um objeto experimental antigo, campos ausentes conservam false;projetos
+anteriores não são migrados silenciosamente. O preset pixelart também declara
+os flags,mas o ajuste circular mantém sua guarda de pixel-art.
+
+Evidência: segunda avaliação cega completada pelo humano,43vitórias/16empates/
+13derrotas,59/72=81,944444%,acima80%. Par7 foi transcrito como empate por
+instrução explícita do usuário;JSON original e proveniência preservados. Gates
+completos:72sem gaps,22/25logos/ilustrações,18/20synthetic,Hausdorff médio
+0,421196691556px,cantos0,988095238095. CIbe26f37 verde nos3SO;75testes Rust/SO,
+17Vitest,fuzzASAN75.053execuções/3.601s sem crash. RNF371,8948ms/1.397,4143ms,
+picos67.887.104/235.745.280bytes;comparação local com flags desligados dentro15%.
+
+QA nativa do candidato4MP/32cores:original/vetor/contorno corretos. Uma primeira
+rodada registrou60ms e foi preservada;duas repetições instrumentadas registraram
+zero longtasks,sem estabelecer causa para o primeiro valor. A preparação do
+bitmap PNG foi movida para worker com transferência de ImageBitmap e descarte
+de recursos;teste de ciclo de vida e resultado tardio acrescentado. Após essa
+mudança:abertura4MP e nova vetorização tiveram zero longtasks≥50ms e desenho
+máximo0,4ms,frontendproduction/Rustdebug. Não atribuir causalidade comprovada ao
+primeiro60ms nem usar o tempo debug como RNF release.
+
+Impacto: apenas defaults e preparação de imagem da UI;regras geométricas,
+limites de resíduos,guardas de transparência,modo exato,arestas compartilhadas
+e formato de projeto permanecem. A exceção de posição abrange somente costura
+artificial de self-loop isolado;nenhuma junção real pode mover. Exportações
+novas podem mudar seus bytes. Verificar novamente os defaults,compatibilidade
+e gates após essa promoção. Resultados humanos e algoritmos avaliados não são
+reescritos nem os limiares relaxados.

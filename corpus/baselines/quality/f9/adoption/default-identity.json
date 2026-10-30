@@ -1,0 +1,368 @@
+{
+  "evaluated": "f9-circles-candidate",
+  "default": "f9-adopted-defaults",
+  "identical": true,
+  "count": 72,
+  "rows": [
+    {
+      "id": "bezier_leaf",
+      "identical": true,
+      "sha256": "d0e00e34a5f30c6dc1e7b2a8d203b7284b2b090148aad38af80d7540a4bde297"
+    },
+    {
+      "id": "checker",
+      "identical": true,
+      "sha256": "fdd9bce30394fe328d13c580eb3a865957bfa05d2282f98a3beed7fc93a94dea"
+    },
+    {
+      "id": "circle_noaa",
+      "identical": true,
+      "sha256": "727cb753699ee3b023ee00da41aaccfb3ae37ddb9adcce52cc770b6ec0795330"
+    },
+    {
+      "id": "circle_r50",
+      "identical": true,
+      "sha256": "ee0aa8fcac20cba27cbe328029a5e75f4a5bdfb30de8c2f0d0f2330214b86d3b"
+    },
+    {
+      "id": "concentric",
+      "identical": true,
+      "sha256": "29d9a308767bb61c972cb50dc243e326f6927ab69ae338e0958f7d35860cef9d"
+    },
+    {
+      "id": "diagonal_touch",
+      "identical": true,
+      "sha256": "674df657dfef2211bcb8ab350f0a04d264b6856875645c9cb73b2ecb2362c580"
+    },
+    {
+      "id": "edge_1x1",
+      "identical": true,
+      "sha256": "8927d8d3569442c1d0fc1c28858c60127d7ba8f2bc4c28eb0b6fcd65b9e0d574"
+    },
+    {
+      "id": "edge_1xn",
+      "identical": true,
+      "sha256": "473e5c97fd5a041b39b1df16f32a3797c59ebe88a7706b5efe1234d82e178d11"
+    },
+    {
+      "id": "edge_64mp",
+      "identical": true,
+      "sha256": "45296177a8b8ac9427d21f8f8a23c97702647c89274de612e8cb260fa885ce9a"
+    },
+    {
+      "id": "edge_animated",
+      "identical": true,
+      "sha256": "345a0d51b7cf337c6293eed8b7551f112603f5b817b142c911337c645dabf97b"
+    },
+    {
+      "id": "edge_png16",
+      "identical": true,
+      "sha256": "06eca54aa3761cbf71a64f8ca915f7c39add432d48f30e15686f5024aa3e7a97"
+    },
+    {
+      "id": "edge_transparent",
+      "identical": true,
+      "sha256": "bcc8379eb49c7ec678c439b1e8616e3b80efbf2ef7130d7d7e11a31a6c817c15"
+    },
+    {
+      "id": "edge_uniform",
+      "identical": true,
+      "sha256": "5eef6e28d6e5fbd0c8be4ce7226179b6a1c9a0f451277d3a96210d6e723d530f"
+    },
+    {
+      "id": "ellipse",
+      "identical": true,
+      "sha256": "dcae3b90febb93d3dbd78e01cbd1a7de082344d12e8dee8d71cea5eb91ffd8ff"
+    },
+    {
+      "id": "illustration_camera",
+      "identical": true,
+      "sha256": "56fbf836fd00498abeaf0a7cdae8177c9e1e8042689606182a0942fa5485bf5c"
+    },
+    {
+      "id": "illustration_cup",
+      "identical": true,
+      "sha256": "666a3d04456482d566c0ba478f35bc4df4d216c31104d8c0290caaa26be2b819"
+    },
+    {
+      "id": "illustration_envelope",
+      "identical": true,
+      "sha256": "5351d826f7865fd3976cb41b464a92c16a8f753455a3c2e3e6d837f226c65705"
+    },
+    {
+      "id": "illustration_fish",
+      "identical": true,
+      "sha256": "f53f51a2bc41fa94dd9134b29985366813c83ba5bf87923d0849a48124282c91"
+    },
+    {
+      "id": "illustration_landscape",
+      "identical": true,
+      "sha256": "77cb4dab31272b05716d1a840014cca9c70b10a63f3fd2b6fdb7d6578ce59fc0"
+    },
+    {
+      "id": "illustration_plant",
+      "identical": true,
+      "sha256": "656ce8a9974cc7bb158d412713a8b11fbbfba17a59513c365bd5b9fc53022512"
+    },
+    {
+      "id": "illustration_robot",
+      "identical": true,
+      "sha256": "63f69137a62c7f191417840c7e186194520e03114914e19661cde02ed56da9c8"
+    },
+    {
+      "id": "illustration_rocket",
+      "identical": true,
+      "sha256": "e29f0bd5562703769c652fe96b9755020f8258c7691f087687c723192f25bebc"
+    },
+    {
+      "id": "illustration_sailboat",
+      "identical": true,
+      "sha256": "cc30220cd2051cf540811d366aa2c464a8132a02db5463306bd4d7ddf6e77376"
+    },
+    {
+      "id": "illustration_tree",
+      "identical": true,
+      "sha256": "5ebbd74ede01d0862b47b3fed608bbe4b7bf51f1c443af5ce96ac6f79b066239"
+    },
+    {
+      "id": "jpeg_q60",
+      "identical": true,
+      "sha256": "a8b025b9e20f912ac883fb8826e2c39ca8d0a4ebb2c5418c334a062525ee08de"
+    },
+    {
+      "id": "junction_t",
+      "identical": true,
+      "sha256": "561c0195a573828ed1336bdde04ed66a0239f916d3d99b0045d24e90c02af2b4"
+    },
+    {
+      "id": "junction_y",
+      "identical": true,
+      "sha256": "8ac39291182598ac2bb6662094f98c7eb0f0b6a57a152274bbcf2e68376cd7a5"
+    },
+    {
+      "id": "line_1px",
+      "identical": true,
+      "sha256": "8c86b695a05d99ca11f4a2174fb16790bc51f117022cdcd1bb7fc578882602e6"
+    },
+    {
+      "id": "line_2px",
+      "identical": true,
+      "sha256": "f775cae3e7390a4d055a26a3e55d86139b854baebbd81bb8238ac6e918780fc5"
+    },
+    {
+      "id": "lineart_bicycle",
+      "identical": true,
+      "sha256": "9d0de59154cf71a1c0841e90ea56532fdc61e76681262ed8e6acfa1336066033"
+    },
+    {
+      "id": "lineart_book",
+      "identical": true,
+      "sha256": "2e71231715b2aded8a0e0c1e69d7edad99fa030dce8569216822a28b268d0126"
+    },
+    {
+      "id": "lineart_circuit",
+      "identical": true,
+      "sha256": "699a60a402ce94e7a3e1489e92fbb464942d13b1f795634d3e2b380c733d0249"
+    },
+    {
+      "id": "lineart_cloud",
+      "identical": true,
+      "sha256": "009d7bb8ef38a744428bc2c8b14b718b6a2f80d00ca41223ba6ca5cc9f951c32"
+    },
+    {
+      "id": "lineart_flower",
+      "identical": true,
+      "sha256": "26295bf508007fbfa7e296c10f9079e5172884b8a272bd979c38780a64571af2"
+    },
+    {
+      "id": "lineart_house",
+      "identical": true,
+      "sha256": "3c4132385eedf7545e3998aaef140db6a80e8c61f9de29d59b43d00ed62b1adc"
+    },
+    {
+      "id": "lineart_maze",
+      "identical": true,
+      "sha256": "c2fd3f2fc89c2b37c9e715978d26d7a89b59d15d4814d420f29bf020e5d362f2"
+    },
+    {
+      "id": "lineart_music",
+      "identical": true,
+      "sha256": "afa9749fc63c8c7c25a50558ea61b53e5563be8e9ecac748c1865216e3fbe1c6"
+    },
+    {
+      "id": "lineart_portrait",
+      "identical": true,
+      "sha256": "3bf29ef979af31d52858ce4f69702eb110cf285f8fbc0d9ac65448ca7c93151c"
+    },
+    {
+      "id": "lineart_signature",
+      "identical": true,
+      "sha256": "6c470376cb06994a891a3922904c454c68733ee999b918a60eea49cc888f8410"
+    },
+    {
+      "id": "logo_bridge",
+      "identical": true,
+      "sha256": "473c0f2709349079b466b27b51b63f443268857a6c09f11116cbb025a71491a2"
+    },
+    {
+      "id": "logo_compass",
+      "identical": true,
+      "sha256": "aceb6d237dc42047908dedb6e342916955505043fdf7aaf15f42c1fd6d0e331f"
+    },
+    {
+      "id": "logo_diamond",
+      "identical": true,
+      "sha256": "a87719888a9b7662bdb69ed393604601a60aa9dae17f364ce1a38ad9235b33db"
+    },
+    {
+      "id": "logo_hexagon",
+      "identical": true,
+      "sha256": "7e0dd30d712f00f340fe359a2ffcf56e8dcc1bd0ca09d162ec898ad18e1f9e1e"
+    },
+    {
+      "id": "logo_interlock",
+      "identical": true,
+      "sha256": "2f90cf4cb92cf27479ed7da4f041889c873204da0342cb4491ef367a9bd9645b"
+    },
+    {
+      "id": "logo_leaf",
+      "identical": true,
+      "sha256": "6f79e45c15c5c18362e909bfecd4d5a839b31bef40b6907ed83036dbe4379248"
+    },
+    {
+      "id": "logo_mountain",
+      "identical": true,
+      "sha256": "f22da1d66abf76666b04d173ae60aebbeff4d55daf72bcc74816cb4b79ffe8f8"
+    },
+    {
+      "id": "logo_orbit",
+      "identical": true,
+      "sha256": "5406962072af5cc5f2f4f5eb58a0f37b99fd7625d3010f4b4ace770b09e31610"
+    },
+    {
+      "id": "logo_original_1",
+      "identical": true,
+      "sha256": "84e79ceaa3b0fde7aa8dce1aa13ea04f47b035308f5643e5abc93781d2d7e88e"
+    },
+    {
+      "id": "logo_original_2",
+      "identical": true,
+      "sha256": "478d3d9b40172df9b9be5c97fa5b2f50fe6231543220514ee54ae6132c2e4fef"
+    },
+    {
+      "id": "logo_original_3",
+      "identical": true,
+      "sha256": "7604750c0363aed8484b63f533868a025fd8518c2bc1ffe377f05863376a14d2"
+    },
+    {
+      "id": "logo_original_4",
+      "identical": true,
+      "sha256": "ffed379550978ad6f6ef5b94e0ad7e9f0a2b55a6aca2bdf9259ab5c93b64130e"
+    },
+    {
+      "id": "logo_original_5",
+      "identical": true,
+      "sha256": "a73cc91c8c0a055652784f734c4e0d168aeaccc5c666365abc19a478064be004"
+    },
+    {
+      "id": "logo_ribbon",
+      "identical": true,
+      "sha256": "8da1bc1077c41e1c0ce23b2ca4ab676e0d78b0acd396fd55b9f5a8e1bc1956bc"
+    },
+    {
+      "id": "logo_waves",
+      "identical": true,
+      "sha256": "cca184d10a48582cfbd809dca2704cbeedcd759f316078e8773916f6725f24db"
+    },
+    {
+      "id": "multicolor_logo",
+      "identical": true,
+      "sha256": "9763159b0c31e42517daba72b459fb3b0b65c8dac25c04d9bbc29fda68babddb"
+    },
+    {
+      "id": "nested_squares",
+      "identical": true,
+      "sha256": "fe527e35d5f0babd7a928312237c6a2e1b2dd819233dceb189954d728eb0e75e"
+    },
+    {
+      "id": "photo_astronaut",
+      "identical": true,
+      "sha256": "cf8c111a5579f926152c8ba1fb70a322a906ba38ea14818b13159c83b11e3740"
+    },
+    {
+      "id": "photo_brick",
+      "identical": true,
+      "sha256": "977b722de52617fc0ace536468c5d85aeac16fb7e41c6e861f4c629d4ad61a65"
+    },
+    {
+      "id": "photo_camera",
+      "identical": true,
+      "sha256": "eb8913d4dca7190e94c07b9592e8fe080759bb1e701b681fc4b2e682e0d43d35"
+    },
+    {
+      "id": "photo_chelsea",
+      "identical": true,
+      "sha256": "2ce95ac7c40ac31e17788d11a2ee782e36b861e7166d3dc9ace94f07709add37"
+    },
+    {
+      "id": "photo_coffee",
+      "identical": true,
+      "sha256": "7fe8fb43dc1a6d5635150e8eb390d9708eaee8fe0aff87dd02d793a9bb1a0ab8"
+    },
+    {
+      "id": "pixel_avatar",
+      "identical": true,
+      "sha256": "23c5c281d2e524c6ed51ba6e296a19882f3cfb8fd96500a1499fde9157283511"
+    },
+    {
+      "id": "pixel_checker",
+      "identical": true,
+      "sha256": "3b97954fbaf8b7f6dc249147a91ee90639c1cc1e280757d25f2bb35095b91f2c"
+    },
+    {
+      "id": "pixel_flower",
+      "identical": true,
+      "sha256": "b85df98d8d47d7667a156095211e15344c401b676263af805f106e78899fdc8b"
+    },
+    {
+      "id": "pixel_robot",
+      "identical": true,
+      "sha256": "fed1172f552f372d22b82db273e876c712f078ff116f0366f489a427f8bf58a9"
+    },
+    {
+      "id": "pixel_sword",
+      "identical": true,
+      "sha256": "0b7fa8627afcb313942bcdf357461783718f5372ca3881caeaa1f08ade81dd99"
+    },
+    {
+      "id": "ring",
+      "identical": true,
+      "sha256": "51af7e4ed80aa7d6e1d5dcf6637d3256f20ac5019f0c85e571547fd77a8c1121"
+    },
+    {
+      "id": "rounded_rectangle",
+      "identical": true,
+      "sha256": "64ef7d26e2da3806f377511aec90643b31a11233e6fa7911abd7ef9c4eb5177d"
+    },
+    {
+      "id": "square_rot30",
+      "identical": true,
+      "sha256": "cce540c33bc284cbe9e85d3652720f6de1aab6a9e63b017817410b0ff13421a5"
+    },
+    {
+      "id": "star5",
+      "identical": true,
+      "sha256": "a7910fcd013f63038688e93f62340743cce5a88e4c987ce7879fa841f062e4aa"
+    },
+    {
+      "id": "text_path",
+      "identical": true,
+      "sha256": "e6786522e21a5f456f1fee494a40bb18479c739c0338e67703e318fd28ab9e35"
+    },
+    {
+      "id": "triangles",
+      "identical": true,
+      "sha256": "80b2c855c71b4774cccc7da89e6a1e560fde0992331946aa74b3b0df95cb0c54"
+    }
+  ]
+}
