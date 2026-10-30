@@ -6,9 +6,13 @@ os limites e pausar com segurança quando restarem10% ou menos, deixando um
 prompt para outro chat. Automação heartbeat ativa:
 `antivector-pausa-segura-em-10`,a cada5minutos. Consultar get_usage_limits antes
 de retomar e entre etapas;usar o menor saldo disponível entre5h e semanal.
-Última leitura:41%/15% restantes,respectivamente. Nunca confundir credits.balance
+Última leitura:29%/13% restantes,respectivamente. Nunca confundir credits.balance
 com esses saldos. Ao atingir o limiar,salvar checkpoint,prompt final e pausar a
 automação;nenhuma retomada após reset sem instrução humana.
+
+A espera do CI foi transferida ao heartbeat para reduzir o consumo deste chat.
+Não executar trabalho artificial para levar o saldo ao limiar. Se todos gates
+terminarem antes,registrar conclusão,prompt e pausar a automação imediatamente.
 
 ## Estado do projeto
 
@@ -25,8 +29,10 @@ automação;nenhuma retomada após reset sem instrução humana.
   antigos permanecem false. Os72SVGs padrão são byte-idênticos aos avaliados:
   corpus/baselines/quality/f9/adoption/default-identity.json. Não regenerar
   avaliações nem alterar votos.
-- Fonte comprometida mais recente:01475bd8d9637b45b69f7cfc188c33dcffd4cdda.
-  CI40995892476 terminou success nos5jobs,3SO,quality e CPUprofile.
+- Fonte comprometida mais recente:160e369d7951ee1aea85a29c14d341d38f249029.
+  CI final40999409607 está em andamento;quality e CPUprofile passaram,
+  3SO em testes na última consulta. CI anterior40995892476 do01475bd terminou
+  success nos5jobs,mas precede o ajuste CSS/coletor atual.
   Local:fmt/clippy/workspace76testes aprovados. Frontend19testes passaram após
   ajuste local de medição;CI01475bd cobre18testes,anterior a esse ajuste.
 - 002c6e4 introduziu defaults/worker;01475bd alinhou cinco snapshots de qualidade
@@ -60,7 +66,7 @@ automação;nenhuma retomada após reset sem instrução humana.
   mesmo método,0longtasks≥50ms,drawmáximo0,5/0,6ms. Logs ui-no-blur-first/second
   e no-blur-summary.json preservados;CSS confere com HEAD exceto pela propriedade
   removida e finais de linha. Não alegar causalidade exclusiva/pior caso universal.
-  Ajuste e diagnóstico/teste estão após01475bd;ver git diff/status e log recente.
+  Ajuste e diagnóstico/teste foram salvos no160e369;ver git diff/status e log.
 
 ## Próximos passos necessários
 

@@ -14,14 +14,20 @@ Atualizar ao fim de cada tarefa. Apenas resultados medidos.
 | F6 Export/CLI | ✅ Concluída | 2026-10-28 | 51 testes; cinco formatos nas 34 imagens; SVG idêntico à F5. CI remoto nos três SOs + quality aprovados no SHA8d89508. |
 | F7 Sessão/app | ✅ Concluída | 2026-10-29 | 57 testes Rust/8 Vitest, QA nativa4MP e Performance API aprovados; builds offline e checks Windows/Linux/macOS verdes no SHA8853d78. |
 | F8 Edição | ✅ Concluída | 2026-10-29 | 66 testes Rust/13 Vitest;128 níveis, máscaras RLE, projetos e fluxo refinado nativo aprovados;34 SVGs iguais à F7. CI remoto370fa71 verde nos três SOs e quality. |
-| F9 Otimização/release | 🚧 Candidato corrigido validado automaticamente; revisão humana pendente | 2026-10-29 | CI3SO,75testesRust/SO,17Vitest,fuzz75.053execuções/3.601s,RNF e instaladores aprovados. Nova avaliação humana adiada;QA nativa da correção pendente. |
+| F9 Otimização/release | 🚧 Gates locais e avaliação humana aprovados;CI final em acompanhamento | 2026-10-30 | Humana59/72=81,94%;76Rust/19Vitest;UI4MP sem blur passou duas aberturas. Fonte160e369 aguarda CI40999409607/instaladores. Monitor de pausa≤10% ativo. |
 
 ## Log
+
+### 2026-10-30 — F9 / Acompanhamento automático para economizar créditos
+- Usuário vai dormir e pediu pausa segura ao restarem10%,com prompt para novo chat. Automação heartbeat antivector-pausa-segura-em-10 ativa a cada5minutos,atualizada para ler HANDOFF/PROGRESS e continuar somente gates pendentes. Última leitura29%na janela5h e13%semanal;limiar ainda não alcançado.
+- CI40999409607/fonte160e369:quality e perfil success,3SO em testes na última consulta. A espera foi transferida ao acompanhamento automático,sem repetir builds/testes locais ou consumir orçamento artificialmente. Ao detectar≤10%,salvar checkpoint e prompt,pausar a automação e não retomar após reset sem humano. Se F9 terminar antes,salvar conclusão e parar para economizar.
+- HANDOFF.md contém estado detalhado,fonte/CI e prompt de retomada. Este registro não declara pausa por limiar nem conclusão F9;falta finalizar o CI/instaladores e registrar evidências finais.
 
 ### 2026-10-30 — F9 / Rendering sem blur validado no cenário4MP
 - Contador corrigido testado para tarefas que atravessam o início da janela;19Vitest/lint/build aprovados. Removida apenas backdrop-filter:blur(3px) do modal de tela inteira,sem mudar véu escurecido ou controles. Diferença CSS conferida contra HEAD normalizando somente finais de linha do Git.
 - Duas aberturas frias nativas do mesmo projeto4MP/32cores,mesmo método:0longtasks≥50ms em ambas,drawmáximo0,5ms e0,6ms;frontendproduction/Rustdebug. Original e vetor inspecionados corretamente. Logs/resumo em session/f9/revision2/ui-no-blur-*.jsonl e no-blur-summary.json. Amostras anteriores60ms/242ms preservadas;valida este cenário,sem provar causalidade exclusiva ou pior caso universal.
 - Fuzz/RNF/72SVGs avaliados não mudam com esse ajuste de UI. Checks Rust completos76aprovados no01475bd continuam válidos para o motor inalterado;novo CI completo da correção CSS/coletor ainda necessário para concluir F9. Monitor de saldo ativo e HANDOFF preventivo atualizado.
+- Checkpoint160e369 enviado;CI40999409607 em andamento. Quality/CPUprofile passaram;matriz3SO em testes. Último saldo33%5h/13%semanal;monitor considera o menor e interromperá novas tarefas ao detectar≤10%. Nenhuma nova bateria cara local iniciada.
 
 ### 2026-10-30 — F9 / Gate UI reaberto e monitor de pausa autorizado
 - CI40995892476 no SHA01475bd terminou success nos5jobs/3SO;local fmt/clippy/workspace76testes passaram. Não equivale a aprovação do gate UI.
